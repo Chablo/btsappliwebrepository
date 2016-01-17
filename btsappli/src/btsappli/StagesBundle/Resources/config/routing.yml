@@ -1,0 +1,3 @@
+btsappli_stages_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: btsappliStagesBundle:Default:index }

@@ -1,3 +1,11 @@
+btsappli_stages:
+    resource: "@btsappliStagesBundle/Resources/config/routing.yml"
+    prefix:   /
+
+btsappli_utilisateurs:
+    resource: "@btsappliUtilisateursBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

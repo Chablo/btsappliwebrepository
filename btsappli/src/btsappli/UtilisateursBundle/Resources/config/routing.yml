@@ -1,0 +1,3 @@
+btsappli_utilisateurs_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: btsappliUtilisateursBundle:Default:index }
