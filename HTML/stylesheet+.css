@@ -8,8 +8,17 @@
 	}
 
 	.bouton3 {
-		margin: 10px auto;
+		margin: 100px auto;
 		text-align: center;
+		
+	}
+	
+	.bouton4 {
+		list-style: none;
+		position: relative;
+		display: inline-block;
+		width: 200px;
+		height: 200px;
 	}
 
 	.bouton1 {
@@ -55,7 +64,7 @@
 		padding-top: 90px;
 		text-decoration: none;
 		text-align: center;
-		font-size: 40px;
+		font-size: 38px;
 		text-shadow: 0 1px 0 rgba(255,255,255,.7);
 		letter-spacing: -.065em;
 		font-family: "Hammersmith One", sans-serif;
@@ -89,13 +98,13 @@
 		transform: rotate(-360deg);
 	}
 
-	a.red {
+	a.orange {
 		background-color: rgba(238,85,25,1);
 		color: rgba(85,83,94,1);
 		border-color: rgba(133,32,28,.2);
 	}
 
-	a.red:hover {
+	a.orange:hover {
 		color: rgba(85,83,94,1);
 	}
 
@@ -109,13 +118,13 @@
 		color: rgba(85,83,94,1);
 	}
 
-	a.yellow {
+	a.blue {
 		background-color: rgba(74,158,244,1);
 		color: rgba(85,83,94,1);
 		border-color: rgba(153,38,0,.2);
 	}
 
-	a.yellow:hover {
+	a.blue:hover {
 		color: rgba(85,83,94,1);
 	}
 
@@ -145,11 +154,42 @@
 		background: rgba(67,255,86,.7);
 	}
 
-	.red span {
+	.orange span {
 		background: rgba(238,85,25,.7);
 	}
 
-	.yellow span {
+	.blue span {
+		background: rgba(74,158,244,.7);
+
+	}
+
+
+	a.violet {
+		background-color: rgba(74,158,244,1);
+		color: rgba(85,83,94,1);
+		border-color: rgba(153,38,0,.2);
+	}
+
+	a.violet:hover {
+		color: rgba(85,83,94,1);
+	}
+	
+	.violet span {
+		background: rgba(74,158,244,.7);
+
+	}
+	
+	a.red {
+		background-color: rgba(74,158,244,1);
+		color: rgba(85,83,94,1);
+		border-color: rgba(153,38,0,.2);
+	}
+
+	a.red:hover {
+		color: rgba(85,83,94,1);
+	}
+	
+	.red span {
 		background: rgba(74,158,244,.7);
 
 	}
