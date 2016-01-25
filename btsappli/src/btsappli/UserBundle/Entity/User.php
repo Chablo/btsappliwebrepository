@@ -1,18 +1,18 @@
 <?php
 
-namespace btsappli\UtilisateursBundle\Entity;
+namespace btsappli\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Utilisateur
+ * User
  *
  * @ORM\Entity
- * @ORM\Table(name="utilisateur")
+ * @ORM\Table(name="fos_user")
  */
-class Utilisateur extends BaseUser
+class User extends BaseUser
 {
     /**
      * @var integer
@@ -36,20 +36,6 @@ class Utilisateur extends BaseUser
      * @ORM\Column(name="prenom", type="string", length=40)
      */
     private $prenom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="adresseMail", type="string", length=60)
-     */
-    private $adresseMail;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="motDePasse", type="string", length=30)
-     */
-    private $motDePasse;
 
     /**
      * @var date
@@ -128,7 +114,7 @@ class Utilisateur extends BaseUser
      * Set nom
      *
      * @param string $nom
-     * @return Utilisateur
+     * @return User
      */
     public function setNom($nom)
     {
@@ -151,7 +137,7 @@ class Utilisateur extends BaseUser
      * Set prenom
      *
      * @param string $prenom
-     * @return Utilisateur
+     * @return User
      */
     public function setPrenom($prenom)
     {
@@ -170,57 +156,13 @@ class Utilisateur extends BaseUser
         return $this->prenom;
     }
 
-    /**
-     * Set adresseMail
-     *
-     * @param string $adresseMail
-     * @return Utilisateur
-     */
-    public function setAdresseMail($adresseMail)
-    {
-        $this->adresseMail = $adresseMail;
-
-        return $this;
-    }
-
-    /**
-     * Get adresseMail
-     *
-     * @return string 
-     */
-    public function getAdresseMail()
-    {
-        return $this->adresseMail;
-    }
-
-    /**
-     * Set motDePasse
-     *
-     * @param string $motDePasse
-     * @return Utilisateur
-     */
-    public function setMotDePasse($motDePasse)
-    {
-        $this->motDePasse = $motDePasse;
-
-        return $this;
-    }
-
-    /**
-     * Get motDePasse
-     *
-     * @return string 
-     */
-    public function getMotDePasse()
-    {
-        return $this->motDePasse;
-    }
+   
 
     /**
      * Set dateNaiss
      *
      * @param string $dateNaiss
-     * @return Utilisateur
+     * @return User
      */
     public function setDateNaiss($dateNaiss)
     {
@@ -243,7 +185,7 @@ class Utilisateur extends BaseUser
      * Set adresse
      *
      * @param string $adresse
-     * @return Utilisateur
+     * @return User
      */
     public function setAdresse($adresse)
     {
@@ -266,7 +208,7 @@ class Utilisateur extends BaseUser
      * Set codePostal
      *
      * @param integer $codePostal
-     * @return Utilisateur
+     * @return User
      */
     public function setCodePostal($codePostal)
     {
@@ -289,7 +231,7 @@ class Utilisateur extends BaseUser
      * Set ville
      *
      * @param string $ville
-     * @return Utilisateur
+     * @return User
      */
     public function setVille($ville)
     {
@@ -312,7 +254,7 @@ class Utilisateur extends BaseUser
      * Set telephone
      *
      * @param string $telephone
-     * @return Utilisateur
+     * @return User
      */
     public function setTelephone($telephone)
     {
@@ -335,7 +277,7 @@ class Utilisateur extends BaseUser
      * Set promotion
      *
      * @param string $promotion
-     * @return Utilisateur
+     * @return User
      */
     public function setPromotion($promotion)
     {
@@ -358,7 +300,7 @@ class Utilisateur extends BaseUser
      * Set entreprise
      *
      * @param \btsappli\StagesBundle\Entity\Entreprise $entreprise
-     * @return Utilisateur
+     * @return User
      */
     public function setEntreprise(\btsappli\StagesBundle\Entity\Entreprise $entreprise = null)
     {
@@ -381,7 +323,7 @@ class Utilisateur extends BaseUser
      * Set tuteur
      *
      * @param \btsappli\StagesBundle\Entity\Tuteur $tuteur
-     * @return Utilisateur
+     * @return User
      */
     public function setTuteur(\btsappli\StagesBundle\Entity\Tuteur $tuteur = null)
     {

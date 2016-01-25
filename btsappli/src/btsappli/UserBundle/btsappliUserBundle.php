@@ -1,10 +1,10 @@
 <?php
 
-namespace btsappli\UtilisateursBundle;
+namespace btsappli\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class btsappliUtilisateursBundle extends Bundle
+class btsappliUserBundle extends Bundle
 {
     public function getParent()
     {

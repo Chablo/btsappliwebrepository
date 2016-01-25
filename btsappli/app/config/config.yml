@@ -83,5 +83,7 @@ swiftmailer:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: btsappli\UtilisateursBundle\Entity\Utilisateur
-    use_username_form_type: false
+    user_class: btsappli\UserBundle\Entity\User
+    registration:
+        form:
+            type: btsappli_user_registration

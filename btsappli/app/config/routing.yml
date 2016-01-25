@@ -1,5 +1,5 @@
 btsappli_utilisateurs:
-    resource: "@btsappliUtilisateursBundle/Resources/config/routing.yml"
+    resource: "@btsappliUserBundle/Resources/config/routing.yml"
     prefix:   /
 
 btsappli_stages:

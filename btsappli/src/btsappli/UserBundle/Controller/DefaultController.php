@@ -1,6 +1,6 @@
 <?php
 
-namespace btsappli\UtilisateursBundle\Controller;
+namespace btsappli\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -8,6 +8,6 @@ class DefaultController extends Controller
 {
     public function indexAction($name)
     {
-        return $this->render('btsappliUtilisateursBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('btsappliUserBundle:Default:index.html.twig', array('name' => $name));
     }
 }
