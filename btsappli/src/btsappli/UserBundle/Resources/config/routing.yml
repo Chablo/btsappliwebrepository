@@ -1,3 +1,7 @@
-btsappli_utilisateurs_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: btsappliUtilisateursBundle:Default:index }
+btsappli_utilisateurs_accueilEtu:
+    path:     /accueilEtu
+    defaults: { _controller: btsappliUserBundle:User:menuEtu }
+
+btsappli_utilisateurs_accueilAdmin:
+    path:     /accueilAdmin
+    defaults: { _controller: btsappliUserBundle:User:menuAdmin }

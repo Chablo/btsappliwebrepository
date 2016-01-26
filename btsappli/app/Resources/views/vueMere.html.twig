@@ -6,6 +6,7 @@
     <title>{% block title %}BTS appli web{% endblock %}</title>
     {% block stylesheets %}
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link href="stylesheet+.css" rel="stylesheet">
     {% endblock %}
   </head>
   
@@ -24,10 +25,11 @@
         </div>
       </div>
     </div>
-    
-    
-    {% block contenuCentral %} 
-    {% endblock %}
+
+    <div class="container">
+        {% block contenuCentral %} 
+        {% endblock %}
+    </div>
     
     <div class="container">
       <!-- Ligne 3 -->
