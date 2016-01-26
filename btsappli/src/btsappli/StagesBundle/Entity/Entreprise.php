@@ -24,6 +24,13 @@ class Entreprise
     /**
      * @var string
      *
+     * @ORM\Column(name="nom", type="string", length=80)
+     */
+    private $nom;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="representant", type="string", length=80)
      */
     private $representant;
@@ -100,6 +107,30 @@ class Entreprise
     public function getId()
     {
         return $this->id;
+    }
+    
+    
+     /**
+     * Set nom
+     *
+     * @param string $nom
+     * @return Entreprise
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string 
+     */
+    public function getNom()
+    {
+        return $this->nom;
     }
 
     /**

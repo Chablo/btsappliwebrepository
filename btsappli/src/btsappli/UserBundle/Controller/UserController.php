@@ -6,13 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class UserController extends Controller
 {
-    public function menuEtuAction()
+    public function accueilEtudiantAction()
     {
-        return $this->render('btsappliUserBundle:User:menuEtu.html.twig');
+        return $this->render('btsappliUserBundle:User:accueilEtudiant.html.twig');
     }
     
-    public function menuAdminAction()
+    public function accueilAdminAction()
     {
-        return $this->render('btsappliUserBundle:User:menuAdmin.html.twig');
+        return $this->render('btsappliUserBundle:User:accueilAdmin.html.twig');
     }
 }

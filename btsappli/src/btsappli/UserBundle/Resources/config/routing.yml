@@ -1,7 +1,7 @@
 btsappli_utilisateurs_accueilEtu:
-    path:     /accueilEtu
-    defaults: { _controller: btsappliUserBundle:User:menuEtu }
+    path:     /accueilEtudiant
+    defaults: { _controller: btsappliUserBundle:User:accueilEtudiant }
 
 btsappli_utilisateurs_accueilAdmin:
     path:     /accueilAdmin
-    defaults: { _controller: btsappliUserBundle:User:menuAdmin }
+    defaults: { _controller: btsappliUserBundle:User:accueilAdmin }

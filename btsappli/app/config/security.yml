@@ -2,6 +2,8 @@ security:
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
  
+
+    
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
@@ -22,6 +24,7 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
+                default_target_path: /accueilEtudiant
             logout:       true
             anonymous:    true
             
@@ -33,3 +36,6 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/accueilEtudiant, role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/accueilAdmin, role: IS_AUTHENTICATED_REMEMBERED }
+
