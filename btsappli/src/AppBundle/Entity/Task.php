@@ -1,4 +1,4 @@
-namespace btsappli\StagesBundle\Entity;
+namespace AppBundle\Entity;
 
 class Task
 {

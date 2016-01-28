@@ -1,4 +1,4 @@
 services:
-#    btsappli_utilisateurs.example:
-#        class: btsappli\UtilisateursBundle\Example
+#    btsappli_user.example:
+#        class: btsappli\UserBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

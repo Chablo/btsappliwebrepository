@@ -15,7 +15,7 @@
       <!-- Ligne 1 -->
       <div class="row">
         <div class="col-sm-12">
-          <nav class="navbar navbar-inverse navbar-fixed-top">
+          <nav class="navbar navbar-default navbar-fixed-top">
             <div class="navbar-header">
                 {% block header %}
                   <a class="navbar-brand" href="#">Becat-Mateu </a>
@@ -40,7 +40,7 @@
               <div class="container-fluid">
                 {% block footer %}
                     <p class="navbar-text align-center">Copyright Becat-Mateu LDF Bayonne</p>
-                    <button type="button" class="btn btn-danger navbar-btn active pull-right" href="#">Se déconnecter</button>
+                    <a href="{{ path('fos_user_security_logout') }}"  role="button" class="btn btn-danger navbar-btn active pull-right" type="button">Se déconnecter</a>
                 {% endblock %}
               </div>
             </nav>

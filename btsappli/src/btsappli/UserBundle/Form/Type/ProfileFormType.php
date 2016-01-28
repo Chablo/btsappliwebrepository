@@ -40,6 +40,7 @@ class ProfileFormType extends AbstractType
             'mapped' => false,
             'constraints' => new UserPassword(),
         ));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -19,10 +19,10 @@
     <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
     <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label></br></br>
 
-    <input type="button" id="bouton" value="Inscription" }}" />
-    {# href="{{ path('#') #}
+  
+    <a href="{{ path('fos_user_registration_register') }}" role="button" class="btn btn-primary" type="button">Inscription</a>
 
-    <input type="submit" id="_submit" name="_submit" href="#"  value="{{ 'security.login.submit'|trans }}" />
+    <button type="submit" id="_submit" class="btn btn-primary" >Se connecter </button>
 
 </form>
 {% endblock fos_user_content %}
