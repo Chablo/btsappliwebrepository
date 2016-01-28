@@ -32,14 +32,14 @@ class RegistrationFormType extends BaseType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('prenom', 'text', array('label'=> 'Prénom: '))
-            ->add('nom', 'text', array('label'=> 'Nom: '))
-            ->add('telephone', 'text', array('label' => 'Telephone: '))
-            ->add('dateNaiss', 'birthday', array('label' => 'Date de naissance: '))
-            ->add('adresse', 'text', array('label' => 'Adresse: '))
-            ->add('codePostal', 'text', array('label'=> 'Code postal: '))
-            ->add('ville', 'text', array('label' => 'Ville: '))
-            ->add('promotion', 'text', array('label' => 'Promotion: '));
+            ->add('prenom', 'text', array('label'=> 'Prénom'))
+            ->add('nom', 'text', array('label'=> 'Nom'))
+            ->add('telephone', 'text', array('label' => 'Telephone'))
+            ->add('dateNaiss', 'birthday', array('label' => 'Date de naissance'))
+            ->add('adresse', 'text', array('label' => 'Adresse'))
+            ->add('codePostal', 'text', array('label'=> 'Code postal'))
+            ->add('ville', 'text', array('label' => 'Ville'))
+            ->add('promotion', 'text', array('label' => 'Promotion'));
         }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)

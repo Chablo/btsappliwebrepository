@@ -28,6 +28,7 @@ security:
             logout:       true
             anonymous:    true
             
+            
         default:
             anonymous: ~
 

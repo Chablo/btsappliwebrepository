@@ -5,3 +5,4 @@ btsappli_utilisateurs_accueilEtu:
 btsappli_utilisateurs_accueilAdmin:
     path:     /accueilAdmin
     defaults: { _controller: btsappliUserBundle:User:accueilAdmin }
+    
