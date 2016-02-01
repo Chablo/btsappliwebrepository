@@ -25,7 +25,10 @@ security:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
                 default_target_path: /accueilEtudiant
-            logout:       true
+            logout:       
+                path: /logout
+                target: /login
+                invalidate_session: false
             anonymous:    true
             
             
