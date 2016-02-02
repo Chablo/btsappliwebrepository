@@ -32,6 +32,7 @@ class RegistrationFormType extends BaseType
     {
         parent::buildForm($builder, $options);
         $builder
+
             ->add('prenom', 'text', array('label'=> 'Prénom'))
             ->add('nom', 'text', array('label'=> 'Nom'))
             ->add('telephone', 'text', array('label' => 'Telephone'))
@@ -40,6 +41,7 @@ class RegistrationFormType extends BaseType
             ->add('codePostal', 'text', array('label'=> 'Code postal'))
             ->add('ville', 'text', array('label' => 'Ville'))
             ->add('promotion', 'text', array('label' => 'Promotion'));
+
         }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)

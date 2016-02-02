@@ -6,3 +6,6 @@ btsappli_utilisateurs_accueilAdmin:
     path:     /accueilAdmin
     defaults: { _controller: btsappliUserBundle:User:accueilAdmin }
     
+btsappli_utilisateurs_suiviEtudiant:
+    path:   /suiviEtudiant
+    defaults: { _controller: btsappliUserBundle:User:suiviEtudiant }

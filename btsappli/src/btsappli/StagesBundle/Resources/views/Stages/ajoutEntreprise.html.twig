@@ -1,0 +1,15 @@
+{# src/btsappli/StagesBundle/Resources/views/Stages/ajoutEntreprise.html.twig #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>Ajout d'une entreprise</h4></div>
+        <div class="well">
+            <form method="post" {{ form_enctype(formulaireEntreprise) }}>
+                {{ form_widget(formulaireEntreprise) }}
+                <input type="submit" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+{% endblock %}

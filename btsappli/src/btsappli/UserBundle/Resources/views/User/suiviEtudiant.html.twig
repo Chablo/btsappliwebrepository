@@ -1,0 +1,146 @@
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+{# Contiendra la liste des étudiants ... #}
+<div style="margin-top:80px;"> <!-- pour descendre le contenu de x pixels -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+         <div class="row">
+            <div class="col-sm-4"> <h3> Liste des étudiants </h3> </div>
+        
+        <!-- bouton de filtrage -->
+        <div class="col-sm-6"></div>
+        <div class="col-sm-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top:6px;">
+                Filtrer par promotion <span class="caret"></span>
+          </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">2016-2018</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">2015-2017</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">2014-2016</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">2013-2015</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Démission</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+        
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <tr class="info" align="center">
+                    <td>
+                       Prenom
+                    </td>
+                
+                    <td>
+                        Nom
+                    </td>
+                   
+                     <td>
+                        Email
+                    </td>
+                
+                    <td>
+                        Telephone
+                    </td>
+                    
+                     <td>
+                         Adresse
+                    </td>
+                    
+                    <td>
+                        CodePostal
+                    </td>
+                    
+                     <td>
+                        Ville
+                    </td>
+                    
+                    <td>
+                        Promotion
+                    </td>
+                    
+                    <td>
+                        Modifier Promotion
+                    </td>
+                    </tr>
+                {% for userCourant in tabUser %}
+                
+                <tr align="center">
+                    <td>
+                        {{userCourant.prenom}}
+                    </td>
+                    
+                    <td>
+                        {{userCourant.nom}}
+                    </td>
+                    
+                     <td>
+                        {{userCourant.email}}
+                    </td>
+                    
+                    <td>
+                        {{userCourant.telephone}}
+                    </td>
+                    
+                     <td>
+                         {{userCourant.adresse}}
+                    </td>
+                    
+                    <td>
+                        {{userCourant.codePostal}}
+                    </td>
+                    
+                     <td>
+                        {{userCourant.ville}}
+                    </td>
+                    
+                    <td>
+                        {{userCourant.promotion}}
+                    </td>
+                    
+                    <td>
+                        <!-- bouton pour changer la promotion -->
+                       <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Promotion <span class="caret"></span>
+                        </button>
+                          <ul class="dropdown-menu">
+                                           <li><a href="#">2016-2018</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">2015-2017</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">2014-2016</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">2013-2015</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Démission</a></li>
+</div>
+                        
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+</div>
+</div>
+
+ <div class="row">
+        <div class="col-sm-4"> </div>
+        <div class="col-sm-1">
+<a href="#" role="button" class="btn btn-primary" type="button"> &nbsp; Valider &nbsp; </a>  <!--&nbsp; = espace-->
+</div>
+        <div class="col-sm-2"> </div>
+        <div class="col-sm-1">
+<a href="#" role="button" class="btn btn-primary" type="button"> &nbsp; Annuler &nbsp; </a>  <!--&nbsp; = espace-->
+</div>
+        <div class="col-sm-4"> </div>
+</div>
+
+{% endblock %}
