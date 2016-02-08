@@ -11,7 +11,7 @@ use btsappli\StagesBundle\Entity\Entreprise;
 
 class StagesController extends Controller
 {
-    public function ajouterEntrepriseAction()
+    public function ajoutEntrepriseAction()
     {
         // On créé un objet Entreprise "vide"
         $entreprise = new Entreprise();
@@ -36,3 +36,5 @@ class StagesController extends Controller
                         array('formulaireEntreprise' => $formulaireEntreprise -> createView()));
     }
 }
+
+?>

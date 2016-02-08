@@ -14,7 +14,7 @@
     <div class="container">
       <!-- Ligne 1 -->
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-lg-12">
           <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-header">
                 {% block header %}
@@ -32,10 +32,8 @@
         <div class="container">
          <!-- Ligne 2 -->
           <div class="row">
-            <div class="col-sm-2"> </div>
-             <div class="col-sm-8">
+             <div class="col-lg-8  col-lg-offset-2">
               <div style="margin-top:80px;"> {{ block ("fos_user_content") }} </div> <!-- bloc pour connexion, enregister et modifier profil -->
-             <div class="col-sm-2"> </div>
             </div>
            </div>
           </div>
@@ -46,7 +44,7 @@
     <div class="container">
       <!-- Ligne 3 -->
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-lg-12">
             <nav class="navbar navbar-default navbar-fixed-bottom">
               <div class="container-fluid">
                 {% block footer %}
@@ -57,7 +55,8 @@
         </div>
       </div>
     </div>
-    
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   </body>
 </html>

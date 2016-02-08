@@ -71,13 +71,6 @@ class User extends BaseUser
      * @ORM\Column(name="telephone", type="string", length=14)
      */
     private $telephone;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="promotion", type="string", length=10, nullable=true)
-     */
-    private $promotion;
     
         public function __construct()
     {
@@ -85,21 +78,27 @@ class User extends BaseUser
         // your own logic
     }
     
-    
+    //RELATION ENTRE LES CLASSES
     /**
      * 
      * @ORM\ManyToOne(targetEntity="btsappli\StagesBundle\Entity\Entreprise")
      */
-     private $entreprise; //un étudiant fait son stage dans une seule entreprise
+     private $entreprise; // sans s car un étudiant fait son stage dans une seule entreprise
+     
+      /**
+     * 
+     * @ORM\ManyToOne(targetEntity="btsappli\UserBundle\Entity\Promotion")
+     */
+     private $promotion; // sans s car un étudiant n'appartient qu'à une seule promotion
 
     /**
      * 
      * @ORM\ManyToOne(targetEntity="btsappli\StagesBundle\Entity\Tuteur")
      */
-     private $tuteur; //un étudiant n'a qu'un seul tuteur lors de son stage
+     private $tuteur; // sans s car un étudiant n'a qu'un seul tuteur lors de son stage
 
 
-
+    //GETTERS ET SETTERS
     /**
      * Get id
      *
@@ -271,29 +270,6 @@ class User extends BaseUser
     public function getTelephone()
     {
         return $this->telephone;
-    }
-
-    /**
-     * Set promotion
-     *
-     * @param string $promotion
-     * @return User
-     */
-    public function setPromotion($promotion)
-    {
-        $this->promotion = $promotion;
-
-        return $this;
-    }
-
-    /**
-     * Get promotion
-     *
-     * @return string 
-     */
-    public function getPromotion()
-    {
-        return $this->promotion;
     }
 
     /**

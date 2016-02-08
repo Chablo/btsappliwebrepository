@@ -39,9 +39,7 @@ class RegistrationFormType extends BaseType
             ->add('dateNaiss', 'birthday', array('label' => 'Date de naissance'))
             ->add('adresse', 'text', array('label' => 'Adresse'))
             ->add('codePostal', 'text', array('label'=> 'Code postal'))
-            ->add('ville', 'text', array('label' => 'Ville'))
-            ->add('promotion', 'text', array('label' => 'Promotion'));
-
+            ->add('ville', 'text', array('label' => 'Ville'));
         }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
