@@ -15,10 +15,10 @@
                         {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
 <div class="row">                       
             <div class="col-lg-4 col-lg-offset-1">                        
-                        {{ form_errors(form.username) }}
+                        {#{{ form_errors(form.username) }}
                         {{ form_label(form.username, "Identifiant: ") }}
                         <li>{{ form_widget(form.username) }}</li>
-                        <br>
+                        <br>#}
                         {{ form_errors(form.plainPassword.first) }}
                         {{ form_label(form.plainPassword.first, "Mot de passe: ") }}
                         <li>{{ form_widget(form.plainPassword.first) }}</li>
@@ -27,20 +27,8 @@
                         {{ form_label(form.nom, "Nom: ") }}
                         <li>{{ form_widget(form.nom) }}</li>
                         <br>
-                        {{ form_errors(form.adresse) }}
-                        {{ form_label(form.adresse, "Adresse: ") }}
-                        <li>{{ form_widget(form.adresse,{ 'attr': {'size': '20'} }) }}</li>
-                        <br>
-                        {{ form_errors(form.ville) }}
-                        {{ form_label(form.ville, "Ville: ") }}
-                        <li>{{ form_widget(form.ville) }}</li>
-                        <br>
-                        {{ form_errors(form.dateNaiss) }}
-                        {{ form_label(form.dateNaiss, "Date de naissance: ") }}
-                        <li>{{ form_widget(form.dateNaiss) }}</li>
-        </div> 
-
-        <div class="col-lg-4 col-lg-offset-1">
+            </div>
+            <div class="col-lg-4 col-lg-offset-1">
                         {{ form_errors(form.email) }}
                         {{ form_label(form.email, "Email: ") }}
                         <li>{{ form_widget(form.email) }}</li>
@@ -54,14 +42,43 @@
                         {{ form_label(form.prenom, "Prenom: ") }}
                         <li>{{ form_widget(form.prenom) }}</li>
                         <br>
+        </div>
+</div> 
+       
+<div class="row"> 
+     <div class="col-lg-9 col-lg-offset-1">  
+                        {{ form_errors(form.adresse) }}
+                        {{ form_label(form.adresse, "Adresse: ") }}
+                        <li>{{ form_widget(form.adresse,{ 'attr': {'size': '20'} }) }}</li>
+                        <br>
+     </div>
+</div>
+
+<div class="row">                       
+            <div class="col-lg-4 col-lg-offset-1">   
+                        {{ form_errors(form.ville) }}
+                        {{ form_label(form.ville, "Ville: ") }}
+                        <li>{{ form_widget(form.ville) }}</li>
+                        <br>
+                        {{ form_errors(form.dateNaiss) }}
+                        {{ form_label(form.dateNaiss, "Date de naissance: ") }}
+                        <li>{{ form_widget(form.dateNaiss) }}</li>
+            </div> 
+
+
+        
+         <div class="col-lg-4 col-lg-offset-1"> 
                         {{ form_errors(form.codePostal) }}
                         {{ form_label(form.codePostal, "Code postal: ") }}
                         <li>{{ form_widget(form.codePostal) }}</li>
                         <br>
+
                         {{ form_errors(form.telephone) }}
                         {{ form_label(form.telephone, "Telephone: ") }}
                         <li>{{ form_widget(form.telephone,{ 'attr': {'cols': '100'} }) }}</li>
                         {#{{ form_end(form) }}#}
+         </div>
+</div>
                        </ul> 
                        <button type="submit" id="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary pull-right"  >&nbsp; S'inscrire &nbsp; </button>
         </div> 

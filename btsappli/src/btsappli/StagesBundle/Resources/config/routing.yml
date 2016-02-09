@@ -1,3 +1,7 @@
 btsappli_stages_entrepriseFormulaire:
     path:     /ajouterEntreprise
     defaults: { _controller: btsappliStagesBundle:Stages:ajoutEntreprise }
+
+btsappli_stages_rechercheEntreprise:
+    path:     /rechercherEntreprise
+    defaults: { _controller: btsappliStagesBundle:Stages:rechercherEntreprise }
