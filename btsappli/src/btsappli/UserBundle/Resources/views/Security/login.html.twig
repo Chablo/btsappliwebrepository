@@ -4,9 +4,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block contenuCentral %}
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
 
         <div class="container">
          <!-- Ligne 2 -->
@@ -17,6 +14,13 @@
                  <div class="panel-heading"> Connexion</div>
                   <div class="panel-body">
                     <div class="row">
+{% if error %}
+<div class="panel panel-default">
+  <div class="panel-body">
+              <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+  </div>
+</div>
+{% endif %}
                       <div class="col-lg-9 col-lg-offset-3">
                         <ul style="list-style-type:none">
                          <form action="{{ path("fos_user_security_check") }}" method="post">

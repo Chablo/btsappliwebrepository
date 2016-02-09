@@ -28,7 +28,16 @@ class UserController extends Controller
         //on envoie la liste des étudiants dans la vue chargée de les afficher
         return $this->render('btsappliUserBundle:User:suiviEtudiant.html.twig', array('tabUser'=>$tabUser));
    
-   
+    }
+    
+     public function suiviStagesAction()
+     {
+         //a compléter
+          return $this->render('btsappliUserBundle:User:suiviStages.html.twig');
+     }
+    
+   /* public function filterPromoAction()
+    {
    
         //on met la liste des promotions dans tabPromotion 
         //on récupère le repository de l'entité Promotion
@@ -39,5 +48,5 @@ class UserController extends Controller
         
         //on envoie la liste des promotions dans la vue chargée de les afficher
         return $this->render('btsappliUserBundle:User:suiviEtudiant.html.twig', array('tabPromotion'=>$tabPromotion));
-    }
+    } */
 }

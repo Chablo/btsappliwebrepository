@@ -42,5 +42,5 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/accueilEtudiant, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/accueilAdmin, role: IS_AUTHENTICATED_REMEMBERED }
-        
+        - { path: ^/suiviEtudiant, role: IS_AUTHENTICATED_REMEMBERED }      
 

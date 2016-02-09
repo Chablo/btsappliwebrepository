@@ -29,7 +29,7 @@
                         <br>
                         {{ form_errors(form.adresse) }}
                         {{ form_label(form.adresse, "Adresse: ") }}
-                        <li>{{ form_widget(form.adresse) }}</li>
+                        <li>{{ form_widget(form.adresse,{ 'attr': {'size': '20'} }) }}</li>
                         <br>
                         {{ form_errors(form.ville) }}
                         {{ form_label(form.ville, "Ville: ") }}
@@ -60,7 +60,7 @@
                         <br>
                         {{ form_errors(form.telephone) }}
                         {{ form_label(form.telephone, "Telephone: ") }}
-                        <li>{{ form_widget(form.telephone) }}</li>
+                        <li>{{ form_widget(form.telephone,{ 'attr': {'cols': '100'} }) }}</li>
                         {#{{ form_end(form) }}#}
                        </ul> 
                        <button type="submit" id="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary pull-right"  >&nbsp; S'inscrire &nbsp; </button>
