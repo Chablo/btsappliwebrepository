@@ -32,7 +32,7 @@ class RegistrationFormType extends BaseType
     {
         parent::buildForm($builder, $options);
         $builder
-
+            ->remove('username')
             ->add('prenom', 'text', array('label'=> 'Prénom'))
             ->add('nom', 'text', array('label'=> 'Nom'))
             ->add('telephone', 'text', array('label' => 'Telephone'))

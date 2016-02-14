@@ -10,11 +10,10 @@ btsappli_utilisateurs_suiviEtudiant:
     path:   /suiviEtudiant
     defaults: { _controller: btsappliUserBundle:User:suiviEtudiant }
     
-btsappli_utilisateurs_suiviStages:
-    path:   /suiviStages
-    defaults: { _controller: btsappliUserBundle:User:suiviStages }
-    
 btsappli_utilisateurs_suiviEtudiant:
     path:   /suiviEtudiant/{promo}
     defaults: { _controller: btsappliUserBundle:User:suiviEtudianParPromotion }
     
+btsappli_utilisateurs_suiviStages:
+    path:   /suiviStages
+    defaults: { _controller: btsappliUserBundle:User:suiviStages }

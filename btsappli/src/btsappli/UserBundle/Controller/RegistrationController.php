@@ -35,6 +35,7 @@ class RegistrationController extends Controller
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
         $user = $userManager->createUser();
+                  
         $user->setEnabled(true);
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
@@ -42,6 +43,7 @@ class RegistrationController extends Controller
             return $event->getResponse();
         }
         $form = $formFactory->createForm();
+     
         $form->setData($user);
         $form->handleRequest($request);
         if ($form->isValid()) {

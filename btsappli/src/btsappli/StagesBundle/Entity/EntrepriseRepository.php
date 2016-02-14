@@ -12,4 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class EntrepriseRepository extends EntityRepository
 {
+    // Méthode retournant les résultats de la recherche de l'entreprise par l'étudiant avec le formulaire rechercheEntreprise
+    public function getResultatsRechercheEntreprise($nom)
+    {
+        // Récupération du gestionnaire d'entité
+        $gestionnaireEntite = $this -> _em;
+        
+        // Création de la requête qui sélectionne toutes les entreprises dont le nom correspond à $nom
+        $requete = $gestionnaireEntite
+                    -> createQuery('SELECT e FROM btsappliStagesBundle:Entreprise e
+                                    WHERE e.nom = :nom');
+        
+        // On définit la valeur du paramètre nomEntreprise de la requête
+        $requete->setParameter('nom', $nom);
+        
+        // On exécute la requête et on renvoie les résultats
+        return $requete->getResult();
+    }
 }

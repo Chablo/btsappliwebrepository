@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class TuteurRepository extends EntityRepository
 {
+    	public function getTuteursDUneEntreprise($id)
+	{
+ 
+		$qb = $this->createQueryBuilder('a');
+ 
+		$qb->where('a.entreprise = :id')
+			  ->setParameter('id', $id);
+ 
+		return $qb;
+	}
 }

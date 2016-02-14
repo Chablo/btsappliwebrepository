@@ -1,0 +1,21 @@
+{# src/btsappli/StagesBundle/Resources/views/Stages/ajoutStageTut.html.twig #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+<div class="col-lg-8 col-lg-offset-2">
+    <div style="margin-top:18px;">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4>Ajout d'un stage (étape 2/2)</h4></div>
+            <div class="panel-body">
+                <form method="post" {{ form_enctype(formulaireStage) }}>
+                    {{ form_widget(formulaireStage) }}
+                    <input type="submit" class="btn btn-primary pull-right" />
+                </form>
+                <h5>Tuteur introuvable ?</h5>
+                <a href="{{ path('btsappli_stages_tuteurFormulaire', {'id':id}) }}" role="button" class="btn btn-primary" type="button">Ajouter tuteur</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -5,6 +5,8 @@ class UserController extends Controller
 {
     public function accueilEtudiantAction()
     {
+
+        
         return $this->render('btsappliUserBundle:User:accueilEtudiant.html.twig');
     }
     
@@ -24,14 +26,25 @@ class UserController extends Controller
         
         //on envoie la liste des étudiants dans la vue chargée de les afficher
         return $this->render('btsappliUserBundle:User:suiviEtudiant.html.twig', array('tabUser'=>$tabUser));
-   
-    }
+     
+}
+        
     
-     public function suiviStagesAction()
-     {
-         //a compléter
-          return $this->render('btsappliUserBundle:User:suiviStages.html.twig');
-     }
+        public function suiviStagesAction()
+    {
+        // On récupère le gestionnaire d'entité
+      /*  $gestionnaireEntite = $this->getDoctrine()->getManager();
+    
+        // On récupère le repository de l'entité Entreprise
+        $repositoryEntreprise = $gestionnaireEntite -> getRepository('btsappliStagesBundle:User');
+    
+        // On récupère l'entreprise dont l'id est le paramètre $id
+        $entreprise = $repositoryEntreprise->findAll();     */
+    
+        // On transmet l'entreprise à la vue chargée de l'afficher
+        return $this->render('btsappliUserBundle:User:suiviStages.html.twig');//, 
+                            // array('tabStages' => $tabStages)); 
+    }
     
    /* public function filterPromoAction()
     {

@@ -1,0 +1,15 @@
+{# src/btsappli/StagesBundle/Resources/views/Stages/ajoutEntreprise.html.twig #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>Ajout d'une entreprise</h4></div>
+        <div class="panel-body">
+            <a href="{{ path('btsappli_stages_voirStage', {'id':id}) }}">Mon stage</a>
+            <a href="{{ path('btsappli_stages_stageFormulaireEnt') }}">Ajouter mon stage</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
