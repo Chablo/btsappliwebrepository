@@ -3,34 +3,42 @@
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
-<div class="col-lg-12">
-    <div class="panel panel-default">
-        <div class="panel-heading"><h4>Récapitulatif de ton stage :</h4></div>
-        <div class="panel-body">
-            <h5>Entreprise <i>{{ user.entreprise.nom }}</i> :</h5>
-            <ul>
-		        <li><b>Représentant :</b> {{ user.entreprise.representant }}</li>
-		        <li><b>Adresse :</b> {{ user.entreprise.adresse }}</li>
-		        <li><b>Code postal :</b> {{ user.entreprise.codePostal }}</li>
-		        <li><b>Ville :</b> {{ user.entreprise.ville }}</li>
-		        <li><b>Pays :</b> {{ user.entreprise.pays }}</li>
-		        <li><b>Adresse email :</b> {{ user.entreprise.adresseMail }}</li>
-		        <li><b>Téléphone :</b> {{ user.entreprise.telephone }}</li>
-		        <li><b>Fax :</b> {{ user.entreprise.fax }}</li>
-		        <li><b>Service d'accueil :</b> {{ user.entreprise.serviceAccueil }}</li>
-		        <li><b>Description :</b> {{ user.entreprise.description }}</li>
-            </ul>
-            <h5>Tuteur :</h5>
-            <ul>
-		        <li><b>Nom :</b> {{ user.tuteur.nom }}</li>
-		        <li><b>Prénom :</b> {{ user.tuteur.prenom }}</li>
-		        <li><b>Email :</b> {{ user.tuteur.adresseMail }}</li>
-		        <li><b>Téléphone :</b> {{ user.tuteur.telephone }}</li>
-		        <li><b>Fonctions :</b> {{ user.tuteur.fonction }}</li>
-		        <li><b>Infos Complémentaires :</b> {{ user.tuteur.infosComplementaires }}</li>
-		    </ul>
-            <a href="{{ path('btsappli_stages_menuStage') }}" role="button" class="btn btn-primary" type="button">Terminer</a>
-        </div>
-    </div>
+<div class="col-lg-10 col-lg-offset-1">
+	<div style="margin-top:18px;">
+	    <div class="panel panel-default">
+	        <div class="panel-heading"><h3>Récapitulatif de ton stage :</h3></div>
+		        <div class="panel-body">
+		        	<div class="row">
+		        		<div class="col-lg-4">
+				            <h4>Entreprise <i>{{ user.entreprise.nom }}</i> :</h4>
+				            <ul>
+						        <li><b>Représentant :</b> {{ user.entreprise.representant }}</li>
+						        <li><b>Adresse :</b> {{ user.entreprise.adresse }}</li>
+						        <li><b>Code postal :</b> {{ user.entreprise.codePostal }}</li>
+						        <li><b>Ville :</b> {{ user.entreprise.ville }}</li>
+						        <li><b>Pays :</b> {{ user.entreprise.pays }}</li>
+						        <li><b>Adresse email :</b> {{ user.entreprise.adresseMail }}</li>
+						        <li><b>Téléphone :</b> {{ user.entreprise.telephone }}</li>
+						        <li><b>Fax :</b> {{ user.entreprise.fax }}</li>
+						        <li><b>Service d'accueil :</b> {{ user.entreprise.serviceAccueil }}</li>
+						        <li><b>Description :</b> {{ user.entreprise.description }}</li>
+				            </ul>
+		        		</div>
+			     		<div class="col-lg-4 col-lg-offset-1">
+				            <h4>Tuteur :</h4>
+				            <ul>
+						        <li><b>Nom :</b> {{ user.tuteur.nom }}</li>
+						        <li><b>Prénom :</b> {{ user.tuteur.prenom }}</li>
+						        <li><b>Email :</b> {{ user.tuteur.adresseMail }}</li>
+						        <li><b>Téléphone :</b> {{ user.tuteur.telephone }}</li>
+						        <li><b>Fonctions :</b> {{ user.tuteur.fonction }}</li>
+						        <li><b>Infos Complémentaires :</b> {{ user.tuteur.infosComplementaires }}</li>
+						    </ul>
+			     		</div>
+					</div>
+		            <a href="{{ path('btsappli_stages_menuStage') }}" role="button" class="btn btn-primary pull-right" type="button">Terminer</a>
+		        </div>
+	    </div>
+	</div>  
 </div>
 {% endblock %}

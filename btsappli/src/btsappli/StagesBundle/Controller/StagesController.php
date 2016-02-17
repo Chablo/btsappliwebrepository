@@ -8,8 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use btsappli\StagesBundle\Form\Type;
 use btsappli\StagesBundle\Entity\Entreprise;
+use btsappli\StagesBundle\Entity\EntrepriseRepository;
+use btsappli\StagesBundle\Form\EntrepriseType;
 use btsappli\StagesBundle\Entity\Tuteur;
 use btsappli\StagesBundle\Entity\TuteurRepository;
+use btsappli\StagesBundle\Form\TuteurType;
 use btsappli\UserBundle\Entity\User;
 
 class StagesController extends Controller
@@ -24,26 +27,27 @@ class StagesController extends Controller
     
     public function voirEntrepriseAction($id)
     {
-        // On récupère le gestionnaire d'entité
-        $gestionnaireEntite = $this->getDoctrine()->getManager();
-    
         // On récupère le repository de l'entité Entreprise
-        $repositoryEntreprise = $gestionnaireEntite -> getRepository('btsappliStagesBundle:Entreprise');
-    
+        $repositoryEntreprise = $this->getDoctrine()->getManager()
+                                   -> getRepository('btsappliStagesBundle:Entreprise');
+                                   
         // On récupère l'entreprise dont l'id est le paramètre $id
-        $entreprise = $repositoryEntreprise->find($id);        
+        $entreprise = $repositoryEntreprise->find($id);
+        
+        // On construit le formulaire qui présentera les données de l'entreprise $id
+        $formulaireEntreprise = $this -> createForm(new EntrepriseType, $entreprise, array('read_only' => true));
     
         // On transmet l'entreprise à la vue chargée de l'afficher
         return $this->render('btsappliStagesBundle:Stages:vueEntreprise.html.twig', 
-                             array('entreprise' => $entreprise));
+                             array('formulaireEntreprise' => $formulaireEntreprise -> createView()));
     }
     
     public function voirStageAction($id)
     {
-        // On récupère le gestionnaire d'entité
-        $gestionnaireEntite = $this->getDoctrine()->getManager();
         // On récupère le repository de l'entité User
-        $repositoryEntreprise = $gestionnaireEntite -> getRepository('btsappliUserBundle:User');
+        $repositoryEntreprise = $this->getDoctrine()->getManager()
+                                   -> getRepository('btsappliUserBundle:User');
+                                   
         // On récupère l'user dont l'id est le paramètre $id
         $user = $repositoryEntreprise->find($id);        
     
@@ -78,11 +82,9 @@ class StagesController extends Controller
     
     public function resultatsRechercheAction($nom)
     {
-        // On récupère le gestionnaire d'entité
-        $gestionnaireEntite = $this->getDoctrine()->getManager();
-    
         // On récupère le repository de l'entité Entreprise
-        $repositoryEntreprise = $gestionnaireEntite -> getRepository('btsappliStagesBundle:Entreprise');
+        $repositoryEntreprise = $this->getDoctrine()->getManager()
+                                   -> getRepository('btsappliStagesBundle:Entreprise');
     
         // On récupère la liste des entreprises
         $entreprises = $repositoryEntreprise->getResultatsRechercheEntreprise($nom);
@@ -98,19 +100,7 @@ class StagesController extends Controller
         $entreprise = new Entreprise();
         
         // Création du formulaire permettant de saisir une entreprise
-        $formulaireEntreprise = $this->createFormBuilder($entreprise)
-            ->add('nom', 'text')
-            ->add('representant', 'text')
-            ->add('adresse', 'text')
-            ->add('codePostal', 'text')
-            ->add('ville', 'text')
-            ->add('pays', 'text')
-            ->add('adresseMail', 'email')
-            ->add('telephone', 'number')
-            ->add('fax', 'number')
-            ->add('description', 'textarea')
-            ->add('serviceAccueil', 'text')
-            ->getForm();
+        $formulaireEntreprise = $this->createForm(new EntrepriseType, $entreprise);
         
         // Enregistrement des données dans $entreprise dès soumission du formulaire
         $formulaireEntreprise->handleRequest($requeteUtilisateur);
@@ -139,10 +129,9 @@ class StagesController extends Controller
         // On créé un objet Tuteur "vide"
         $tuteur = new Tuteur();
         
-        // On récupère le gestionnaire d'entité
-        $gestionnaireEntite = $this->getDoctrine()->getManager();
         // On récupère le repository de l'entité Entreprise
-        $repositoryEntreprise = $gestionnaireEntite -> getRepository('btsappliStagesBundle:Entreprise');
+        $repositoryEntreprise = $this->getDoctrine()->getManager()
+                                     -> getRepository('btsappliStagesBundle:Entreprise');
         // On récupère l'entreprise dont l'id est le paramètre $id
         $entreprise = $repositoryEntreprise->find($id);  
         
@@ -150,14 +139,7 @@ class StagesController extends Controller
         $tuteur -> setEntreprise($entreprise);
         
         // Création du formulaire permettant de saisir une entreprise
-        $formulaireTuteur = $this->createFormBuilder($tuteur)
-            ->add('nom', 'text')
-            ->add('prenom', 'text')
-            ->add('adresseMail', 'email')
-            ->add('telephone', 'text')
-            ->add('fonction', 'text')
-            ->add('infosComplementaires', 'textarea')
-            ->getForm();
+        $formulaireTuteur = $this->createForm(new TuteurType, $tuteur);
         
         // Enregistrement des données dans $tuteur dès soumission du formulaire
         $formulaireTuteur->handleRequest($requeteUtilisateur);
@@ -190,7 +172,11 @@ class StagesController extends Controller
             ->add('entreprise', 'entity',
                 array('label' => 'Choix de l\'entreprise',
                       'class' => 'btsappliStagesBundle:Entreprise',
-                      'property' => 'nom',
+                      'query_builder' => function (EntrepriseRepository $er) {
+                            return $er->createQueryBuilder('e')
+                                            ->orderBy('e.nom', 'ASC');
+                       },
+                      'choice_label' => 'nom',
                       'multiple' => false,
                       'expanded' => false))
             ->getForm();

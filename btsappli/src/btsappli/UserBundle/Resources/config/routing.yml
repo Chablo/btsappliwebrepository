@@ -17,3 +17,7 @@ btsappli_utilisateurs_suiviEtudiant:
 btsappli_utilisateurs_suiviStages:
     path:   /suiviStages
     defaults: { _controller: btsappliUserBundle:User:suiviStages }
+    
+btsappli_utilisateurs_suiviEtudiantFiltrer:
+    path:   /suiviEtudiantFiltrer
+    defaults: { _controller: btsappliUserBundle:User:suiviEtudiantFiltrer }

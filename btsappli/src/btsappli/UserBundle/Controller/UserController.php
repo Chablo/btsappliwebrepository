@@ -5,9 +5,11 @@ class UserController extends Controller
 {
     public function accueilEtudiantAction()
     {
-
+        $user = $this -> getUser();
         
-        return $this->render('btsappliUserBundle:User:accueilEtudiant.html.twig');
+        return $this->render('btsappliUserBundle:User:accueilEtudiant.html.twig',
+                            array('user' => $user,
+                                  'id' => $user -> getId()));
     }
     
     public function accueilAdminAction()
@@ -46,9 +48,11 @@ class UserController extends Controller
                             // array('tabStages' => $tabStages)); 
     }
     
-   /* public function filterPromoAction()
+    public function suiviEtudiantFiltrer()
     {
-   
+        return $this->render('btsappliUserBundle:User:suiviEtudiantFiltrer.html.twig');
+        
+        /*
         //on met la liste des promotions dans tabPromotion 
         //on récupère le repository de l'entité Promotion
         $repositoryPromotion=$this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:Promotion');
@@ -57,6 +61,6 @@ class UserController extends Controller
         $tabPromotion=$repositoryPromotion->findAll();
         
         //on envoie la liste des promotions dans la vue chargée de les afficher
-        return $this->render('btsappliUserBundle:User:suiviEtudiant.html.twig', array('tabPromotion'=>$tabPromotion));
-    } */
+        return $this->render('btsappliUserBundle:User:suiviEtudiant.html.twig', array('tabPromotion'=>$tabPromotion)); */
+    } 
 }

@@ -5,20 +5,12 @@
 {% block contenuCentral %}
 <div class="col-lg-12">
     <div class="panel panel-default">
-        <div class="panel-heading"><h4>{{ entreprise.nom }} :</h4></div>
+        <div class="panel-heading"><h3></h3></div>
         <div class="panel-body">
-            <ul>
-		        <li><b>Représentant :</b> {{ entreprise.representant }}</li>
-		        <li><b>Adresse :</b> {{ entreprise.adresse }}</li>
-		        <li><b>Code postal :</b> {{ entreprise.codePostal }}</li>
-		        <li><b>Ville :</b> {{ entreprise.ville }}</li>
-		        <li><b>Pays :</b> {{ entreprise.pays }}</li>
-		        <li><b>Adresse email :</b> {{ entreprise.adresseMail }}</li>
-		        <li><b>Téléphone :</b> {{ entreprise.telephone }}</li>
-		        <li><b>Fax :</b> {{ entreprise.fax }}</li>
-		        <li><b>Service d'accueil :</b> {{ entreprise.serviceAccueil }}</li>
-		        <li><b>Description :</b> {{ entreprise.description }}</li>
-            </ul>
+                    <form method="post" {{ form_enctype(formulaireEntreprise) }}>
+                        {{ form_widget(formulaireEntreprise) }}
+                        <input type="submit" class="btn btn-primary pull-right" />
+                    </form>
             <a href="#" role="button" class="btn btn-primary" type="button">Choisir</a>
             <a href="#" role="button" class="btn btn-secondary" type="button">Retour</a>
         </div>

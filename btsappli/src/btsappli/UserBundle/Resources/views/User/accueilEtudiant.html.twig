@@ -4,7 +4,11 @@
       <!-- Ligne 2 -->
       <div class="row">
         <div class="col-lg-6 col-lg-offset-3">
-          <a role="button" class="btn btn-success btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_stages_menuStage') }}">Stages</a>
+        {% if user.entreprise is null or user.tuteur  is null %}
+          <a role="button" class="btn btn-success btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_stages_stageFormulaireEnt') }}">Stages</a>
+        {% else %}
+          <a role="button" class="btn btn-success btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_stages_voirStage',  {'id':id}) }}">Stages</a>
+        {% endif %}
         </div>
       </div>
       

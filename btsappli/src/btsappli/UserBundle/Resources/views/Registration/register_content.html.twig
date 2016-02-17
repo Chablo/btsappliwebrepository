@@ -13,12 +13,21 @@
 
                         
                         {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-<div class="row">                       
+                     
+            
+            
+            <div class="row"> 
+                <div class="col-lg-9 col-lg-offset-1">  
+                        {{ form_errors(form.email) }}
+                        {{ form_label(form.email, "Adresse e-mail: ") }}
+                        <li>{{ form_widget(form.email,{ 'attr': {'size': '20'} }) }}</li>
+                        <br>
+                </div>
+            </div>
+
+            
+            <div class="row">  
             <div class="col-lg-4 col-lg-offset-1">                        
-                        {#{{ form_errors(form.username) }}
-                        {{ form_label(form.username, "Identifiant: ") }}
-                        <li>{{ form_widget(form.username) }}</li>
-                        <br>#}
                         {{ form_errors(form.plainPassword.first) }}
                         {{ form_label(form.plainPassword.first, "Mot de passe: ") }}
                         <li>{{ form_widget(form.plainPassword.first) }}</li>
@@ -29,10 +38,6 @@
                         <br>
             </div>
             <div class="col-lg-4 col-lg-offset-1">
-                        {{ form_errors(form.email) }}
-                        {{ form_label(form.email, "Email: ") }}
-                        <li>{{ form_widget(form.email) }}</li>
-                        <br>
                         {{ form_errors(form.plainPassword.second) }}
                         {{ form_label(form.plainPassword.second, "Confirmer Mot de passe: ") }}
                         <li>{{ form_widget(form.plainPassword.second) }}</li>
@@ -42,8 +47,8 @@
                         {{ form_label(form.prenom, "Prenom: ") }}
                         <li>{{ form_widget(form.prenom) }}</li>
                         <br>
-        </div>
-</div> 
+            </div>
+            </div> 
        
 <div class="row"> 
      <div class="col-lg-9 col-lg-offset-1">  
@@ -81,6 +86,7 @@
 </div>
                        </ul> 
                        <button type="submit" id="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary pull-right"  >&nbsp; S'inscrire &nbsp; </button>
+                                 <a href="{{ path('fos_user_security_login') }}" role="button" class="btn btn-primary" type="button"> &nbsp; Annuler &nbsp; </a>  <!--&nbsp; = espace-->
         </div> 
                            {# <input type="submit" value="{{ 'registration.submit'|trans }}" /> #}
                            

@@ -3,14 +3,17 @@
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
-<div class="col-lg-12">
-    <div class="panel panel-default">
-        <div class="panel-heading"><h4>Ajout d'un tuteur pour l'entreprise <i>{{ tuteur.entreprise.nom }}</i></h4></div>
-        <div class="panel-body">
-            <form method="post" {{ form_enctype(formulaireTuteur) }}>
-                {{ form_widget(formulaireTuteur) }}
-                <input type="submit" class="btn btn-primary"/>
-            </form>
+<div class="col-lg-10 col-lg-offset-1">
+    <div style="margin-top:18px;">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>Ajout d'un tuteur pour l'entreprise <i>{{ tuteur.entreprise.nom }}</i></h3></div>
+                <div class="panel-body">
+                    <form method="post" {{ form_enctype(formulaireTuteur) }}>
+                        {{ form_widget(formulaireTuteur) }}
+                        <input type="submit" class="btn btn-primary pull-right"/>
+                    </form>
+                </div>
+                
         </div>
     </div>
 </div>

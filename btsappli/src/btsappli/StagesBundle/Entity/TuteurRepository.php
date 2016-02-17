@@ -12,13 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class TuteurRepository extends EntityRepository
 {
-    	public function getTuteursDUneEntreprise($id)
+    public function getTuteursDUneEntreprise($id)
 	{
  
-		$qb = $this->createQueryBuilder('a');
+		$qb = $this->createQueryBuilder('t');
  
-		$qb->where('a.entreprise = :id')
-			  ->setParameter('id', $id);
+		$qb->where('t.entreprise = :id')
+			  ->setParameter('id', $id)
+			  	->orderBy('t.nom', 'ASC');
  
 		return $qb;
 	}

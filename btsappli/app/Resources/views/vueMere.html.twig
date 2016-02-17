@@ -18,7 +18,7 @@
           <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-header">
                 {% block header %}
-                  <a href="#">
+                  <a href="{{ path('btsappli_utilisateurs_accueilEtu') }}">
                   <svg  height="65px" width="550px" xmlns="http://www.w3.org/2000/svg" > 
                     <image x="-223px" y="0px" height="100%" width="100%"  xlink:href="{{ asset('images/LogoV5.svg') }}" />
                   </svg>
@@ -40,7 +40,7 @@
         <div class="col-lg-12">
             <nav class="navbar navbar-default navbar-fixed-bottom">
               <div class="container-fluid">
-                    <p class="navbar-text align-center">Copyright Becat-Mateu LDF Bayonne</p>
+                    <p class="navbar-text align-center">Copyright</p>
                 {% block footer %}
                     <a href="{{ path('fos_user_security_logout') }}" class="btn btn-danger navbar-btn active pull-right">Se déconnecter</a>
                 {% endblock %}

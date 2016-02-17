@@ -22,6 +22,7 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
 
     /**
      * @var string
@@ -272,6 +273,7 @@ class User extends BaseUser
         return $this->telephone;
     }
 
+
     /**
      * Set entreprise
      *
@@ -318,5 +320,21 @@ class User extends BaseUser
         return $this->tuteur;
     }
     
+        /* Override FOSUB */
+    public function setEmail($email)
+    {
+        parent::setEmail($email);
+        $this->username = $email;
+
+        return $this;
+    }
+    public function setEmailCanonical($emailCanonical)
+    {
+        parent::setEmailCanonical($emailCanonical);
+        $this->usernameCanonical = $emailCanonical;
+
+        return $this;
+    }
+
     
 }
