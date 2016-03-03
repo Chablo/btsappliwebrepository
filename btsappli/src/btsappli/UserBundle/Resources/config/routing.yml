@@ -5,6 +5,8 @@ btsappli_utilisateurs_accueilEtu:
 btsappli_utilisateurs_accueilAdmin:
     path:     /accueilAdmin
     defaults: { _controller: btsappliUserBundle:User:accueilAdmin }
+
+#************************************************************************************************************
     
 btsappli_utilisateurs_suiviEtudiant:
     path:   /suiviEtudiant
@@ -12,12 +14,29 @@ btsappli_utilisateurs_suiviEtudiant:
     
 btsappli_utilisateurs_suiviEtudiant:
     path:   /suiviEtudiant/{promo}
-    defaults: { _controller: btsappliUserBundle:User:suiviEtudianParPromotion }
+    defaults: { _controller: btsappliUserBundle:User:suiviEtudiantParPromotion }
     
 btsappli_utilisateurs_suiviStages:
     path:   /suiviStages
     defaults: { _controller: btsappliUserBundle:User:suiviStages }
+
+btsappli_utilisateurs_suiviStagesPasStage:
+    path:   /suiviStages/pasStage
+    defaults: { _controller: btsappliUserBundle:User:suiviStagesPasStage }
+
+btsappli_utilisateurs_suiviStagesConventionValidee:
+    path: /suiviStages/conventionValidee
+    defaults: { _controller: btsappliUserBundle:User:suiviStagesConventionValidee }
     
 btsappli_utilisateurs_suiviEtudiantFiltrer:
     path:   /suiviEtudiantFiltrer
     defaults: { _controller: btsappliUserBundle:User:suiviEtudiantFiltrer }
+
+btsappli_utilisateurs_supprimerStage:
+    path:   /suiviStages/supprimerStage/{id}
+    defaults: { _controller: btsappliUserBundle:User:supprimerStage }
+    
+btsappli_utilisateurs_validerInscriptions:
+    path:   /validerUser
+    defaults: { _controller: btsappliUserBundle:User:validerUser }
+    

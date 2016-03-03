@@ -52,7 +52,7 @@ class Tuteur
     /**
      * @var string
      *
-     * @ORM\Column(name="infosComplementaires", type="text")
+     * @ORM\Column(name="infosComplementaires", type="text", nullable=true)
      */
     private $infosComplementaires;
 
@@ -103,6 +103,11 @@ class Tuteur
     public function getNom()
     {
         return $this->nom;
+    }
+    
+    public function getNomPrenom()
+    {
+	    return $this->nom.' '.$this->prenom;
     }
 
     /**

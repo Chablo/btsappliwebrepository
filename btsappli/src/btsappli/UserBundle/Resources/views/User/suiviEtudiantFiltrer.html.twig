@@ -1,3 +1,9 @@
-{% extends "::suiviEtudiant.html.twig" %}
+{% extends "::vueMere.html.twig" %}
 
-{% block contenuCentral %}
+{% for promotionCourant in tabPromo %}
+    <li>{{promotionCourant.anneePromo}}</li>
+    <li role="separator" class="divider"></li>
+{% endfor %}
+
+
+

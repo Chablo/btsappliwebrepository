@@ -28,8 +28,8 @@ change_password:
     flash:
         success: 'Le mot de passe a été modifié'
 registration:
-    check_email: 'Un e-mail a été envoyé à l''adresse %email%. Il contient un lien d''activation sur lequel il vous faudra cliquer afin d''activer votre compte.'
-    confirmed: 'Félicitations %username%, votre compte est maintenant activé.'
+    check_email: 'Un e-mail a vous a été envoyé. Il contient un lien d''activation sur lequel il vous faudra cliquer afin d''activer votre compte.'
+    confirmed: 'Félicitations! Votre compte est maintenant activé.'
     back: 'Retour à la page d''origine.'
     submit: Enregistrer
     flash:
@@ -42,8 +42,8 @@ resetting:
     check_email: 'Un e-mail a été envoyé à l''adresse %email%. Il contient un lien sur lequel il vous faudra cliquer afin de réinitialiser votre mot de passe.'
     request:
         invalid_username: 'Le nom d''utilisateur ou l''adresse e-mail "%username%" n''existe pas.'
-        username: 'Nom d''utilisateur ou adresse e-mail'
-        submit: 'Réinitialiser le mot de passe'
+        username: 'Adresse e-mail'
+        submit: 'Envoyer'
     reset:
         submit: 'Modifier le mot de passe'
     flash:

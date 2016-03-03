@@ -9,3 +9,9 @@ services:
         arguments: [%fos_user.model.user.class%]
         tags:
             - { name: form.type, alias: btsappli_user_registration }
+            
+    btsappli_user.profile.for.type:
+        class: btsappli\UserBundle\Form\Type\ProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: btsappli_user_profile }

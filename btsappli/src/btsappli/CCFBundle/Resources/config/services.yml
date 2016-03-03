@@ -1,0 +1,4 @@
+services:
+#    btsappli_ccf.example:
+#        class: btsappli\CCFBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

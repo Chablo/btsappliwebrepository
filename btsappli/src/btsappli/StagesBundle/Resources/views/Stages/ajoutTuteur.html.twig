@@ -6,11 +6,17 @@
 <div class="col-lg-10 col-lg-offset-1">
     <div style="margin-top:18px;">
         <div class="panel panel-default">
-            <div class="panel-heading"><h3>Ajout d'un tuteur pour l'entreprise <i>{{ tuteur.entreprise.nom }}</i></h3></div>
+            <div class="panel-heading"><h3>Ajout d'un tuteur pour l'entreprise <i>{{ entreprise.nom }}</i></h3></div>
                 <div class="panel-body">
                     <form method="post" {{ form_enctype(formulaireTuteur) }}>
                         {{ form_widget(formulaireTuteur) }}
-                        <input type="submit" class="btn btn-primary pull-right"/>
+                        
+                           <div class="col-lg-1 col-lg-offset-1">
+                            <a href="{{ path('btsappli_stages_stageFormulaireTut', {'idEntreprise':entreprise.id}) }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>
+                        </div>
+                        <div class="col-lg-1  col-lg-offset-8">
+                            <input type="submit" class="btn btn-primary pull-right" style="width:140px" />
+                        </div>
                     </form>
                 </div>
                 

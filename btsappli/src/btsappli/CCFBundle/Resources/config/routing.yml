@@ -1,0 +1,11 @@
+btsappli_CCF_accueilCCF:
+    path:   /accueilCCF
+    defaults: { _controller: btsappliCCFBundle:CCF:accueilCCF }
+    
+btsappli_CCF_planningCCFAdmin:
+    path:   /planningCCFAdmin
+    defaults: { _controller: btsappliCCFBundle:CCF:planningCCFAdmin }
+    
+btsappli_CCF_planningCCFEtu:
+    path:   /planningCCFEtu/{id}
+    defaults: { _controller: btsappliCCFBundle:CCF:planningCCFEtu }

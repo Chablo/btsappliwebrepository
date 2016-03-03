@@ -10,7 +10,14 @@
                 <div class="panel-body">
                     <form method="post" {{ form_enctype(formulaireEntreprise) }}>
                         {{ form_widget(formulaireEntreprise) }}
-                        <input type="submit" class="btn btn-primary pull-right" />
+                        <div class="row">
+                        <div class="col-lg-1  col-lg-offset-1">
+                            <a href="{{ path('btsappli_stages_ajoutStage') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>
+                        </div>
+                        <div class="col-lg-1  col-lg-offset-8">
+                            <input type="submit" class="btn btn-primary pull-right" style="width:140px" />
+                        </div>
+                        </div>
                     </form>
                 </div>
         </div>

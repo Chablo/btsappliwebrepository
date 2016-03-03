@@ -7,7 +7,7 @@
             <div class="col-lg-8 col-lg-offset-2">
               
                 <div class="panel panel-primary">
-                 <div class="panel-heading">Inscription </div>
+                 <div class="panel-heading"><h3>Inscription</h3></div>
                   <div class="panel-body">
                       <ul style="list-style-type:none">
 
@@ -85,8 +85,13 @@
          </div>
 </div>
                        </ul> 
-                       <button type="submit" id="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary pull-right"  >&nbsp; S'inscrire &nbsp; </button>
-                                 <a href="{{ path('fos_user_security_login') }}" role="button" class="btn btn-primary" type="button"> &nbsp; Annuler &nbsp; </a>  <!--&nbsp; = espace-->
+                       
+                       <div class="col-lg-1  col-lg-offset-4">
+                           <button type="submit" id="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary pull-right" style="width:140px">S'inscrire</button>
+                       </div>
+                       <div class="col-lg-1  col-lg-offset-2">
+                            <a href="{{ path('fos_user_security_login') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Annuler</a>
+                       </div>
         </div> 
                            {# <input type="submit" value="{{ 'registration.submit'|trans }}" /> #}
                            

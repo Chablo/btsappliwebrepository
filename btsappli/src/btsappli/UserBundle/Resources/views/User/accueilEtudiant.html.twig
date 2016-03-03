@@ -1,30 +1,29 @@
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
-      <!-- Ligne 2 -->
-      <div class="row">
-        <div class="col-lg-6 col-lg-offset-3">
-        {% if user.entreprise is null or user.tuteur  is null %}
-          <a role="button" class="btn btn-success btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_stages_stageFormulaireEnt') }}">Stages</a>
-        {% else %}
-          <a role="button" class="btn btn-success btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_stages_voirStage',  {'id':id}) }}">Stages</a>
-        {% endif %}
-        </div>
-      </div>
-      
-      <!-- Ligne  3 -->
-      <div class="row">
-        <div class="col-lg-6 col-lg-offset-3">
-          <a role="button" class="btn btn-info btn-lg btn-block" style="padding: 50px 16px;" href="{{ path('fos_user_profile_edit') }}" >Modifier le profil</a>
-        </div>
-      </div>
+  <!-- Ligne 2 Bouton d'accès au Planning des CCF de l'étudiant -->
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+      <href="#" role="button" class="btn btn-info btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;">Planning CCF</button>
+    </div>
+  </div>
+  
+  <!-- Ligne  3 Bouton d'accès à la partie relative au Stage (ajout du stage) -->
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+    {% if (user.stage is null) or (user.stage.tuteur is null) %}
+      <a role="button" class="btn btn-success btn-lg btn-block" style=" padding: 50px 16px;" href="{{ path('btsappli_stages_ajoutStage') }}">Stage</a>
+    {% else %}
+      <a role="button" class="btn btn-success btn-lg btn-block" style="padding: 50px 16px;" href="{{ path('btsappli_stages_voirStage',  {'id':user.stage.id}) }}">Stage</a>
+    {% endif %}
+    </div>
+  </div>
 
-      {#      <!-- Ligne  4 -->
-      <div class="row">
-        <div class="col-lg-6 col-lg-offset-3">
-          <href="#" role="button" class="btn btn-danger btn-lg btn-block" style="padding: 50px 16px;">Planning CCF</button>
-        </div>
-      </div>
-    </div> 
-      #}
+ <!-- Ligne  4 Bouton d'accès à la Modification du profil de l'Etudiant-->
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+      <a role="button" class="btn btn-danger btn-lg btn-block" style="padding: 50px 16px;" href="{{ path('fos_user_profile_edit') }}" >Modifier le profil</a>
+    </div>
+  </div>
+      
 {% endblock %}

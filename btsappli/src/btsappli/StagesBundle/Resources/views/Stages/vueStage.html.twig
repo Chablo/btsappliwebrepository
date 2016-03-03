@@ -9,34 +9,38 @@
 	        <div class="panel-heading"><h3>Récapitulatif de ton stage :</h3></div>
 		        <div class="panel-body">
 		        	<div class="row">
-		        		<div class="col-lg-4">
-				            <h4>Entreprise <i>{{ user.entreprise.nom }}</i> :</h4>
-				            <ul>
-						        <li><b>Représentant :</b> {{ user.entreprise.representant }}</li>
-						        <li><b>Adresse :</b> {{ user.entreprise.adresse }}</li>
-						        <li><b>Code postal :</b> {{ user.entreprise.codePostal }}</li>
-						        <li><b>Ville :</b> {{ user.entreprise.ville }}</li>
-						        <li><b>Pays :</b> {{ user.entreprise.pays }}</li>
-						        <li><b>Adresse email :</b> {{ user.entreprise.adresseMail }}</li>
-						        <li><b>Téléphone :</b> {{ user.entreprise.telephone }}</li>
-						        <li><b>Fax :</b> {{ user.entreprise.fax }}</li>
-						        <li><b>Service d'accueil :</b> {{ user.entreprise.serviceAccueil }}</li>
-						        <li><b>Description :</b> {{ user.entreprise.description }}</li>
-				            </ul>
+		        		<div class="col-lg-6">
+				            <h4>Entreprise <em>{{ stage.entreprise.nom }}</em> :</h4>
+				            <dl class="dl-horizontal">
+						        <dt>Représentant</dt><dd>{{ stage.entreprise.representant }}</dd><br/>
+						        
+						        <dt>Adresse<dt><dd>{{ stage.entreprise.adresse }}</dd>
+						        <dt>Code postal</dt><dd>{{ stage.entreprise.codePostal }}</dd>
+						        <dt>Ville<dt><dd>{{ stage.entreprise.ville }}</dd>
+						        <dt>Pays</dt><dd>{{ stage.entreprise.pays }}</dd><br/>
+						        
+						        <dt>Adresse email<dt><dd>{{ stage.entreprise.adresseMail }}</dd>
+						        <dt>Téléphone</dt><dd>{{ stage.entreprise.telephone }}</dd>
+						        <dt>Fax</dt><dd>{{ stage.entreprise.fax }}</dd><br/>
+						        
+						        <dt>Service d'accueil</dt><dd>{{ stage.entreprise.serviceAccueil }}</dd><br/>
+						        
+						        <dt>Description</dt><dd>{{ stage.entreprise.description }}</dd>
+				            </dl>
 		        		</div>
-			     		<div class="col-lg-4 col-lg-offset-1">
+			     		<div class="col-lg-6">
 				            <h4>Tuteur :</h4>
-				            <ul>
-						        <li><b>Nom :</b> {{ user.tuteur.nom }}</li>
-						        <li><b>Prénom :</b> {{ user.tuteur.prenom }}</li>
-						        <li><b>Email :</b> {{ user.tuteur.adresseMail }}</li>
-						        <li><b>Téléphone :</b> {{ user.tuteur.telephone }}</li>
-						        <li><b>Fonctions :</b> {{ user.tuteur.fonction }}</li>
-						        <li><b>Infos Complémentaires :</b> {{ user.tuteur.infosComplementaires }}</li>
-						    </ul>
+				            <dl class="dl-horizontal">
+						        <dt>Nom</dt><dd>{{ stage.tuteur.nom }}</dd>
+						        <dt>Prénom<dt><dd>{{ stage.tuteur.prenom }}</dd>
+						        <dt>Email</dt><dd>{{ stage.tuteur.adresseMail }}</dd>
+						        <dt>Téléphone<dt><dd>{{ stage.tuteur.telephone }}</dd>
+						        <dt>Fonctions</dt><dd>{{ stage.tuteur.fonction }}</dd>
+						        <dt>Infos Complémentaires<dt><dd>{{ stage.tuteur.infosComplementaires }}</dd>
+				            </dl>
 			     		</div>
 					</div>
-		            <a href="{{ path('btsappli_stages_menuStage') }}" role="button" class="btn btn-primary pull-right" type="button">Terminer</a>
+		            <a href="{{ path('btsappli_utilisateurs_accueilEtu') }}" role="button" class="btn btn-primary pull-right" type="button" style="width:140px">Accueil</a>
 		        </div>
 	    </div>
 	</div>  

@@ -3,28 +3,52 @@
 {% block contenuCentral %}
 {# Contient la liste des étudiants ... #}
 
+
 <div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
 
 <div class="panel panel-default">
+
     <div class="panel-heading">
          
          <h3> Liste des étudiants </h3> 
-        
-        <!-- bouton de filtrage qui affiche toutes les promotions existantes -->
-        <div class="btn-group">
-          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top:6px;">
-                Filtrer par promotion <span class="caret"></span>
-        </button>
-                <ul class="dropdown-menu">
-                    <!-- Faire la liste des promotions -->
-                    
-                    {# PROBLEME AVEC TABPROMOTION :( #}
-                    {#  {% for promotionCourant in tabPromotion %} #}
-                       <!--  <li>{# {{promotionCourant.anneePromo}} #}</li>
-                        <li role="separator" class="divider"></li> -->
-                   {# {% endfor %} #}
-                </ul>
+        <div class="row">
+            <div class="col-lg-6">
+                <!--debut du formulaire-->
+                <form class="form-inline " action="search.php" method="get">
+                  <div class="form-group">
+                    <input type="text" name="q" id="q" class="form-control"  placeholder="Recherche..."/>
+                    <button type="submit" class="btn btn-primary" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                  </div>
+                </form>
+                <!--fin du formulaire-->
+                 
+                <!--preparation de l'affichage des resultats-->
+                <div id="results"></div>
+                  
+                  
+            </div>
+            <div class="col-lg-2 col-lg-offset-4">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                        Filtrer par promotion <span class="caret"></span>
+                </button>
+                        <ul class="dropdown-menu pull-right" style="width:200px">
+                            {# {% render "btsappliUserBundle:User:suiviEtudiantFiltrer" %} #}
+                            
+                            {#{% render "UserBundle:Controller:suiviEtudiantFiltrer" %}#}
+                            <!-- Faire la liste des promotions -->
+                            
+                            {# PROBLEME AVEC TABPROMOTION :( #}
+                            {#  {% for promotionCourant in tabPromotion %} #}
+                               <!--  <li>{# {{promotionCourant.anneePromo}} #}</li>
+                                <li role="separator" class="divider"></li> -->
+                           {# {% endfor %} #}
+                        </ul>
+                </div>
+            </div>
         </div>
+            
+        <!-- bouton de filtrage qui affiche toutes les promotions existantes -->
     </div>
         
         <!-- Création du tableau contenant la liste des étudiants -->
@@ -40,12 +64,12 @@
                     <td>Adresse</td>
                     <td>CodePostal</td>
                     <td>Ville</td>
-                    <!--<td>Promotion</td>-->
+                    <td>Promotion</td>
                     <td>Modif Promotion</td>
                 </tr>
                 
                 <!-- Affichage de tous les étudiants -->
-                {% for userCourant in tabUser %}
+                        {% for userCourant in tabUser %} 
                 
                     <tr align="center">
                         <td>{{userCourant.nom}}</td>
@@ -55,35 +79,30 @@
                         <td>{{userCourant.adresse}}</td>
                         <td>{{userCourant.codePostal}}</td>
                         <td>{{userCourant.ville}}</td>
-                        <!--<td> {# {{userCourant.promotion}} #}</td> -->
+                        <td> {# {{userCourant.promotion}} #}</td> 
                     
-                        <td>
-                            
+                       <td>
+                        
                         <!-- bouton pour changer la promotion -->
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Promotion <span class="caret"></span>
                                 </button>
                             <ul class="dropdown-menu">
-                                <li></li>
+                                <li>
+                                    
+                                </li>
                             </ul>
                             </div>
                         </td>
-                    </tr>
+                    </tr> 
                 {% endfor %}
+                
             </table>
         </div>
 </div>
 </div>
-
-<div class="row">
-
-        <div class="col-lg-1  col-lg-offset-4">
-            <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary" type="button"> &nbsp; Retour &nbsp; </a>  <!--&nbsp; = espace-->
-        </div>
-        <div class="col-lg-1 col-lg-offset-2">
-            <a href="#" role="button" class="btn btn-primary" type="button"> &nbsp; Valider &nbsp; </a>  <!--&nbsp; = espace-->
-        </div>
-</div>
+<a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
+<a href="#" role="button" class="btn btn-primary pull-right" type="button" style="width:140px">Valider</a>  <!--&nbsp; = espace-->
 
 {% endblock %}

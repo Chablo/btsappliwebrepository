@@ -12,8 +12,13 @@ use btsappli\StagesBundle\Entity\EntrepriseRepository;
 use btsappli\StagesBundle\Form\EntrepriseType;
 use btsappli\StagesBundle\Entity\Tuteur;
 use btsappli\StagesBundle\Entity\TuteurRepository;
+use btsappli\StagesBundle\Entity\Stage;
+use btsappli\StagesBundle\Entity\StageRepository;
 use btsappli\StagesBundle\Form\TuteurType;
+use btsappli\StagesBundle\Form\StageType;
 use btsappli\UserBundle\Entity\User;
+use btsappli\StagesBundle\Form\EntrepriseRechercheForm;
+
 
 class StagesController extends Controller
 {
@@ -28,8 +33,7 @@ class StagesController extends Controller
     public function voirEntrepriseAction($id)
     {
         // On récupère le repository de l'entité Entreprise
-        $repositoryEntreprise = $this->getDoctrine()->getManager()
-                                   -> getRepository('btsappliStagesBundle:Entreprise');
+        $repositoryEntreprise = $this->getDoctrine()->getManager() -> getRepository('btsappliStagesBundle:Entreprise');
                                    
         // On récupère l'entreprise dont l'id est le paramètre $id
         $entreprise = $repositoryEntreprise->find($id);
@@ -44,54 +48,67 @@ class StagesController extends Controller
     
     public function voirStageAction($id)
     {
-        // On récupère le repository de l'entité User
-        $repositoryEntreprise = $this->getDoctrine()->getManager()
-                                   -> getRepository('btsappliUserBundle:User');
+        // On récupère le repository de l'entité Stage
+        $repositoryStage = $this->getDoctrine()->getManager() -> getRepository('btsappliStagesBundle:Stage');
                                    
-        // On récupère l'user dont l'id est le paramètre $id
-        $user = $repositoryEntreprise->find($id);        
-    
+        // On récupère le stage dont l'id est le paramètre $id
+        $stage = $repositoryStage->find($id);
+        
         // On transmet l'entreprise à la vue chargée de l'afficher
-        return $this->render('btsappliStagesBundle:Stages:vueStage.html.twig', 
-                             array('user' => $user));
+        return $this->render('btsappliStagesBundle:Stages:vueStage.html.twig', array('stage' => $stage));
     }
     
     public function rechercherEntrepriseAction(Request $requeteUtilisateur)
     {
-        // On construit un tableau pour receuillier les données de la recherche
-        $entreprise = new Entreprise(); 
-
-        // Créations du formulaire de recherche
-        $formulaireRecherche = $this->createFormBuilder($entreprise)
-            ->add('nom', 'text')
-            ->getForm();
-            
-        // Enregistrement des données dans $tabDonneesEntreprise après soumission       
-        $formulaireRecherche->handleRequest($requeteUtilisateur);
-    
-        if ( $formulaireRecherche->isSubmitted() )
-        {
-            // On redirige vers la page de visualisation des résultats de la recherche
-            return $this->redirect($this->generateUrl('btsappli_stages_resultatsRecherche', array('nom' => $entreprise->getNom())));
-        }
+        // On récupère le repository de l'entité Entreprise
+        $repositoryEntreprise = $this->getDoctrine()->getManager() -> getRepository('btsappliStagesBundle:Entreprise');
+                                   
+        // On récupère l'entreprise dont l'id est le paramètre $id
+        $entreprises = $repositoryEntreprise->findAll();
         
-        // À ce stade le visiteur arrive sur la page qui doit présenter le formulaire 
-        return $this->render('btsappliStagesBundle:Stages:rechercheEntreprise.html.twig',
-               array('formulaireRecherche' => $formulaireRecherche->createView()));
+        $formulaireRecherche = $this -> createForm(new EntrepriseRechercheForm());
+	
+	    return $this->render('btsappliStagesBundle:Stages:rechercheEntreprise.html.twig', 
+	                            array('entreprises' => $entreprises,
+	                                  'formulaireRecherche' => $formulaireRecherche->createView()));
     }
     
-    public function resultatsRechercheAction($nom)
+    public function resultatRechercheAction()
     {
-        // On récupère le repository de l'entité Entreprise
-        $repositoryEntreprise = $this->getDoctrine()->getManager()
-                                   -> getRepository('btsappliStagesBundle:Entreprise');
+        $request = $this->getRequest();
     
-        // On récupère la liste des entreprises
-        $entreprises = $repositoryEntreprise->getResultatsRechercheEntreprise($nom);
+        if($request->isXmlHttpRequest())
+        {
+            $motcle = '';
+            $motcle = $request->getRequest('motcle');
+            
+            // On récupère le gestionnaire d'entité
+            $gestionnaireEntite = $this->getDoctrine()->getManager();
     
-        // On transmet la liste des entreprises à la vue chargée de les afficher
-        return $this->render('btsappliStagesBundle:Stages:resultatsRecherche.html.twig', 
-                             array('entreprises' => $entreprises));
+            if($motcle != '')
+            {
+                   $qb = $gestionnaireEntite->createQueryBuilder();
+    
+                   $qb->select('e')
+                      ->from('btsappliStagesBundle:Entreprise', 'e')
+                      ->where("e.nom LIKE :motcle")
+                      ->orderBy('e.nom', 'ASC')
+                      ->setParameter('motcle', '%'.$motcle.'%');
+    
+                   $query = $qb->getQuery();               
+                   $entreprises = $query->getResult();
+            }
+            else {
+                $entreprises = $gestionnaireEntite->getRepository('btsappliStagesBundle:Entreprise')->findAll();
+            }
+    
+            return $this->render('btsappliStagesBundle:Entreprise:resultatRecherche.html.twig', array(
+                'entreprises' => $entreprises
+                ));
+        }
+        else {
+            return $this->rechercheEntrepriseAction();
+        }
     }   
     
     public function ajoutEntrepriseAction(Request $requeteUtilisateur)
@@ -122,16 +139,126 @@ class StagesController extends Controller
                         array('formulaireEntreprise' => $formulaireEntreprise -> createView()));
     }
     
-    public function ajoutTuteurAction($id, Request $requeteUtilisateur)
+    public function ajoutStageAction(Request $requeteUtilisateur)
     {
+        // On récupère l'utilisateur qui est connecté
         $user = $this -> getUser();
+        
+        if (empty($user->getStage()) or empty($user->getStage()->getTuteur()))
+        {
+            if (!empty($user->getStage()))
+            {
+                $stage = $user->getStage();
+                // On supprime l'objet $stage en base de données
+                $gestionnaireEntite = $this->getDoctrine()->getManager();
+                $gestionnaireEntite->remove($stage);
+                $gestionnaireEntite->flush();
+                
+            }
+            
+                // Création d'un nouvel objet stage vide
+                $stage = new Stage();
+                
+                // On lie l'objet stage à l'utilisateur
+                $user -> setStage($stage);
+                
+                // Création du formulaire permettant de saisir un stage
+                $formulaireStage = $this -> createForm(new StageType, $stage);
+                
+                // Enregistrement des données dans $stage dès soumission du formulaire
+                $formulaireStage->handleRequest($requeteUtilisateur);
+                
+                // Si le formulaire a été soumis et que les données sont valides
+                if($formulaireStage->isValid())
+                {
+                    // On enregistre l'objet $stage en base de données
+                    $gestionnaireEntite = $this->getDoctrine()->getManager();
+                    $gestionnaireEntite->persist($stage);
+                    $gestionnaireEntite->flush();
+        
+                    // On redirige vers la page du choix du tuteur
+                    return $this->redirect($this->generateUrl('btsappli_stages_stageFormulaireTut',  array('id' => $stage -> getId())));
+                }
+                
+                // On appelle la vue chargée d'afficher le formulaire et on lui transmet la représentation graphique du formulaire
+                return $this -> render('btsappliStagesBundle:Stages:ajoutStage.html.twig',array (
+                                                    'formulaireStage' => $formulaireStage -> createView()));
+        }
+        else
+        {
+            return $this -> render('btsappliStagesBundle:Stages:erreurStage.html.twig', array(
+                                                'id' => $user -> getStage()-> getId()));
+        }
+    }
+    
+    public function ajoutStageTutAction(Request $requeteUtilisateur)
+    {
+        // On récupère l'utilisateur connecté
+        $user = $this -> getUser();
+        
+        // On récupère l'objet stage de l'utilisateur
+        $stage = $user -> getStage();
+    
+        if (empty($stage->getTuteur()))
+        {
+            // On récupère l'id de l'entreprise liée au stage pour l'envoyer dans la vue
+            $idEntreprise = $stage -> getEntreprise() -> getId();
+            
+            // Création du formulaire permettant de choisir son tuteur
+            $formulaireStageTut = $this->createFormBuilder($stage)
+                ->add('tuteur', 'entity',array(
+                            'label' => 'Choix du tuteur',
+                            'class' => 'btsappliStagesBundle:Tuteur',
+                            'property' => 'NomPrenom',
+                            'query_builder' => function(TuteurRepository $tr) use ($idEntreprise)
+                               {
+                                return $tr->getTuteursDUneEntreprise($idEntreprise);
+                               },
+                            'multiple' => false,
+                            'expanded' => false))
+                ->getForm();
+            
+            // Enregistrement des données dans $user dès soumission du formulaire
+            $formulaireStageTut->handleRequest($requeteUtilisateur);
+            
+            // Si le formulaire a été soumis et que les données sont valides
+            if($formulaireStageTut->isValid())
+            {
+                // On enregistre l'objet $user en base de données
+                $gestionnaireEntite = $this->getDoctrine()->getManager();
+                $gestionnaireEntite->persist($stage);
+                $gestionnaireEntite->flush();
+    
+                 // On redirige vers la page de récapitulatif du stage
+                 return $this->redirect($this->generateUrl('btsappli_stages_voirStage', array('id' => $stage -> getId())));
+            }
+            
+            // On appelle la vue chargée d'afficher le formulaire et on lui transmet la représentation graphique du formulaire
+            return $this -> render('btsappliStagesBundle:Stages:ajoutStageTut.html.twig',array(
+                                        'formulaireStageTut' => $formulaireStageTut -> createView(),
+                                        'id' => $idEntreprise));
+        }
+        else
+        {
+            return $this -> render('btsappliStagesBundle:Stages:erreurStage.html.twig', array(
+                                        'id' => $stage-> getId())); 
+        }
+    }
+
+    public function ajoutTuteurAction($id,  Request $requeteUtilisateur)
+    {
+        // On récupère l'utilisateur qui est connecté
+        $user = $this -> getUser();
+        
+        // On récupère le stage de l'utilisateur connecté pour pouvoir envoyer à la vue son id
+        $stage = $user -> getStage();
         
         // On créé un objet Tuteur "vide"
         $tuteur = new Tuteur();
         
         // On récupère le repository de l'entité Entreprise
-        $repositoryEntreprise = $this->getDoctrine()->getManager()
-                                     -> getRepository('btsappliStagesBundle:Entreprise');
+        $repositoryEntreprise = $this->getDoctrine()->getManager() -> getRepository('btsappliStagesBundle:Entreprise');
+        
         // On récupère l'entreprise dont l'id est le paramètre $id
         $entreprise = $repositoryEntreprise->find($id);  
         
@@ -153,94 +280,17 @@ class StagesController extends Controller
             $gestionnaireEntite->flush();
 
              // On redirige vers la page du choix du tuteur
-             return $this->redirect($this->generateUrl('btsappli_stages_stageFormulaireTut',  array('id' => $user->getEntreprise()->getId())));
+             return $this->redirect($this->generateUrl('btsappli_stages_stageFormulaireTut',  array(
+                                                                        'id' => $stage -> getId(),
+                                                                        )));
         }
         
-        // On appelle la vue chargée d'afficher le formulaire et on lui transmet ma représentation graphique du formulaire
-        return $this -> render('btsappliStagesBundle:Stages:ajoutTuteur.html.twig',
-                        array('formulaireTuteur' => $formulaireTuteur -> createView(),
-                              'tuteur' => $tuteur,
-                              'id' => $user->getId()));
+        // On appelle la vue chargée d'afficher le formulaire et on lui transmet la représentation graphique du formulaire
+        return $this -> render('btsappliStagesBundle:Stages:ajoutTuteur.html.twig',array(
+                                    'formulaireTuteur' => $formulaireTuteur -> createView(),
+                                    'entreprise' => $entreprise,
+                                    ));
     }
-    
-    public function ajoutStageEntAction(Request $requeteUtilisateur)
-    {
-        $user = $this -> getUser();
-        
-        // Création du formulaire permettant de choisir son entreprise
-        $formulaireStage = $this->createFormBuilder($user)
-            ->add('entreprise', 'entity',
-                array('label' => 'Choix de l\'entreprise',
-                      'class' => 'btsappliStagesBundle:Entreprise',
-                      'query_builder' => function (EntrepriseRepository $er) {
-                            return $er->createQueryBuilder('e')
-                                            ->orderBy('e.nom', 'ASC');
-                       },
-                      'choice_label' => 'nom',
-                      'multiple' => false,
-                      'expanded' => false))
-            ->getForm();
-        
-        // Enregistrement des données dans $user dès soumission du formulaire
-        $formulaireStage->handleRequest($requeteUtilisateur);
-        
-        // Si le formulaire a été soumis et que les données sont valides
-        if($formulaireStage->isValid())
-        {
-            // On enregistre l'objet $user en base de données
-            $gestionnaireEntite = $this->getDoctrine()->getManager();
-            $gestionnaireEntite->persist($user);
-            $gestionnaireEntite->flush();
-
-             // On redirige vers la page de visualisation de l'entreprise ajoutée
-             return $this->redirect($this->generateUrl('btsappli_stages_stageFormulaireTut', array('id' => $user->getEntreprise()->getId())));
-        }
-        
-        // On appelle la vue chargée d'afficher le formulaire et on lui transmet ma représentation graphique du formulaire
-        return $this -> render('btsappliStagesBundle:Stages:ajoutStageEnt.html.twig',
-                        array('formulaireStage' => $formulaireStage -> createView()));
-    }
-    
-    public function ajoutStageTutAction($id, Request $requeteUtilisateur)
-    {
-        $user = $this -> getUser();
-        
-        // Création du formulaire permettant de choisir son entreprise
-        $formulaireStage = $this->createFormBuilder($user)
-            ->add('tuteur', 'entity',
-                array('label' => 'Choix du tuteur',
-                      'class' => 'btsappliStagesBundle:Tuteur',
-                      'property' => 'nom',
-                      'query_builder' => function(TuteurRepository $tr) use ($id)
-                           {
-                            return $tr->getTuteursDUneEntreprise($id);
-                           },
-                      'multiple' => false,
-                      'expanded' => false))
-            ->getForm();
-        
-        // Enregistrement des données dans $user dès soumission du formulaire
-        $formulaireStage->handleRequest($requeteUtilisateur);
-        
-        // Si le formulaire a été soumis et que les données sont valides
-        if($formulaireStage->isValid())
-        {
-            // On enregistre l'objet $user en base de données
-            $gestionnaireEntite = $this->getDoctrine()->getManager();
-            $gestionnaireEntite->persist($user);
-            $gestionnaireEntite->flush();
-
-             // On redirige vers la page de récapitulation du stage
-             return $this->redirect($this->generateUrl('btsappli_stages_voirStage', array('id' => $user->getId())));
-        }
-        
-        // On appelle la vue chargée d'afficher le formulaire et on lui transmet ma représentation graphique du formulaire
-        return $this -> render('btsappliStagesBundle:Stages:ajoutStageTut.html.twig',
-                        array('formulaireStage' => $formulaireStage -> createView(),
-                              'id' => $user->getEntreprise()->getId(),
-                              'tuteur' => $user -> getTuteur()));
-    }
-    
 
 }
 

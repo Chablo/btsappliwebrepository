@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new btsappli\StagesBundle\btsappliStagesBundle(),
             new btsappli\UserBundle\btsappliUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new btsappli\CCFBundle\btsappliCCFBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

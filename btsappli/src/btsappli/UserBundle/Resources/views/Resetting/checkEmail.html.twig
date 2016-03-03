@@ -3,7 +3,30 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': email}) }}
-</p>
+
+<div class="container">
+         <!-- Ligne 2 -->
+    <div class="row">
+        <div class="col-lg-5 col-lg-offset-1">
+            <div style="margin-top:50px;">
+                <div class="panel panel-primary"> <!--Fenetre-->
+                    <div class="panel-heading"><h4>Mot de passe oublié</h4></div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-9 col-lg-offset-2">
+                                    {{ 'resetting.check_email'|trans({'%email%': email}) }}
+                                    <br><br>
+                                    <div class="col-lg-8 col-lg-offset-2">
+                                        <a  href="{{ path('btsappli_utilisateurs_accueilEtu') }}" role="button" class="btn btn-primary" type="button" style="width:130px">Ok</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}

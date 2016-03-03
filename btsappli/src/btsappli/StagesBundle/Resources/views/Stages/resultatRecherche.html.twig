@@ -1,0 +1,24 @@
+{# src/btsappli/StagesBundle/Resources/views/Stages/resultatsRecherche.html.twig #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+<div class="col-lg-9">
+    <div style="margin-top:18px;">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4>Entreprises trouvées :</h4></div>
+            <div class="panel-body">
+                <ul class="list-group"> 
+                    {% for entrepriseCourante in entreprises %}          
+                        <li class="list-group-item">
+                            <a href="#">
+                                {{entrepriseCourante.nom}} - {{entrepriseCourante.ville}}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

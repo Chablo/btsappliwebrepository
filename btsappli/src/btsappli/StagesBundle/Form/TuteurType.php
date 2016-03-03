@@ -21,7 +21,7 @@ class TuteurType extends AbstractType
             ->add('telephone',              'number')
             ->add('infosComplementaires',   'textarea')
             ->add('fonction',               'text')
-            ->add('entreprise')
+            //->add('entreprise')
         ;
     }
     

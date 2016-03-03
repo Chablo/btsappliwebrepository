@@ -3,8 +3,35 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    {% if targetUrl %}
-    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-    {% endif %}
+   
+<div class="container">
+    <!-- Ligne 2 -->
+    <div class="row">
+        <div class="col-lg-5 col-lg-offset-1">
+            <div style="margin-top:50px;">
+                <div class="panel panel-primary"> <!--Fenetre-->
+                    <div class="panel-heading"><h4>Inscription</h4></div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-9 col-lg-offset-2">
+                                    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    
+                                        {% if targetUrl %}
+                                            <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+                                        {% endif %}
+                                        <br><br>
+   
+                                        <div class="col-lg-9 col-lg-offset-2">
+                                            <a href="{{ path('fos_user_security_login') }}" class="btn btn-primary" style="width:140px">Ok</a>
+    
+                                         </div>
+                                </div>
+                            </div>
+                        </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock fos_user_content %}

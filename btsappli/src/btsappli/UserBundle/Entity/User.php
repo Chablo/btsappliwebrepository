@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * User
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="btsappli\UserBundle\Entity\UserRepository")
  * @ORM\Table(name="fos_user")
  */
 class User extends BaseUser
@@ -79,27 +79,22 @@ class User extends BaseUser
         // your own logic
     }
     
+    
     //RELATION ENTRE LES CLASSES
     /**
      * 
-     * @ORM\ManyToOne(targetEntity="btsappli\StagesBundle\Entity\Entreprise")
+     * @ORM\ManyToOne(targetEntity="btsappli\StagesBundle\Entity\Stage")
      */
-     private $entreprise; // sans s car un étudiant fait son stage dans une seule entreprise
+     private $stage; // sans s car un étudiant n'a qu'un seul stage
      
-      /**
+     /**
      * 
      * @ORM\ManyToOne(targetEntity="btsappli\UserBundle\Entity\Promotion")
      */
      private $promotion; // sans s car un étudiant n'appartient qu'à une seule promotion
 
-    /**
-     * 
-     * @ORM\ManyToOne(targetEntity="btsappli\StagesBundle\Entity\Tuteur")
-     */
-     private $tuteur; // sans s car un étudiant n'a qu'un seul tuteur lors de son stage
-
-
-    //GETTERS ET SETTERS
+    
+    //GET ET SET
     /**
      * Get id
      *
@@ -157,11 +152,10 @@ class User extends BaseUser
     }
 
    
-
-    /**
+     /**
      * Set dateNaiss
      *
-     * @param string $dateNaiss
+     * @param date $dateNaiss
      * @return User
      */
     public function setDateNaiss($dateNaiss)
@@ -174,7 +168,7 @@ class User extends BaseUser
     /**
      * Get dateNaiss
      *
-     * @return string 
+     * @return date 
      */
     public function getDateNaiss()
     {
@@ -275,52 +269,31 @@ class User extends BaseUser
 
 
     /**
-     * Set entreprise
+     * Set stage
      *
-     * @param \btsappli\StagesBundle\Entity\Entreprise $entreprise
+     * @param \btsappli\StagesBundle\Entity\Stage $stage
      * @return User
      */
-    public function setEntreprise(\btsappli\StagesBundle\Entity\Entreprise $entreprise = null)
+    public function setStage(\btsappli\StagesBundle\Entity\Stage $stage = null)
     {
-        $this->entreprise = $entreprise;
+        $this->stage = $stage;
 
         return $this;
     }
 
     /**
-     * Get entreprise
+     * Get stage
      *
-     * @return \btsappli\StagesBundle\Entity\Entreprise 
+     * @return \btsappli\StagesBundle\Entity\Stage 
      */
-    public function getEntreprise()
+    public function getStage()
     {
-        return $this->entreprise;
+        return $this->stage;
     }
 
-    /**
-     * Set tuteur
-     *
-     * @param \btsappli\StagesBundle\Entity\Tuteur $tuteur
-     * @return User
-     */
-    public function setTuteur(\btsappli\StagesBundle\Entity\Tuteur $tuteur = null)
-    {
-        $this->tuteur = $tuteur;
-
-        return $this;
-    }
-
-    /**
-     * Get tuteur
-     *
-     * @return \btsappli\StagesBundle\Entity\Tuteur 
-     */
-    public function getTuteur()
-    {
-        return $this->tuteur;
-    }
+  
     
-        /* Override FOSUB */
+        /* Surcharge de fosuser bunble afin que l'identifiant correspondent à l'email */
     public function setEmail($email)
     {
         parent::setEmail($email);

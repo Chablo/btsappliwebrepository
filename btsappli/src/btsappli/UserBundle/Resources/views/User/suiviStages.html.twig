@@ -1,6 +1,28 @@
 {% extends "::vueMere.html.twig" %}
 
+
 {% block contenuCentral %}
+
+
+<!-- Modale pour la suppression d'un stage -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 id="myModalLabel">Suppression de stage</h3>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <a href="#" type="button" class="btn btn-danger" id="btnYes">Supprimer</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 {# Contient la liste des stages ... #}
 <div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
 
@@ -11,51 +33,22 @@
         
         <!-- bouton de filtrage qui affiche toutes les promotions existantes -->
         <div class="row">
-            <div class="col-lg-6">
-                <form class="form-inline">
-                  <div class="form-group">
-                      <input type="text" class="form-control" id="Recherche" placeholder="Recherche...">
-                  </div>
-                  <button type="submit" class="btn btn-primary">Rechercher</button>
-                </form>
-            </div>
-            <div class="col-lg-2 col-lg-offset-4">
+            
+            <div class="col-lg-2 col-lg-offset-10">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top:6px;">
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown" style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                     Filtrer <span class="caret"></span>
                     </button>
-                        <ul class="dropdown-menu" >
-                            <li><div class="checkbox" style="margin-right:3px" >
-                                <label>
-                                  <input type="checkbox"> Pas de stage
-                                </label>
-                              </div>
-                            </li>
-                           <li><div class="checkbox">
-                                <label>
-                                  <input type="checkbox"> Convention validée
-                                </label>
-                              </div>
-                            </li>
-                           <li><div class="checkbox">
-                                <label>
-                                  <input type="checkbox"> Convention non validée
-                                </label>
-                              </div>
-                            </li>
-                           <li><div class="checkbox">
-                                <label>
-                                  <input type="checkbox"> Promotion 1ère année
-                                </label>
-                              </div>
-                            </li>
-                           <li><div class="checkbox">
-                                <label>
-                                  <input type="checkbox"> Promotion 2ième année
-                                </label>
-                              </div>
-                            </li>
-                            
+                        <ul class="dropdown-menu pull-right" style="width:200px" >
+                            <li role="presentation"><a id="pasStage" role="menuitem" href="{{ path('btsappli_utilisateurs_suiviStagesPasStage') }}"> Pas de stage </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" href="{{ path('btsappli_utilisateurs_suiviStagesConventionValidee') }}"> Convention validée </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" href="#"> Convention non validée </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" href="#"> Promotion 1ère année </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" href="#"> Promotion 2ième année </a></li>
                         </ul>
                 </div>
             </div>
@@ -64,72 +57,136 @@
         
         <!-- Création du tableau contenant la liste des stages -->
         <div class="table-responsive">
-            <table class="table table-striped table-hover">
+            <table id="customers" class="table table-striped table-hover">
+                <thead>
                
-                <!-- Création de la première ligne contenant le nom de chaque colonne principale -->
-                <tr align="center"> 
-                    <td class="warning"></td>
-                    <td class="warning">Etudiants</td> 
-                    <td class="warning"></td>
-                    <td class="success"></td>
-                    <td class="success"></td>
-                    <td class="success"></td>
-                    <td class="success">Entreprises</td>
-                    <td class="success"></td>
-                    <td class="success"></td>
-                    <td class="success"></td>
-                    <td class="success"></td>
-                </tr>
-                <!-- Création de la première ligne contenant le nom de chaque colonne secondaire -->
-                <tr class="info " align="center">
-                        <td>Infos</td>
-                        <td>Statut</td>
-                        <td>Date de signature</td>
-                    
-                        <td>Nom</td>
-                        <td>Adresse</td>
-                        <td>Code Postal</td>
-                        <td>Ville</td>
-                        <td>Pays</td>
-                        <td>E-Mail</td>
-                        <td>Téléphone</td>
-                        <td>Suppr. stage</td>
-                </tr>
+                    <!-- Création de la première ligne contenant le nom de chaque colonne principale -->
+                    <tr align="center">
+                        <td class="warning"></td> 
+                        <td class="warning">Etudiants</td> 
+                        <td class="warning"></td>
+                        <td class="warning"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success">Entreprises</td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                        <td class="success"></td>
+                    </tr>
+                    <!-- Création de la première ligne contenant le nom de chaque colonne secondaire -->
+                    <tr class="info " align="center">
+                            <td>Infos</td>
+                            <td>Statut</td>
+                            <td>Date début</td>
+                            <td>Date fin</td>
+                        
+                            <td>Nom</td>
+                            <td>Adresse</td>
+                            <td>Code Postal</td>
+                            <td>Ville</td>
+                            <td>Pays</td>
+                            <td>E-Mail</td>
+                            <td>Téléphone</td>
+                            <td>Suppr. stage</td>
+                    </tr>
                 
+                </thead>
+                <tbody>
                 <!-- Affichage de tous les stages -->
-            {#    {% for userCourant in tabStages %}  #}
+                {% for userCourant in tabUsersEtStages %}  
                 
                     <tr align="center">
-                     {# <td>{{userCourant.nom}} {{userCourant.prenom}}</td>
-                        <td{{>userCourant. .statut}}</td>
-                        <td>{{userCourant. .dateSign}}</td>
+                        <td>{{userCourant.nom}} {{userCourant.prenom}}</td>
+                    
+                    {% if userCourant.stage is not null %}
+                        <td>{{userCourant.stage.etatConvention}}</td>
+                        <td>{{userCourant.stage.dateDebut|date("m/d/Y")}}</td>
+                        <td>{{userCourant.stage.dateFin|date("m/d/Y")}}</td>
+                    
                         
-                        <td>{{userCourant.entreprise.nom}}</td>
-                        <td>{{userCourant.entreprise.adresse}}</td>
-                        <td>{{userCourant.entreprise.codePostal}}</td>
-                        <td>{{userCourant.entreprise.ville}}</td>
-                        <td>{{userCourant.entreprise.pays}}</td>
-                        <td>{{userCourant.entreprise.email}}</td>
-                        <td>{{userCourant.entreprise.telephone}}</td> #}
-                        <td> 
-                            <button type="button" class="btn btn-danger" href="">X</button>
+                        <td>{{userCourant.stage.entreprise.nom}}</td>
+                        <td>{{userCourant.stage.entreprise.adresse}}</td>
+                        <td>{{userCourant.stage.entreprise.codePostal}}</td>
+                        <td>{{userCourant.stage.entreprise.ville}}</td>
+                        <td>{{userCourant.stage.entreprise.pays}}</td>
+                        <td>{{userCourant.stage.entreprise.adresseMail}}</td>
+                        <td>{{userCourant.stage.entreprise.telephone}}</td> 
+                        
+                        <td>
+                            <button type="button" class="confirm-delete btn btn-danger" data-toggle="modal" data-target="#myModal" data-title="{{ userCourant.prenom }} {{ userCourant.nom }}">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>
+                            </button>
                         </td>
+                        
+                    {% else %}
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                     
+                        <td></td>
+                    {% endif %}
+
                     </tr>
-            {#    {% endfor %} #}
+               {% endfor %}
+               </tbody>
             </table>
         </div>
 </div>
 </div>
 
 <div class="row">
-        <div class="col-lg-1  col-lg-offset-4">
-            <a href="#" role="button" class="btn btn-primary" type="button"> &nbsp; Imprimer &nbsp; </a>  <!--&nbsp; = espace-->
+        <div class="col-lg-1  col-lg-offset-2">
+            <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>
         </div>
+    
+        <!--<div class="col-lg-1  col-lg-offset-2">
+            <a href="#" role="button" onclick="javascript:window.print()" class="btn btn-primary" type="button" style="width:140px">Imprimer</a>
+        </div> -->
+        
+        <div class="col-lg-1  col-lg-offset-2">
+            <a href="#" role="button" onClick ="$('#customers').tableExport({type:'pdf',escape:'false'});" class="btn btn-primary" type="button" style="width:140px">Imprimer</a>
+        </div>
+        
         <div class="col-lg-1 col-lg-offset-2">
-            <a href="#" role="button" class="btn btn-primary" type="button"> &nbsp; Réinitialiser &nbsp; </a>  <!--&nbsp; = espace-->
+            <a href="#" role="button" class="btn btn-primary" type="button" style="width:140px">Réinitialiser</a>
         </div>
 </div>
 
+<script src="vendors/tableExport/tableExport.js"></script>
+<script src="vendors/tableExport/jquery.base64.js"></script>
+<script src="vendors/tableExport/html2canvas.js"></script>
+<script src="vendors/tableExport/jspdf/libs/sprintf.js"></script>
+<script src="vendors/tableExport/jspdf/jspdf.js"></script>
+<script src="vendors/tableExport/jspdf/libs/base64.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript">
+    
+$('#myModal').on('show', function() {
+    $('#myModal .modal-body p').html("Souhaitez-vous vraiment supprimer le stage de ");
+});
+
+$('.confirm-delete').on('click', function(e) {
+    e.preventDefault();
+
+    $('#myModal').modal('show');
+});
+
+
+</script>
 
 
 {% endblock %}
+
+
+
+
+

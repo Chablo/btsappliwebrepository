@@ -3,15 +3,44 @@
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
-<div class="col-lg-8 col-lg-offset-2">
-    <div style="margin-top:80px;">
+<div class="col-lg-10 col-lg-offset-1">
+    <div style="margin-top:18px;">
         <div class="panel panel-default">
             <div class="panel-heading"><h3>Rechercher l'entreprise</h3></div>
                 <div class="panel-body">
-                    <form method="post" {{ form_enctype(formulaireRecherche) }}>
+                    
+                    <form id="form_recherche" method="post" action="{{ path('btsappli_stages_resultatRecherche') }}">
                         {{ form_widget(formulaireRecherche) }}
-                        <input type="submit" class="btn btn-primary pull-right" />
+                        <input type="submit" value="Rechercher" class="btn btn-primary pull-right" style="width:140px"/>
                     </form>
+        
+                    <div class="loading"></div>
+                    
+                            <div id="resultats_recherche"> 
+                                {% include 'btsappliStagesBundle:Stages:resultatRecherche.html.twig' with {'entreprises' : entreprises}  %}
+                            </div>
+                    <p><a href="{{ path('btsappli_stages_entrepriseFormulaire') }}"role="button" class="btn btn-primary pull-right" type="button">Ajouter une entreprise</a><p>
+                    
+                    <script>
+                        $(".loading").hide();
+                        $("#form_recherche").submit(function(){ 
+                                                    $(".loading").show();
+                                                    var motcle = $("#entrepriseRecherche_motcle").val();
+                                                    var DATA = 'motcle=' + motcle;
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "{{ path('btsappli_stages_resultatRecherche')}}",
+                                                        data: DATA,
+                                                        cache: false,
+                                                        success: function(data){
+                                                           $('#resultats_recherche').html(data);
+                                                           $(".loading").hide();
+                                                        }
+                                                }
+                                                );    
+                        return false;
+                    });
+                    </script>
                 </div>
         </div>
     </div>

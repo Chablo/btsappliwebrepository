@@ -1,0 +1,18 @@
+{# src/btsappli/StagesBundle/Resources/views/Stages/ajoutTuteur.html.twig #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+<div class="col-lg-10 col-lg-offset-1">
+    <div style="margin-top:18px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">Erreur</h3></div>
+                <div class="panel-body">
+                    <p>Tu ne peux pas accéder à cette page car tu as déjà un stage</p>
+                    <a href="{{ path('btsappli_stages_voirStage', {'id':id}) }}" role="button" class="btn btn-primary" type="button" style="width:140px">Mon stage</a> 
+                </div>
+                
+        </div>
+    </div>
+</div>
+{% endblock %}

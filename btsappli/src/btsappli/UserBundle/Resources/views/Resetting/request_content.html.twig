@@ -1,14 +1,36 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-    <div>
-        {% if invalid_username is defined %}
-            <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
-        {% endif %}
-        <label for="username">{{ 'resetting.request.username'|trans }}</label>
-        <input type="text" id="username" name="username" required="required" />
+    
+    <div class="container">
+         <!-- Ligne 2 -->
+        <div class="row">
+            <div class="col-lg-5 col-lg-offset-1">
+                <div style="margin-top:50px;">
+                    <div class="panel panel-primary"> <!--Fenetre-->
+                        <div class="panel-heading"><h4>Mot de passe oublié</h4></div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-9 col-lg-offset-1">
+                                        <div>
+                                            {% if invalid_username is defined %}
+                                                <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+                                            {% endif %}
+                                            <label for="username">{{ 'resetting.request.username'|trans }}</label>
+                                            <input type="text" id="username" name="username" required="required" />
+                                        </div>
+                                        <br>
+                                        <div>
+                                             <a  href="{{ path('fos_user_security_login') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>
+                                            <input type="submit" value="{{ 'resetting.request.submit'|trans }}" class="btn btn-primary" style="width:140px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
     </div>
-    <div>
-        <input type="submit" value="{{ 'resetting.request.submit'|trans }}" />
-    </div>
+
 </form>

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FOS\UserBundle\Form\Type;
+namespace btsappli\UserBundle\Form\Type;
 
 use FOS\UserBundle\Util\LegacyFormHelper;
 use Symfony\Component\Form\AbstractType;
@@ -67,7 +67,7 @@ class ProfileFormType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'fos_user_profile';
+        return 'btsappli_user_profile';
     }
 
     /**
@@ -79,8 +79,12 @@ class ProfileFormType extends AbstractType
     protected function buildUserForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
+
             ->add('email', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\EmailType'), array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
+            ->add('telephone', 'text', array('label' => 'Telephone'))
+            ->add('adresse', 'text', array('label' => 'Adresse'))
+            ->add('codePostal', 'text', array('label'=> 'Code postal'))
+            ->add('ville', 'text', array('label' => 'Ville'));
         ;
     }
 }

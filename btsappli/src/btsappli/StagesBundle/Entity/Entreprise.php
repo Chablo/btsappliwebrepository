@@ -80,14 +80,14 @@ class Entreprise
     /**
      * @var string
      *
-     * @ORM\Column(name="fax", type="string", length=14)
+     * @ORM\Column(name="fax", type="string", length=14, nullable=true)
      */
     private $fax;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -131,6 +131,11 @@ class Entreprise
     public function getNom()
     {
         return $this->nom;
+    }
+    
+    public function getNomVille()
+    {
+	    return $this->nom.' - '.$this->ville;
     }
 
     /**
