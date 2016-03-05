@@ -27,7 +27,7 @@
                 
                 <!-- Affichage de tous les demandes -->
                 {% for userCourant in tabUser %} 
-                
+                    {% if userCourant.valide == 0 %}
                     <tr align="center">
                         <td>{{userCourant.nom}}</td>
                         <td>{{userCourant.prenom}}</td>
@@ -45,10 +45,11 @@
                             </ul>
                             </div>
                         </td>
-                        <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" ></span></button> 
+                        <td><a type="button" role="button" class="btn btn-success"  href="{{ path('btsappli_utilisateurs_acceptInscriptions') }}"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></a>
+                            <a type="button" class="btn btn-danger"  href="{{ path('btsappli_utilisateurs_supprInscriptions') }}"><span class="glyphicon glyphicon-remove" aria-hidden="true" ></span></a>
                         </td>
                     </tr>
+                    {% endif %}
                 {% endfor %}
             </table>
         </div>

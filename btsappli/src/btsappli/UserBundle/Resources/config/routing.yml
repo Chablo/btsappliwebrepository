@@ -40,3 +40,11 @@ btsappli_utilisateurs_validerInscriptions:
     path:   /validerUser
     defaults: { _controller: btsappliUserBundle:User:validerUser }
     
+btsappli_utilisateurs_supprInscriptions:
+    path:   /validerUser
+    defaults: { _controller: btsappliUserBundle:User:supprimerValidation }
+    
+btsappli_utilisateurs_acceptInscriptions:
+    path:   /validerUser
+    defaults: { _controller: btsappliUserBundle:User:accepterValidation }
+    

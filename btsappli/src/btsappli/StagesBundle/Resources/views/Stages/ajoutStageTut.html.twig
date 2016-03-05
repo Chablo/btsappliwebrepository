@@ -8,13 +8,14 @@
         <div class="panel panel-default">
             <div class="panel-heading"><h3>Ajout d'un stage (étape 2/2)</h3></div>
             <div class="panel-body">
+                <h4>Entreprise {{entreprise.nom}}</h4>
                 <form method="post" {{ form_enctype(formulaireStageTut) }}>
                     {{ form_widget(formulaireStageTut) }}
-                     <a href="{{ path('btsappli_stages_ajoutStage') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>
-                    <input type="submit" value="Terminer" class="btn btn-primary pull-right" style="width:140px" />
+                     <a href="{{ path('btsappli_stages_voirEntreprise', {'id':entreprise.id}) }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>
+                    <input type="submit" value="Valider" class="btn btn-primary pull-right" style="width:140px" />
                 </form>
                 <p><br>Tuteur introuvable ?</p>
-                <a href="{{ path('btsappli_stages_tuteurFormulaire', {'id':id}) }}" role="button" class="btn btn-primary" type="button" style="width:140px">Ajouter tuteur</a>
+                <a href="{{ path('btsappli_stages_tuteurFormulaire', {'id':entreprise.id}) }}" role="button" class="btn btn-primary" type="button" style="width:140px">Ajouter tuteur</a>
             </div>
         </div>
     </div>

@@ -73,6 +73,16 @@ class User extends BaseUser
      */
     private $telephone;
     
+     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="valide", type="boolean", options={"default":false})
+     */
+    private $valide;
+    
+    
+    
+    
         public function __construct()
     {
         parent::__construct();
@@ -305,6 +315,30 @@ class User extends BaseUser
     {
         parent::setEmailCanonical($emailCanonical);
         $this->usernameCanonical = $emailCanonical;
+
+        return $this;
+    }
+    
+
+    /**
+     * Get valide
+     *
+     * @return boolean 
+     */
+    public function getValide()
+    {
+        return $this->valide;
+    }
+
+    /**
+     * Set valide
+     *
+     * @param boolean $valide
+     * @return User
+     */
+    public function setValide($valide)
+    {
+        $this->valide = $valide;
 
         return $this;
     }

@@ -32,6 +32,16 @@ class UserController extends Controller
         return $this->render('btsappliUserBundle:User:suiviEtudiant.html.twig', array('tabUser'=>$tabUser));
     }
     
+    public function suiviEtudiantModifPromoAction($id)
+    {
+        // On récupère le repository de l'entité User
+        $repositoryUser = $this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:User');
+         
+        // On récupère l'user dont l'id est le paramètre $id
+        $user = $repositoryUser -> find($id);
+        
+    }
+    
     public function suiviStagesAction()
     {
         // On récupère le repository de l'entité User
@@ -44,8 +54,6 @@ class UserController extends Controller
         return $this->render('btsappliUserBundle:User:suiviStages.html.twig', 
                              array('tabUsersEtStages' => $tabUsersEtStages)); 
     }
-
-    
     
     public function suiviStagesConventionValideeAction()
     {
@@ -60,7 +68,6 @@ class UserController extends Controller
                              array('tabUsersEtStages' => $tabUsersEtStages)); 
     }
     
-    
     public function suiviStagesPasStageAction()
     {
         // On récupère le repository de l'entité User
@@ -73,8 +80,6 @@ class UserController extends Controller
         return $this->render('btsappliUserBundle:User:suiviStages.html.twig', 
                              array('tabUsersEtStages' => $tabUsersEtStages)); 
     }
-    
-    
     
     public function supprimerStageAction($id)
     {
@@ -118,5 +123,51 @@ class UserController extends Controller
         
         //on envoie la liste des étudiants demandant une inscription dans la vue chargée de les afficher
         return $this->render('btsappliUserBundle:User:validerInscriptions.html.twig', array('tabUser'=>$tabUser));
+    }
+    
+    public function supprimerValidationAction()
+    {
+          // On récupère le gestionnaire d'entité
+        $gestionnaireEntite = $this->getDoctrine()->getManager();
+        
+        // On récupère le repository de l'entité User
+        $user = $gestionnaireEntite->getRepository('btsappliUserBundle:User')->find($id);
+ 
+        
+        // On supprime le stage récupéré de la BD
+       
+        $gestionnaireEntite->remove($user);
+        $gestionnaireEntite->flush();
+    
+        // On récupère tous les users avec leur stage
+        $tabUser = $repositoryUser->findAll();  
+        
+        // On transmet l'entreprise à la vue chargée de l'afficher
+        return $this->render('btsappliUserBundle:validerInscriptions.html.twig', array('tabUser'=>$tabUser));
+    }
+
+
+    public function accepterValidationAction()
+    {
+        // On récupère le gestionnaire d'entité
+        $gestionnaireEntite = $this->getDoctrine()->getManager();
+        
+        // On récupère le repository de l'entité User
+        $repositoryUser = $gestionnaireEntite->getRepository('btsappliUserBundle:User');
+    
+        // On récupère l'user dont l'id est le paramètre $id
+        $user = $repositoryUser->find($id);
+        
+        // On récupère le stage de l'user
+        $validerInscription = $user->getValide();
+        $validerInscription = true;
+        $user->setValide($validerInscription); 
+        $gestionnaireEntite->flush();
+
+        // On récupère tous les users avec leur stage
+        $tabUser = $repositoryUser->findAll();     
+        
+        // On transmet l'entreprise à la vue chargée de l'afficher
+        return $this->render('btsappliUserBundle:validerInscriptions.html.twig', array('tabUser'=>$tabUser));
     }
 }

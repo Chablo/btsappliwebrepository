@@ -6,18 +6,34 @@
 <div class="col-lg-12">
     <div style="margin-top:18px;">
         <div class="panel panel-default">
-            <div class="panel-heading"><h3></h3></div>
+            <div class="panel-heading"><h3>Entreprise <em>{{ entreprise.nom }}</em> :</h3></div>
             <div class="panel-body">
-                    <form method="post" {{ form_enctype(formulaireEntreprise) }}>
-                        {{ form_widget(formulaireEntreprise) }}
-                        <input type="submit" class="btn btn-primary pull-right"style="width:140px" />
-                    </form>
+                    <div class="row">
+		        		<div class="col-lg-12">
+				            <dl class="dl-horizontal">
+						        <dt>Représentant</dt><dd>{{ entreprise.representant }}</dd><br/>
+						        
+						        <dt>Adresse<dt><dd>{{ entreprise.adresse }}</dd>
+						        <dt>Code postal</dt><dd>{{ entreprise.codePostal }}</dd>
+						        <dt>Ville<dt><dd>{{ entreprise.ville }}</dd>
+						        <dt>Pays</dt><dd>{{ entreprise.pays }}</dd><br/>
+						        
+						        <dt>Adresse email<dt><dd>{{ entreprise.adresseMail }}</dd>
+						        <dt>Téléphone</dt><dd>{{ entreprise.telephone }}</dd>
+						        <dt>Fax</dt><dd>{{ entreprise.fax }}</dd><br/>
+						        
+						        <dt>Service d'accueil</dt><dd>{{ entreprise.serviceAccueil }}</dd><br/>
+						        
+						        <dt>Description</dt><dd>{{ entreprise.description }}</dd>
+				            </dl>
+		        		</div>
+		        	</div>
                     <div class="row">
                         <div class="col-lg-1">
-                            <a href="#" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>
+                            <a href="{{ path('btsappli_stages_ajoutStageEnt') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>
                         </div>
                         <div class="col-lg-1 col-lg-offset-4">
-                            <a href="#" role="button" class="btn btn-primary" type="button" style="width:140px">Choisir</a>
+                            <a href="{{ path('btsappli_stages_ajoutStageTut') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Suivant</a>
                         </div>
                     </div>
             </div>

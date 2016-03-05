@@ -8,7 +8,7 @@
         <div class="panel panel-default">
             <div class="panel-heading"><h3>Ajout d'un stage (étape 1/1)</h3></div>
             <div class="panel-body">
-                <form method="post" {{ form_enctype(formulaireStage) }}>
+                <form id="formStage" method="post" {{ form_enctype(formulaireStage) }}>
                     {{ form_widget(formulaireStage) }}
                     <a href="{{ path('btsappli_utilisateurs_accueilEtu') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>
                     <input type="submit" class="btn btn-primary pull-right" style="width:140px" />
@@ -19,4 +19,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

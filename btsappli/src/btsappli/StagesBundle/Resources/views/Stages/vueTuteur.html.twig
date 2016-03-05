@@ -1,0 +1,33 @@
+{# src/btsappli/StagesBundle/Resources/views/Stages/vueTuteur.html.twig #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+<div class="col-lg-12">
+    <div style="margin-top:18px;">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3><em>{{ tuteur.nom }} {{ tuteur.prenom }}</em> :</h3></div>
+            <div class="panel-body">
+                    <div class="row">
+		        		<div class="col-lg-12">
+				            <dl class="dl-horizontal">
+						        <dt>Email</dt><dd>{{ tuteur.adresseMail }}</dd>
+						        <dt>Téléphone<dt><dd>{{ tuteur.telephone }}</dd>
+						        <dt>Fonctions</dt><dd>{{ tuteur.fonction }}</dd>
+						        <dt>Infos Complémentaires<dt><dd>{{ tuteur.infosComplementaires }}</dd>
+				            </dl>
+		        		</div>
+		        	</div>
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <a href="{{ path('btsappli_stages_ajoutStageTut') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>
+                        </div>
+                        <div class="col-lg-1 col-lg-offset-4">
+                            <a href="{{ path('btsappli_stages_voirStage') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Finaliser</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -8,30 +8,35 @@ btsappli_stages_tuteurFormulaire:
     requirements:
         id:   \d+
 
-btsappli_stages_ajoutStage:
-    path:     /stage/ajouter1
-    defaults: { _controller: btsappliStagesBundle:Stages:ajoutStage }
+btsappli_stages_ajoutStageEnt:
+    path:     /stage/ajouterEnt
+    defaults: { _controller: btsappliStagesBundle:Stages:ajoutStageEnt }
 
-btsappli_stages_stageFormulaireTut:
-    path:     /stage/ajouter2
+btsappli_stages_ajoutStageTut:
+    path:     /stage/ajouterTut
     defaults: { _controller: btsappliStagesBundle:Stages:ajoutStageTut }
 
+
+#************************************************************************************************************
+
+btsappli_stages_voirEntreprise:
+    path:     /stage/entreprise
+    defaults: { _controller: btsappliStagesBundle:Stages:voirEntreprise }
+
+btsappli_stages_voirTuteur:
+    path:     /stage/tuteur
+    defaults: { _controller: btsappliStagesBundle:Stages:voirTuteur }
+        
 btsappli_stages_voirStage:
-    path:     /stage/{id}
+    path:     /stage
     defaults: { _controller: btsappliStagesBundle:Stages:voirStage }
-    requirements:
-        id:   \d+
+
+#************************************************************************************************************
 
 btsappli_stages_rechercheEntreprise:
     path:     /entreprise/rechercher
     defaults: { _controller: btsappliStagesBundle:Stages:rechercherEntreprise }
 
-btsappli_stages_voirEntreprise:
-    path:     /entreprise/{id}
-    defaults: { _controller: btsappliStagesBundle:Stages:voirEntreprise }
-    requirements:
-        id:   \d+
-        
 btsappli_stages_resultatRecherche:
     path:     /entreprise/resultat
     defaults: { _controller: btsappliStagesBundle:Stages:resultatRecherche }
