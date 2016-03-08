@@ -35,7 +35,6 @@ class RegistrationController extends Controller
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
         $user = $userManager->createUser();
-                  
         $user->setEnabled(true);
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);

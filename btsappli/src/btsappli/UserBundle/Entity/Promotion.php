@@ -28,6 +28,15 @@ class Promotion
      */
     private $anneePromo;
 
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
      /**
      * Get anneePromo
      *

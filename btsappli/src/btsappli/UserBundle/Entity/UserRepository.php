@@ -23,4 +23,52 @@ class UserRepository extends EntityRepository
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();
 	}
+	
+	public function getUsersEtPromo()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT u, p FROM btsappliUserBundle:User u LEFT JOIN u.promotion p');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
+	
+	public function findByEtatConventionValidee()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s WHERE s.etatConvention = 2');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
+	
+	public function findByEtatConventionNonValidee()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s WHERE s.etatConvention = 1');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
+	
+	public function findByEtatConventionSignee()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s WHERE s.etatConvention = 3');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
 }

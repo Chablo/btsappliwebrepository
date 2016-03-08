@@ -141,6 +141,9 @@ class StagesController extends Controller
         // Si le formulaire a été soumis et que les données sont valides
         if($formulaireStageTut->isValid())
         {
+            // On passe le stage à convention non validée
+            $stage -> setEtatConvention(1);
+            
             // On enregistre l'objet $user en base de données
             $gestionnaireEntite = $this->getDoctrine()->getManager();
             $gestionnaireEntite->persist($stage);

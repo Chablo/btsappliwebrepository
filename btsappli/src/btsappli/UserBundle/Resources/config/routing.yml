@@ -12,39 +12,63 @@ btsappli_utilisateurs_suiviEtudiant:
     path:   /suiviEtudiant
     defaults: { _controller: btsappliUserBundle:User:suiviEtudiant }
     
-btsappli_utilisateurs_suiviEtudiant:
-    path:   /suiviEtudiant/{promo}
-    defaults: { _controller: btsappliUserBundle:User:suiviEtudiantParPromotion }
+btsappli_utilisateurs_setPromo:
+    path:   /suiviEtudiant/{id}/{idPromo}
+    defaults: { _controller: btsappliUserBundle:User:setPromo }
+
+btsappli_utilisateurs_suiviEtudiantFiltrer:
+    path:   /suiviEtudiantFiltrer/{idPromo}
+    defaults: { _controller: btsappliUserBundle:User:suiviEtudiantFiltrer }
     
+#************************************************************************************************************
+
 btsappli_utilisateurs_suiviStages:
     path:   /suiviStages
     defaults: { _controller: btsappliUserBundle:User:suiviStages }
-
-btsappli_utilisateurs_suiviStagesPasStage:
-    path:   /suiviStages/pasStage
-    defaults: { _controller: btsappliUserBundle:User:suiviStagesPasStage }
-
-btsappli_utilisateurs_suiviStagesConventionValidee:
-    path: /suiviStages/conventionValidee
-    defaults: { _controller: btsappliUserBundle:User:suiviStagesConventionValidee }
     
-btsappli_utilisateurs_suiviEtudiantFiltrer:
-    path:   /suiviEtudiantFiltrer
-    defaults: { _controller: btsappliUserBundle:User:suiviEtudiantFiltrer }
+btsappli_utilisateurs_suiviStagesFiltrerPromo:
+    path:   /suiviStagesFiltrerPromo
+    defaults: { _controller: btsappliUserBundle:User:suiviStagesFiltrerPromo }
+
+btsappli_utilisateurs_suiviStagesFiltrerConventionValidee:
+    path:   /suiviStagesFiltrerConventionValidee
+    defaults: { _controller: btsappliUserBundle:User:suiviStagesFiltrerConventionValidee }
+
+btsappli_utilisateurs_suiviStagesFiltrerConventionNonValidee:
+    path:   /suiviStagesFiltrerConventionNonValidee
+    defaults: { _controller: btsappliUserBundle:User:suiviStagesFiltrerConventionNonValidee }
+
+btsappli_utilisateurs_suiviStagesFiltrerConventionSignee:
+    path:   /suiviStagesFiltrerConventionSignee
+    defaults: { _controller: btsappliUserBundle:User:suiviStagesFiltrerConventionSignee }
+
+btsappli_utilisateurs_suiviStagesFiltrerPasStage:
+    path:   /suiviStagesFiltrerPasStage
+    defaults: { _controller: btsappliUserBundle:User:suiviStagesFiltrerPasStage }
 
 btsappli_utilisateurs_supprimerStage:
     path:   /suiviStages/supprimerStage/{id}
     defaults: { _controller: btsappliUserBundle:User:supprimerStage }
     
+btsappli_utilisateurs_supprimerStageValidation:
+    path:   /suiviStages/supprimerStageValidation/{id}
+    defaults: { _controller: btsappliUserBundle:User:supprimerStageValidation }
+
+#************************************************************************************************************
+
 btsappli_utilisateurs_validerInscriptions:
-    path:   /validerUser
-    defaults: { _controller: btsappliUserBundle:User:validerUser }
+    path:   /validationsUser
+    defaults: { _controller: btsappliUserBundle:User:validationsUser }
     
 btsappli_utilisateurs_supprInscriptions:
-    path:   /validerUser
+    path:   /validationsUser/supprimer/{id}
     defaults: { _controller: btsappliUserBundle:User:supprimerValidation }
+    requirements:
+        id:   \d+
     
 btsappli_utilisateurs_acceptInscriptions:
-    path:   /validerUser
+    path:   /validationsUser/accepter/{id}
     defaults: { _controller: btsappliUserBundle:User:accepterValidation }
+    requirements:
+        id:   \d+
     

@@ -2,104 +2,80 @@
 
 <div style="margin-top:18px;">
 <div class="container">
-         <!-- Ligne 2 -->
-          <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-              
-                <div class="panel panel-primary">
-                 <div class="panel-heading"><h3>Inscription</h3></div>
-                  <div class="panel-body">
-                      <ul style="list-style-type:none">
-
-                        
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h3>Inscription</h3></div>
+                <div class="panel-body">
+                    <ul style="list-style-type:none">
+                        <!-- Début du formulaire d'inscription -->
                         {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-                     
+                            <div class="row"> 
+                                <div class="col-lg-9 col-lg-offset-1">  
+                                        {{ form_errors(form.email) }}
+                                        {{ form_label(form.email, "Adresse e-mail: ") }}
+                                        <li>{{ form_widget(form.email,{ 'attr': {'size': '20'} }) }}</li><br/>
+                                </div>
+                            </div>
+    
             
-            
-            <div class="row"> 
-                <div class="col-lg-9 col-lg-offset-1">  
-                        {{ form_errors(form.email) }}
-                        {{ form_label(form.email, "Adresse e-mail: ") }}
-                        <li>{{ form_widget(form.email,{ 'attr': {'size': '20'} }) }}</li>
-                        <br>
-                </div>
-            </div>
-
-            
-            <div class="row">  
-            <div class="col-lg-4 col-lg-offset-1">                        
-                        {{ form_errors(form.plainPassword.first) }}
-                        {{ form_label(form.plainPassword.first, "Mot de passe: ") }}
-                        <li>{{ form_widget(form.plainPassword.first) }}</li>
-                        <br>
-                        {{ form_errors(form.nom) }}
-                        {{ form_label(form.nom, "Nom: ") }}
-                        <li>{{ form_widget(form.nom) }}</li>
-                        <br>
-            </div>
-            <div class="col-lg-4 col-lg-offset-1">
-                        {{ form_errors(form.plainPassword.second) }}
-                        {{ form_label(form.plainPassword.second, "Confirmer Mot de passe: ") }}
-                        <li>{{ form_widget(form.plainPassword.second) }}</li>
-                        {{ form_row(form._token) }}
-                        <br>
-                        {{ form_errors(form.prenom) }}
-                        {{ form_label(form.prenom, "Prenom: ") }}
-                        <li>{{ form_widget(form.prenom) }}</li>
-                        <br>
-            </div>
-            </div> 
-       
-<div class="row"> 
-     <div class="col-lg-9 col-lg-offset-1">  
-                        {{ form_errors(form.adresse) }}
-                        {{ form_label(form.adresse, "Adresse: ") }}
-                        <li>{{ form_widget(form.adresse,{ 'attr': {'size': '20'} }) }}</li>
-                        <br>
-     </div>
-</div>
-
-<div class="row">                       
-            <div class="col-lg-4 col-lg-offset-1">   
-                        {{ form_errors(form.ville) }}
-                        {{ form_label(form.ville, "Ville: ") }}
-                        <li>{{ form_widget(form.ville) }}</li>
-                        <br>
-                        {{ form_errors(form.dateNaiss) }}
-                        {{ form_label(form.dateNaiss, "Date de naissance: ") }}
-                        <li>{{ form_widget(form.dateNaiss) }}</li>
-            </div> 
-
-
-        
-         <div class="col-lg-4 col-lg-offset-1"> 
-                        {{ form_errors(form.codePostal) }}
-                        {{ form_label(form.codePostal, "Code postal: ") }}
-                        <li>{{ form_widget(form.codePostal) }}</li>
-                        <br>
-
-                        {{ form_errors(form.telephone) }}
-                        {{ form_label(form.telephone, "Telephone: ") }}
-                        <li>{{ form_widget(form.telephone,{ 'attr': {'cols': '100'} }) }}</li>
-                        {#{{ form_end(form) }}#}
-         </div>
-</div>
+                            <div class="row">  
+                                <div class="col-lg-4 col-lg-offset-1">                        
+                                            {{ form_errors(form.plainPassword.first) }}
+                                            {{ form_label(form.plainPassword.first, "Mot de passe: ") }}
+                                            <li>{{ form_widget(form.plainPassword.first) }}</li><br/>
+                                            {{ form_errors(form.nom) }}
+                                            {{ form_label(form.nom, "Nom: ") }}
+                                            <li>{{ form_widget(form.nom) }}</li><br/>
+                                </div>
+                                <div class="col-lg-4 col-lg-offset-1">
+                                            {{ form_errors(form.plainPassword.second) }}
+                                            {{ form_label(form.plainPassword.second, "Confirmer Mot de passe: ") }}
+                                            <li>{{ form_widget(form.plainPassword.second) }}</li>
+                                            {{ form_row(form._token) }}<br/>
+                                            {{ form_errors(form.prenom) }}
+                                            {{ form_label(form.prenom, "Prenom: ") }}
+                                            <li>{{ form_widget(form.prenom) }}</li><br/>
+                                </div>
+                            </div> 
+                            <div class="row"> 
+                                 <div class="col-lg-9 col-lg-offset-1">  
+                                                    {{ form_errors(form.adresse) }}
+                                                    {{ form_label(form.adresse, "Adresse: ") }}
+                                                    <li>{{ form_widget(form.adresse,{ 'attr': {'size': '20'} }) }}</li><br/>
+                                 </div>
+                            </div>
+                            <div class="row">                       
+                                        <div class="col-lg-4 col-lg-offset-1">   
+                                                    {{ form_errors(form.ville) }}
+                                                    {{ form_label(form.ville, "Ville: ") }}
+                                                    <li>{{ form_widget(form.ville) }}</li>
+                                                    <br>
+                                                    {{ form_errors(form.dateNaiss) }}
+                                                    {{ form_label(form.dateNaiss, "Date de naissance: ") }}
+                                                    <li>{{ form_widget(form.dateNaiss) }}</li>
+                                        </div> 
+                            
+                            
+                                    
+                                     <div class="col-lg-4 col-lg-offset-1"> 
+                                                    {{ form_errors(form.codePostal) }}
+                                                    {{ form_label(form.codePostal, "Code postal: ") }}
+                                                    <li>{{ form_widget(form.codePostal) }}</li>
+                                                    <br>
+                            
+                                                    {{ form_errors(form.telephone) }}
+                                                    {{ form_label(form.telephone, "Telephone: ") }}
+                                                    <li>{{ form_widget(form.telephone,{ 'attr': {'cols': '100'} }) }}</li>
+                                                    {#{{ form_end(form) }}#}
+                                     </div>
+                            </div>
                        </ul> 
-                       
-                       <div class="col-lg-1  col-lg-offset-4">
-                           <button type="submit" id="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary pull-right" style="width:140px">S'inscrire</button>
-                       </div>
-                       <div class="col-lg-1  col-lg-offset-2">
-                            <a href="{{ path('fos_user_security_login') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Annuler</a>
-                       </div>
-        </div> 
-                           {# <input type="submit" value="{{ 'registration.submit'|trans }}" /> #}
-                           
-</div>
-                  
-                        </div>
-                    </div>
-               </div>
+                        <a href="{{ path('fos_user_security_login') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Annuler</a>
+                        <button type="submit" id="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary pull-right" style="width:140px">S'inscrire</button>
+                </div> 
             </div>
-          </div> 
-          
+        </div>
+    </div>
+</div>
+</div>

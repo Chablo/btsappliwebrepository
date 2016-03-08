@@ -36,9 +36,9 @@ class Stage
     private $dateFin;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="etatConvention", type="string", length=100, nullable=true)
+     * @ORM\Column(name="etatConvention", type="integer", nullable=true)
      */
     private $etatConvention = null;
 

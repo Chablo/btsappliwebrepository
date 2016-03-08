@@ -76,9 +76,9 @@ class User extends BaseUser
      /**
      * @var boolean
      *
-     * @ORM\Column(name="valide", type="boolean", options={"default":false})
+     * @ORM\Column(name="valide", type="boolean")
      */
-    private $valide;
+    private $valide = false;
     
     
     
@@ -320,6 +320,30 @@ class User extends BaseUser
     }
     
 
+    /**
+     * Set promotion
+     *
+     * @param \btsappli\UserBundle\Entity\Promotion $promotion
+     * @return User
+     */
+    public function setPromotion(\btsappli\UserBundle\Entity\Promotion $promotion = null)
+    {
+        $this->promotion = $promotion;
+
+        return $this;
+    }
+
+    /**
+     * Get promotion
+     * 
+     *
+     * @return \btsappli\UserBundle\Entity\Promotion
+     */
+    public function getPromotion()
+    {
+        return $this->promotion;
+    }
+    
     /**
      * Get valide
      *

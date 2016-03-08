@@ -16,7 +16,7 @@
                 <!--debut du formulaire-->
                 <form class="form-inline " action="search.php" method="get">
                   <div class="form-group">
-                    <input type="text" name="q" id="q" class="form-control"  placeholder="Recherche..."/>
+                    <input type="text" name="q" id="q" class="form-control" style="width:333px" placeholder="Recherche..."/>
                     <button type="submit" class="btn btn-primary" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                   </div>
                 </form>
@@ -29,20 +29,15 @@
             </div>
             <div class="col-lg-2 col-lg-offset-4">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                         Filtrer par promotion <span class="caret"></span>
-                </button>
+                    </button>
                         <ul class="dropdown-menu pull-right" style="width:200px">
-                            {# {% render "btsappliUserBundle:User:suiviEtudiantFiltrer" %} #}
-                            
-                            {#{% render "UserBundle:Controller:suiviEtudiantFiltrer" %}#}
-                            <!-- Faire la liste des promotions -->
-                            
-                            {# PROBLEME AVEC TABPROMOTION :( #}
-                            {#  {% for promotionCourant in tabPromotion %} #}
-                               <!--  <li>{# {{promotionCourant.anneePromo}} #}</li>
-                                <li role="separator" class="divider"></li> -->
-                           {# {% endfor %} #}
+                            <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiant') }}"> Tous </a></li>
+                            <li role="separator" class="divider"></li>
+                            {% for promoCourante in tabPromotions %}
+                                <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiantFiltrer', {'idPromo':promoCourante.id}) }}"> {{promoCourante.anneePromo}} </a></li>
+                            {% endfor %}
                         </ul>
                 </div>
             </div>
@@ -69,7 +64,7 @@
                 </tr>
                 
                 <!-- Affichage de tous les étudiants -->
-                        {% for userCourant in tabUser %} 
+                {% for userCourant in tabUser %} 
                 
                     <tr align="center">
                         <td>{{userCourant.nom}}</td>
@@ -79,19 +74,25 @@
                         <td>{{userCourant.adresse}}</td>
                         <td>{{userCourant.codePostal}}</td>
                         <td>{{userCourant.ville}}</td>
-                        <td> {# {{userCourant.promotion}} #}</td> 
-                    
-                       <td>
                         
+                        {% if  userCourant.promotion is not null %}
+                        <td>{{userCourant.promotion.anneePromo}}</td> 
+                        {% else %} 
+                        <td></td> 
+                        {% endif %}
+                        
+                        <td>
                         <!-- bouton pour changer la promotion -->
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Promotion <span class="caret"></span>
                                 </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    
-                                </li>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                {% for promoCourante in tabPromotions %}
+                                    {% if loop.index %}
+                                        <li><a href="{{ path('btsappli_utilisateurs_setPromo', {'id':userCourant.id, 'idPromo':promoCourante.id}) }}">{{promoCourante.anneePromo}}</a></li>
+                                    {% endif %}
+                                {% endfor %}
                             </ul>
                             </div>
                         </td>
@@ -103,6 +104,5 @@
 </div>
 </div>
 <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
-<a href="#" role="button" class="btn btn-primary pull-right" type="button" style="width:140px">Valider</a>  <!--&nbsp; = espace-->
 
 {% endblock %}
