@@ -37,11 +37,11 @@ btsappli_utilisateurs_voirStageEtu:
     defaults: { _controller: btsappliUserBundle:User:voirStageEtu }
     
 btsappli_utilisateurs_setEtatConv:
-    path:   /voirStageEtu/{id}
+    path:   /voirStageEtu/{id}/{etatConv}
     defaults: { _controller: btsappliUserBundle:User:setEtatConv }
     
 btsappli_utilisateurs_suiviStagesFiltrerPromo:
-    path:   /suiviStagesFiltrerPromo
+    path:   /suiviStagesFiltrerPromo/{idPromo}
     defaults: { _controller: btsappliUserBundle:User:suiviStagesFiltrerPromo }
 
 btsappli_utilisateurs_suiviStagesFiltrerConventionValidee:

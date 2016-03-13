@@ -18,7 +18,7 @@ class UserRepository extends EntityRepository
 		$gestionnaireEntite = $this -> _em;
 		
 		// écriture de la requête personnalisée
-		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s');
+		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s LEFT JOIN u.promotion p WHERE p.enCours = true ORDER BY u.nom ASC, u.prenom ASC');
 		
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();
@@ -42,7 +42,7 @@ class UserRepository extends EntityRepository
 		$gestionnaireEntite = $this -> _em;
 		
 		// écriture de la requête personnalisée
-		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s WHERE s.etatConvention = 2');
+		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s LEFT JOIN u.promotion p WHERE s.etatConvention = 2 AND p.enCours = true ORDER BY u.nom ASC, u.prenom ASC');
 		
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();
@@ -54,7 +54,7 @@ class UserRepository extends EntityRepository
 		$gestionnaireEntite = $this -> _em;
 		
 		// écriture de la requête personnalisée
-		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s WHERE s.etatConvention = 1');
+		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s LEFT JOIN u.promotion p WHERE s.etatConvention = 1 AND p.enCours = true ORDER BY u.nom ASC, u.prenom ASC');
 		
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();
@@ -66,7 +66,19 @@ class UserRepository extends EntityRepository
 		$gestionnaireEntite = $this -> _em;
 		
 		// écriture de la requête personnalisée
-		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s WHERE s.etatConvention = 3');
+		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s LEFT JOIN u.promotion p WHERE s.etatConvention = 3 AND p.enCours = true ORDER BY u.nom ASC, u.prenom ASC');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
+	
+	public function findByPasStage()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT u FROM btsappliUserBundle:User u LEFT JOIN u.promotion p WHERE u.stage is null AND p.enCours = true ORDER BY u.nom ASC, u.prenom ASC');
 		
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();
@@ -83,4 +95,5 @@ class UserRepository extends EntityRepository
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();
 	}
+	
 }
