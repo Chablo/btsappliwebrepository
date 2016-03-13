@@ -1,0 +1,26 @@
+{# src/btsappli/StagesBundle/Resources/views/Stages/modificationEntreprise.html.twig #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+<div class="col-lg-10 col-lg-offset-1">
+    <div style="margin-top:18px;">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>Modification de l'entreprise {{ nomEntreprise }}</h3></div>
+                <div class="panel-body">
+                    <form method="post" {{ form_enctype(formulaireEntreprise) }}>
+                        {{ form_widget(formulaireEntreprise) }}
+                        <div class="row">
+                        <div class="col-lg-1  col-lg-offset-1">
+                            <a href="{{ path('btsappli_stages_voirEntreprise') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Annuler</a>
+                        </div>
+                        <div class="col-lg-1  col-lg-offset-8">
+                            <input type="submit" class="btn btn-primary pull-right" style="width:140px" />
+                        </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

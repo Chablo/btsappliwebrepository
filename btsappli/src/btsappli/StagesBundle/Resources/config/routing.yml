@@ -8,6 +8,16 @@ btsappli_stages_tuteurFormulaire:
     requirements:
         id:   \d+
 
+
+btsappli_stages_modificationEnt:
+    path:     /stage/modifierEnt
+    defaults: { _controller: btsappliStagesBundle:Stages:modificationEnt }
+
+btsappli_stages_modificationTut:
+    path:     /stage/modifierTut
+    defaults: { _controller: btsappliStagesBundle:Stages:modificationTut }
+
+
 btsappli_stages_ajoutStageEnt:
     path:     /stage/ajouterEnt
     defaults: { _controller: btsappliStagesBundle:Stages:ajoutStageEnt }
@@ -15,6 +25,12 @@ btsappli_stages_ajoutStageEnt:
 btsappli_stages_ajoutStageTut:
     path:     /stage/ajouterTut
     defaults: { _controller: btsappliStagesBundle:Stages:ajoutStageTut }
+
+btsappli_stages_generate_pdf:
+    path: /generate-pdf
+    defaults: { _controller: btsappliStagesBundle:Stages:generatePdf }
+    requirements:
+        _method: GET
 
 
 #************************************************************************************************************

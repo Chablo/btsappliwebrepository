@@ -6,7 +6,17 @@
 <div class="col-lg-10 col-lg-offset-1">
 	<div style="margin-top:18px;">
 	    <div class="panel panel-default">
-	        <div class="panel-heading"><h3>Récapitulatif de ton stage :</h3></div>
+	        <div class="panel-heading"><h3>Récapitulatif de ton stage :</h3>
+	        {% if stage.etatConvention == 1 %}
+                <h4>(Convention Non Validée)</h4>
+            {% endif %}
+            {% if stage.etatConvention == 2 %}
+                <h4>(Convention Validée)</h4>
+            {% endif %}
+            {% if stage.etatConvention == 3 %}
+                <h4>(Convention Signée)</h4>
+            {% endif %}
+	        </div>
 		        <div class="panel-body">
 		        	<div class="row">
 		        		<div class="col-lg-6">
@@ -40,6 +50,7 @@
 				            </dl>
 			     		</div>
 					</div>
+					<a href="{{ path('btsappli_stages_generate_pdf') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Imprimer</a>
 		            <a href="{{ path('btsappli_utilisateurs_accueilEtu') }}" role="button" class="btn btn-primary pull-right" type="button" style="width:140px">Accueil</a>
 		        </div>
 	    </div>

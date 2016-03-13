@@ -12,4 +12,29 @@ use Doctrine\ORM\EntityRepository;
  */
 class PromotionRepository extends EntityRepository
 {
+	public function getPromoEnCours()
+	{
+		$qb = $this->createQueryBuilder('p');
+ 
+		$qb->where('p.enCours = true');
+ 
+		return $qb;
+	}
+	
+    /*public function getAnciennePromo($anneePromo)
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT p FROM btsappliUserBundle:Promotion p WHERE p.anneePromo = :anneePromo');
+		
+		$anneeAnciennePromo = $anneePromo - 2;
+		
+		// On définit la valeur du paramètre anneePromo de la requête
+		$requete->setParameter('anneePromo', $anneeAnciennePromo);
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}*/
 }

@@ -36,7 +36,13 @@
                             <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiant') }}"> Tous </a></li>
                             <li role="separator" class="divider"></li>
                             {% for promoCourante in tabPromotions %}
-                                <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiantFiltrer', {'idPromo':promoCourante.id}) }}"> {{promoCourante.anneePromo}} </a></li>
+                                <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiantFiltrer', {'idPromo':promoCourante.id}) }}">
+                                    {% if promoCourante.anneePromo is same as(0) %}
+                                        Démission
+                                    {% else %}
+                                        {{promoCourante.anneePromo}}
+                                    {% endif %}
+                                </a></li>
                             {% endfor %}
                         </ul>
                 </div>
@@ -76,25 +82,59 @@
                         <td>{{userCourant.ville}}</td>
                         
                         {% if  userCourant.promotion is not null %}
-                        <td>{{userCourant.promotion.anneePromo}}</td> 
+                        <td>                                                
+                            {% if userCourant.promotion.anneePromo is same as(0) %}
+                                Démission
+                            {% else %}
+                                {{userCourant.promotion.anneePromo}}
+                            {% endif %}
+                        </td> 
                         {% else %} 
                         <td></td> 
                         {% endif %}
                         
                         <td>
                         <!-- bouton pour changer la promotion -->
+                        {% if loop.last %}
+                            <div class="btn-group dropup">
+        					    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        					        Promotion <span class="caret"></span>
+        					        <span class="sr-only">Toggle Dropdown</span>
+        					    </button>
+        					    <ul class="dropdown-menu dropdown-menu-left">
+        					    	{% for promoCourante in tabPromotions %}
+                                        
+                                            <li><a href="{{ path('btsappli_utilisateurs_setPromo', {'id':userCourant.id, 'idPromo':promoCourante.id}) }}">
+                                                {% if promoCourante.anneePromo is same as(0) %}
+                                                    Démission
+                                                {% else %}
+                                                    {{promoCourante.anneePromo}}
+                                                {% endif %}
+                                            </a></li>
+                                        
+                                    {% endfor %}
+        					    </ul>
+        					</div>
+        				{% else %}
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Promotion <span class="caret"></span>
                                 </button>
-                            <ul class="dropdown-menu dropdown-menu-left">
-                                {% for promoCourante in tabPromotions %}
-                                    {% if loop.index %}
-                                        <li><a href="{{ path('btsappli_utilisateurs_setPromo', {'id':userCourant.id, 'idPromo':promoCourante.id}) }}">{{promoCourante.anneePromo}}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
+                                <ul class="dropdown-menu dropdown-menu-left">
+                                    {% for promoCourante in tabPromotions %}
+                                        
+                                            <li><a href="{{ path('btsappli_utilisateurs_setPromo', {'id':userCourant.id, 'idPromo':promoCourante.id}) }}">
+                                                {% if promoCourante.anneePromo is same as(0) %}
+                                                    Démission
+                                                {% else %}
+                                                    {{promoCourante.anneePromo}}
+                                                {% endif %}
+                                            </a></li>
+                                       
+                                    {% endfor %}
+                                </ul>
                             </div>
+                        {% endif %}
                         </td>
                     </tr> 
                 {% endfor %}

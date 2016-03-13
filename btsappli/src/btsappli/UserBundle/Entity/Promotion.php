@@ -22,11 +22,18 @@ class Promotion
     protected $id;
     
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="anneePromo", type="string", length=20)
+     * @ORM\Column(name="anneePromo", type="integer")
      */
     private $anneePromo;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enCours", type="boolean")
+     */
+    private $enCours;
 
     /**
      * Get id
@@ -40,7 +47,7 @@ class Promotion
      /**
      * Get anneePromo
      *
-     * @return string 
+     * @return integer
      */
     public function getanneePromo()
     {
@@ -50,12 +57,35 @@ class Promotion
     /**
      * Set anneePromo
      *
-     * @param string $anneePromo
+     * @param integer $anneePromo
      * @return Entreprise
      */
     public function setanneePromo($anneePromo)
     {
         $this->anneePromo = $anneePromo;
+
+        return $this;
+    }
+    
+    /**
+     * Get enCours
+     *
+     * @return boolean 
+     */
+    public function getEnCours()
+    {
+        return $this->enCours;
+    }
+
+    /**
+     * Set enCours
+     *
+     * @param boolean $valide
+     * @return User
+     */
+    public function setEnCours($enCours)
+    {
+        $this->enCours = $enCours;
 
         return $this;
     }

@@ -1,18 +1,18 @@
 <?php
 
-namespace btsappli\UtilisateursBundle\Entity;
+namespace btsappli\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Utilisateur
+ * User
  *
- * @ORM\Entity
- * @ORM\Table(name="utilisateur")
+ * @ORM\Entity(repositoryClass="btsappli\UserBundle\Entity\UserRepository")
+ * @ORM\Table(name="fos_user")
  */
-class Utilisateur extends BaseUser
+class User extends BaseUser
 {
     /**
      * @var integer
@@ -22,6 +22,7 @@ class Utilisateur extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
 
     /**
      * @var string
@@ -36,20 +37,6 @@ class Utilisateur extends BaseUser
      * @ORM\Column(name="prenom", type="string", length=40)
      */
     private $prenom;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="adresseMail", type="string", length=60)
-     */
-    private $adresseMail;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="motDePasse", type="string", length=30)
-     */
-    private $motDePasse;
 
     /**
      * @var date
@@ -85,13 +72,16 @@ class Utilisateur extends BaseUser
      * @ORM\Column(name="telephone", type="string", length=14)
      */
     private $telephone;
-
-    /**
-     * @var string
+    
+     /**
+     * @var boolean
      *
-     * @ORM\Column(name="promotion", type="string", length=10)
+     * @ORM\Column(name="valide", type="boolean")
      */
-    private $promotion;
+    private $valide = false;
+    
+    
+    
     
         public function __construct()
     {
@@ -100,20 +90,27 @@ class Utilisateur extends BaseUser
     }
     
     
+    //RELATION ENTRE LES CLASSES
     /**
      * 
-     * @ORM\ManyToOne(targetEntity="btsappli\StagesBundle\Entity\Entreprise")
+     * @ORM\ManyToOne(targetEntity="btsappli\StagesBundle\Entity\Stage")
      */
-     private $entreprise; //un étudiant fait son stage dans une seule entreprise
-
-    /**
+     private $stage; // sans s car un étudiant n'a qu'un seul stage
+     
+     /**
      * 
-     * @ORM\ManyToOne(targetEntity="btsappli\StagesBundle\Entity\Tuteur")
+     * @ORM\ManyToOne(targetEntity="btsappli\UserBundle\Entity\Promotion")
      */
-     private $tuteur; //un étudiant n'a qu'un seul tuteur lors de son stage
+     private $promotion; // sans s car un étudiant n'appartient qu'à une seule promotion
+     
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="btsappli\CCFBundle\Entity\Ecrit")
+     */
+    private $ecrits; // avec un s car un étudiant a plusieurs écrits
 
-
-
+    
+    //GET ET SET
     /**
      * Get id
      *
@@ -128,7 +125,7 @@ class Utilisateur extends BaseUser
      * Set nom
      *
      * @param string $nom
-     * @return Utilisateur
+     * @return User
      */
     public function setNom($nom)
     {
@@ -151,7 +148,7 @@ class Utilisateur extends BaseUser
      * Set prenom
      *
      * @param string $prenom
-     * @return Utilisateur
+     * @return User
      */
     public function setPrenom($prenom)
     {
@@ -170,57 +167,12 @@ class Utilisateur extends BaseUser
         return $this->prenom;
     }
 
-    /**
-     * Set adresseMail
-     *
-     * @param string $adresseMail
-     * @return Utilisateur
-     */
-    public function setAdresseMail($adresseMail)
-    {
-        $this->adresseMail = $adresseMail;
-
-        return $this;
-    }
-
-    /**
-     * Get adresseMail
-     *
-     * @return string 
-     */
-    public function getAdresseMail()
-    {
-        return $this->adresseMail;
-    }
-
-    /**
-     * Set motDePasse
-     *
-     * @param string $motDePasse
-     * @return Utilisateur
-     */
-    public function setMotDePasse($motDePasse)
-    {
-        $this->motDePasse = $motDePasse;
-
-        return $this;
-    }
-
-    /**
-     * Get motDePasse
-     *
-     * @return string 
-     */
-    public function getMotDePasse()
-    {
-        return $this->motDePasse;
-    }
-
-    /**
+   
+     /**
      * Set dateNaiss
      *
-     * @param string $dateNaiss
-     * @return Utilisateur
+     * @param date $dateNaiss
+     * @return User
      */
     public function setDateNaiss($dateNaiss)
     {
@@ -232,7 +184,7 @@ class Utilisateur extends BaseUser
     /**
      * Get dateNaiss
      *
-     * @return string 
+     * @return date 
      */
     public function getDateNaiss()
     {
@@ -243,7 +195,7 @@ class Utilisateur extends BaseUser
      * Set adresse
      *
      * @param string $adresse
-     * @return Utilisateur
+     * @return User
      */
     public function setAdresse($adresse)
     {
@@ -266,7 +218,7 @@ class Utilisateur extends BaseUser
      * Set codePostal
      *
      * @param integer $codePostal
-     * @return Utilisateur
+     * @return User
      */
     public function setCodePostal($codePostal)
     {
@@ -289,7 +241,7 @@ class Utilisateur extends BaseUser
      * Set ville
      *
      * @param string $ville
-     * @return Utilisateur
+     * @return User
      */
     public function setVille($ville)
     {
@@ -312,7 +264,7 @@ class Utilisateur extends BaseUser
      * Set telephone
      *
      * @param string $telephone
-     * @return Utilisateur
+     * @return User
      */
     public function setTelephone($telephone)
     {
@@ -331,13 +283,56 @@ class Utilisateur extends BaseUser
         return $this->telephone;
     }
 
+
+    /**
+     * Set stage
+     *
+     * @param \btsappli\StagesBundle\Entity\Stage $stage
+     * @return User
+     */
+    public function setStage(\btsappli\StagesBundle\Entity\Stage $stage = null)
+    {
+        $this->stage = $stage;
+
+        return $this;
+    }
+
+    /**
+     * Get stage
+     *
+     * @return \btsappli\StagesBundle\Entity\Stage 
+     */
+    public function getStage()
+    {
+        return $this->stage;
+    }
+
+  
+    
+        /* Surcharge de fosuser bunble afin que l'identifiant correspondent à l'email */
+    public function setEmail($email)
+    {
+        parent::setEmail($email);
+        $this->username = $email;
+
+        return $this;
+    }
+    public function setEmailCanonical($emailCanonical)
+    {
+        parent::setEmailCanonical($emailCanonical);
+        $this->usernameCanonical = $emailCanonical;
+
+        return $this;
+    }
+    
+
     /**
      * Set promotion
      *
-     * @param string $promotion
-     * @return Utilisateur
+     * @param \btsappli\UserBundle\Entity\Promotion $promotion
+     * @return User
      */
-    public function setPromotion($promotion)
+    public function setPromotion(\btsappli\UserBundle\Entity\Promotion $promotion = null)
     {
         $this->promotion = $promotion;
 
@@ -346,11 +341,37 @@ class Utilisateur extends BaseUser
 
     /**
      * Get promotion
+     * 
      *
-     * @return string 
+     * @return \btsappli\UserBundle\Entity\Promotion
      */
     public function getPromotion()
     {
         return $this->promotion;
     }
+    
+    /**
+     * Get valide
+     *
+     * @return boolean 
+     */
+    public function getValide()
+    {
+        return $this->valide;
+    }
+
+    /**
+     * Set valide
+     *
+     * @param boolean $valide
+     * @return User
+     */
+    public function setValide($valide)
+    {
+        $this->valide = $valide;
+
+        return $this;
+    }
+
+    
 }

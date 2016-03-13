@@ -1,6 +1,10 @@
 btsappli_CCF_accueilCCF:
     path:   /accueilCCF
     defaults: { _controller: btsappliCCFBundle:CCF:accueilCCF }
+
+btsappli_CCF_ajoutEcrit:
+    path:   /ajouterEcrit
+    defaults: { _controller: btsappliCCFBundle:CCF:ajoutEcrit }
     
 btsappli_CCF_planningCCFAdmin:
     path:   /planningCCFAdmin

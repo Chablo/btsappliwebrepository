@@ -16,6 +16,9 @@ use btsappli\StagesBundle\Form\TuteurType;
 use btsappli\StagesBundle\Form\StageType;
 use btsappli\UserBundle\Entity\User;
 use btsappli\StagesBundle\Form\EntrepriseRechercheForm;
+use Symfony\Component\HttpFoundation\Response;
+
+
 class StagesController extends Controller
 {
     public function voirEntrepriseAction()
@@ -232,6 +235,63 @@ class StagesController extends Controller
     }
     
     
+    public function modificationEntAction(Request $requeteUtilisateur)
+    {
+        // On récupère l'entreprise choisie précédemment par l'étudiant
+        $entreprise = $this->getUser()->getStage()->getEntreprise();
+        
+        // Création du formulaire permettant de modifier une entreprise
+        $formulaireEntreprise = $this->createForm(new EntrepriseType, $entreprise);
+        
+        // Enregistrement des données dans $entreprise dès soumission du formulaire
+        $formulaireEntreprise->handleRequest($requeteUtilisateur);
+        
+        // Si le formulaire a été soumis et que les données sont valides
+        if($formulaireEntreprise->isValid())
+        {
+            // On enregistre l'objet $entreprise en base de données
+            $gestionnaireEntite = $this->getDoctrine()->getManager();
+            $gestionnaireEntite->persist($entreprise);
+            $gestionnaireEntite->flush();
+             // On redirige vers la page de la vue de l'entreprise choisie et modifiée
+             return $this->redirect($this->generateUrl('btsappli_stages_voirEntreprise'));
+        }
+        
+        // On appelle la vue chargée d'afficher le formulaire et on lui transmet la représentation graphique du formulaire
+        return $this -> render('btsappliStagesBundle:Stages:modificationEntreprise.html.twig',
+                        array('formulaireEntreprise' => $formulaireEntreprise -> createView(),
+                              'nomEntreprise' => $entreprise->getNom()));
+    }
+
+    public function modificationTutAction(Request $requeteUtilisateur)
+    {
+        // On récupère le tuteur choisi précédemment par l'étudiant
+        $tuteur = $this->getUser()->getStage()->getTuteur();
+        
+        // Création du formulaire permettant de modifier un tuteur
+        $formulaireTuteur = $this->createForm(new TuteurType, $tuteur);
+        
+        // Enregistrement des données dans $tuteur dès soumission du formulaire
+        $formulaireTuteur->handleRequest($requeteUtilisateur);
+        
+        // Si le formulaire a été soumis et que les données sont valides
+        if($formulaireTuteur->isValid())
+        {
+            // On enregistre l'objet $tuteur en base de données
+            $gestionnaireEntite = $this->getDoctrine()->getManager();
+            $gestionnaireEntite->persist($tuteur);
+            $gestionnaireEntite->flush();
+             // On redirige vers la page de la vue du tuteur choisi et modifié
+             return $this->redirect($this->generateUrl('btsappli_stages_voirTuteur'));
+        }
+        
+        // On appelle la vue chargée d'afficher le formulaire et on lui transmet la représentation graphique du formulaire
+        return $this -> render('btsappliStagesBundle:Stages:modificationTuteur.html.twig',
+                        array('formulaireTuteur' => $formulaireTuteur -> createView(),
+                              'tuteur' => $tuteur));
+    }
+    
+    
     
     
     public function rechercherEntrepriseAction(Request $requeteUtilisateur)
@@ -286,5 +346,23 @@ class StagesController extends Controller
             return $this->rechercheEntrepriseAction();
         }
     }
+    
+    public function generatePdfAction(Request $request)
+    {
+       // initialize the $emp variable
+        $html = $this->renderView('btsappliStagesBundle:Stages:vueStage.html.twig',
+            array('stage'=> $this->getUser()->getStage())
+        );
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="file.pdf"'
+            )
+        );
+    }
+
 }
 ?>

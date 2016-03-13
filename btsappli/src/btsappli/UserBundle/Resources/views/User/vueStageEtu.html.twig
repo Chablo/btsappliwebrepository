@@ -6,42 +6,73 @@
 <div class="col-lg-10 col-lg-offset-1">
 	<div style="margin-top:18px;">
 	    <div class="panel panel-default">
-	        <div class="panel-heading"><h3>Récapitulatif de ton stage :</h3></div>
-		        <div class="panel-body">
-		        	<div class="row">
-		        		<div class="col-lg-6">
-				            <h4>Entreprise <em>{{ stage.entreprise.nom }}</em> :</h4>
-				            <dl class="dl-horizontal">
-						        <dt>Représentant</dt><dd>{{ stage.entreprise.representant }}</dd><br/>
-						        
-						        <dt>Adresse<dt><dd>{{ stage.entreprise.adresse }}</dd>
-						        <dt>Code postal</dt><dd>{{ stage.entreprise.codePostal }}</dd>
-						        <dt>Ville<dt><dd>{{ stage.entreprise.ville }}</dd>
-						        <dt>Pays</dt><dd>{{ stage.entreprise.pays }}</dd><br/>
-						        
-						        <dt>Adresse email<dt><dd>{{ stage.entreprise.adresseMail }}</dd>
-						        <dt>Téléphone</dt><dd>{{ stage.entreprise.telephone }}</dd>
-						        <dt>Fax</dt><dd>{{ stage.entreprise.fax }}</dd><br/>
-						        
-						        <dt>Service d'accueil</dt><dd>{{ stage.entreprise.serviceAccueil }}</dd><br/>
-						        
-						        <dt>Description</dt><dd>{{ stage.entreprise.description }}</dd>
-				            </dl>
-		        		</div>
-			     		<div class="col-lg-6">
-				            <h4>Tuteur :</h4>
-				            <dl class="dl-horizontal">
-						        <dt>Nom</dt><dd>{{ stage.tuteur.nom }}</dd>
-						        <dt>Prénom<dt><dd>{{ stage.tuteur.prenom }}</dd>
-						        <dt>Email</dt><dd>{{ stage.tuteur.adresseMail }}</dd>
-						        <dt>Téléphone<dt><dd>{{ stage.tuteur.telephone }}</dd>
-						        <dt>Fonctions</dt><dd>{{ stage.tuteur.fonction }}</dd>
-						        <dt>Infos Complémentaires<dt><dd>{{ stage.tuteur.infosComplementaires }}</dd>
-				            </dl>
-			     		</div>
-					</div>
-		            <a href="{{ path('btsappli_utilisateurs_accueilEtu') }}" role="button" class="btn btn-primary pull-right" type="button" style="width:140px">Accueil</a>
-		        </div>
+	        <div class="panel-heading"><h3>Récapitulatif de ton stage :</h3>
+        	{% if user.stage.etatConvention == 1 %}
+                <h4>(Convention Non Validée)</h4>
+            {% endif %}
+            {% if user.stage.etatConvention == 2 %}
+                <h4>(Convention Validée)</h4>
+            {% endif %}
+            {% if user.stage.etatConvention == 3 %}
+                <h4>(Convention Signée)</h4>
+            {% endif %}
+            </div>
+	        <div class="panel-body">
+	        	<div class="row">
+	        		<div class="col-lg-6">
+			            <h4>Etudiant <em>{{ user.nom }} {{ user.prenom }}</em> :</h4>
+			            <dl class="dl-horizontal">
+					        <dt>Date de naissance</dt><dd>{{ user.stage.entreprise.fax }}</dd>
+					        <dt>Email</dt><dd>{{ user.email }}</dd>
+					        <dt>Téléphone</dt><dd>{{ user.telephone }}</dd>
+					        <dt>Adresse<dt><dd>{{ user.adresse }}</dd>
+					        <dt>Code postal</dt><dd>{{ user.codePostal }}</dd>
+					        <dt>Ville<dt><dd>{{ user.ville }}</dd>
+			            </dl>
+			            
+			            <h4>Tuteur <em>{{ user.stage.tuteur.nom }} {{ user.stage.tuteur.prenom }}</em> :</h4>
+			            <dl class="dl-horizontal">
+					        <dt>Email</dt><dd>{{ user.stage.tuteur.adresseMail }}</dd>
+					        <dt>Téléphone<dt><dd>{{ user.stage.tuteur.telephone }}</dd>
+					        <dt>Fonctions</dt><dd>{{ user.stage.tuteur.fonction }}</dd>
+					        <dt>Infos Complémentaires<dt><dd>{{ user.stage.tuteur.infosComplementaires }}</dd>
+			            </dl>
+	        		</div>
+	        		<div class="col-lg-6">
+			            <h4>Entreprise <em>{{ user.stage.entreprise.nom }}</em> :</h4>
+			            <dl class="dl-horizontal">
+					        <dt>Représentant</dt><dd>{{ user.stage.entreprise.representant }}</dd><br/>
+					        
+					        <dt>Adresse<dt><dd>{{ user.stage.entreprise.adresse }}</dd>
+					        <dt>Code postal</dt><dd>{{ user.stage.entreprise.codePostal }}</dd>
+					        <dt>Ville<dt><dd>{{ user.stage.entreprise.ville }}</dd>
+					        <dt>Pays</dt><dd>{{ user.stage.entreprise.pays }}</dd><br/>
+					        
+					        <dt>Adresse email<dt><dd>{{ user.stage.entreprise.adresseMail }}</dd>
+					        <dt>Téléphone</dt><dd>{{ user.stage.entreprise.telephone }}</dd>
+					        <dt>Fax</dt><dd>{{ user.stage.entreprise.fax }}</dd><br/>
+					        
+					        <dt>Service d'accueil</dt><dd>{{ user.stage.entreprise.serviceAccueil }}</dd><br/>
+					        
+					        <dt>Description</dt><dd>{{ user.stage.entreprise.description }}</dd>
+			            </dl>
+	        		</div>
+		     		
+		     		
+				</div>
+				<div class="btn-group dropup pull-right">
+					<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    	Convention <span class="caret"></span>
+				    	<span class="sr-only">Toggle Dropdown</span>
+				    </button>
+				    <ul class="dropdown-menu dropdown-menu-left">
+				    	<li><a href="{{ path('btsappli_utilisateurs_setEtatConv', {'id':user.id, 'etatConv':1}) }}">Non Validée</a></li>
+                        <li><a href="{{ path('btsappli_utilisateurs_setEtatConv', {'id':user.id, 'etatConv':2}) }}">Validée</a></li>
+                        <li><a href="{{ path('btsappli_utilisateurs_setEtatConv', {'id':user.id, 'etatConv':3}) }}">Signée</a></li>
+				    </ul>
+				</div>
+	            <a href="{{ path('btsappli_utilisateurs_suiviStages') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>
+        	</div>
 	    </div>
 	</div>  
 </div>

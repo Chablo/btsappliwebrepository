@@ -3,12 +3,43 @@
 namespace btsappli\CCFBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use btsappli\CCFBundle\Entity\Ecrit;
+use btsappli\CCFBundle\Form\EcritType;
 
 class CCFController extends Controller
 {
-     public function accueilCCFAction()
+    public function accueilCCFAction()
     {
         return $this->render('btsappliCCFBundle:CCF:accueilCCF.html.twig');
+    }
+    
+    public function ajoutEcritAction(Request $requeteUtilisateur)
+    {
+        // On créé un objet Ecrit "vide"
+        $ecrit = new Ecrit();
+        
+        // Création du formulaire permettant de saisir un ecrit
+        $formulaireEcrit = $this->createForm(new EcritType, $ecrit);
+        
+        // Enregistrement des données dans $ecrit dès soumission du formulaire
+        $formulaireEcrit->handleRequest($requeteUtilisateur);
+        
+        // Si le formulaire a été soumis et que les données sont valides
+        if($formulaireEcrit->isValid())
+        {
+            // On enregistre l'objet $ecrit en base de données
+            $gestionnaireEntite = $this->getDoctrine()->getManager();
+            $gestionnaireEntite->persist($ecrit);
+            $gestionnaireEntite->flush();
+            
+            // On redirige vers la page de planning des CCF
+            return $this->redirect($this->generateUrl('btsappli_CCF_planningCCFAdmin'));
+        }
+        
+        // On appelle la vue chargée d'afficher le formulaire et on lui transmet la représentation graphique du formulaire
+        return $this->render('btsappliCCFBundle:CCF:ajoutEcrit.html.twig',
+                                array('formulaireEcrit' => $formulaireEcrit -> createView()));
     }
     
      public function planningCCFAdminAction()

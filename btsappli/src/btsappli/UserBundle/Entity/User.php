@@ -102,6 +102,12 @@ class User extends BaseUser
      * @ORM\ManyToOne(targetEntity="btsappli\UserBundle\Entity\Promotion")
      */
      private $promotion; // sans s car un étudiant n'appartient qu'à une seule promotion
+     
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="btsappli\CCFBundle\Entity\Ecrit")
+     */
+    private $ecrits; // avec un s car un étudiant a plusieurs écrits
 
     
     //GET ET SET
@@ -368,4 +374,37 @@ class User extends BaseUser
     }
 
     
+
+    /**
+     * Add ecrits
+     *
+     * @param \btsappli\CCFBundle\Entity\Ecrit $ecrits
+     * @return User
+     */
+    public function addEcrit(\btsappli\CCFBundle\Entity\Ecrit $ecrits)
+    {
+        $this->ecrits[] = $ecrits;
+
+        return $this;
+    }
+
+    /**
+     * Remove ecrits
+     *
+     * @param \btsappli\CCFBundle\Entity\Ecrit $ecrits
+     */
+    public function removeEcrit(\btsappli\CCFBundle\Entity\Ecrit $ecrits)
+    {
+        $this->ecrits->removeElement($ecrits);
+    }
+
+    /**
+     * Get ecrits
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEcrits()
+    {
+        return $this->ecrits;
+    }
 }

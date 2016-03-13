@@ -14,7 +14,6 @@ class TuteurRepository extends EntityRepository
 {
     public function getTuteursDUneEntreprise($id)
 	{
- 
 		$qb = $this->createQueryBuilder('t');
  
 		$qb->where('t.entreprise = :id')

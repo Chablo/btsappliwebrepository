@@ -2,6 +2,9 @@
 namespace btsappli\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use btsappli\UserBundle\Entity\Promotion;
+use btsappli\UserBundle\Form\PromotionType;
 
 class UserController extends Controller
 {
@@ -97,8 +100,51 @@ class UserController extends Controller
                                             'tabPromotions'=>$tabPromotions));
     }
     
+// ************* PROMOTIONS ***********************************************************************************
 
-// ************* Suivi Stages ***********************************************************************************
+    public function ajoutPromoAction(Request $requeteUtilisateur)
+    {
+        // On créé un objet Promotion "vide"
+        $promotion = new Promotion();
+        
+        // Création du formulaire permettant de saisir une promotion
+        $formulairePromotion = $this->createForm(new PromotionType, $promotion);
+        
+        // Enregistrement des données dans $promotion dès soumission du formulaire
+        $formulairePromotion->handleRequest($requeteUtilisateur);
+        
+        // Si le formulaire a été soumis et que les données sont valides
+        if($formulairePromotion->isValid())
+        {
+            // On enregistre l'objet $promotion en base de données
+            $gestionnaireEntite = $this->getDoctrine()->getManager();
+            $gestionnaireEntite->persist($promotion);
+            $gestionnaireEntite->flush();
+            
+            /*$repositoryPromotion = $gestionnaireEntite->getRepository('btsappliUserBundle:Promotion');
+            
+            // On récupère l'année de la nouvelle promotion créée
+            $anneePromo = $promotion->getAnneePromo();
+            
+            // On récupère la promotion qui ne sera plus en cours
+            $anciennePromo = $repositoryPromotion -> getAnciennePromo($anneePromo);
+            
+            // On change l'etat de cette promotion
+            $anciennePromo -> setEnCours(false);
+            
+            $gestionnaireEntite->persist($anciennePromo);
+            $gestionnaireEntite->flush();*/
+            
+            // On redirige vers la page de suivi de stages
+            return $this->redirect($this->generateUrl('btsappli_utilisateurs_suiviStages'));
+        }
+        
+        // On appelle la vue chargée d'afficher le formulaire et on lui transmet la représentation graphique du formulaire
+        return $this -> render('btsappliUserBundle:User:ajoutPromotion.html.twig',
+                        array('formulairePromotion' => $formulairePromotion -> createView()));
+    }
+
+// ************* SUIVI STAGES ***********************************************************************************
     
     public function suiviStagesAction()
     {
@@ -113,13 +159,43 @@ class UserController extends Controller
                              array('tabUsersEtStages' => $tabUsersEtStages)); 
     }
     
-        public function voirStageEtuAction()
+    public function voirStageEtuAction($id)
     {
-        // On récupère le stage de l'utilisateur
-        $stage = $this -> getUser() -> getStage();
+        // On récupère le gestionnaire d'entité
+        $gestionnaireEntite = $this->getDoctrine()->getManager();
+        
+        // On récupère le repository de l'entité User
+        $repositoryUser = $gestionnaireEntite->getRepository('btsappliUserBundle:User');
+    
+        // On récupère l'user dont l'id est le paramètre $id
+        $user = $repositoryUser->find($id);
         
         // On transmet le stage à la vue chargée de l'afficher
-        return $this->render('btsappliUserBundle:User:vueStage.html.twig', array('stage' => $stage));
+        return $this->render('btsappliUserBundle:User:vueStageEtu.html.twig', array('user' => $user));
+    }
+    
+    public function setEtatConv($id,$etatConv)
+    {
+        // On récupère le gestionnaire d'entité
+        $gestionnaireEntite = $this->getDoctrine()->getManager();
+        
+        // On récupère le repository de l'entité User
+        $repositoryUser = $gestionnaireEntite->getRepository('btsappliUserBundle:User');
+    
+        // On récupère l'user dont l'id est le paramètre $id
+        $user = $repositoryUser->find($id);
+        $stage = $user->getStage();
+        // On met la convention à la valeur correspondante
+        if($etatConv==1) {$stage->setetatConvention(1);}
+        elseif($etatConv==2) {$stage->setetatConvention(2);}
+        elseif($etatConv==3) {$stage->setetatConvention(3);}
+        
+        // On le répercute dans la BD
+        $gestionnaireEntite->persist($stage);
+        $gestionnaireEntite->flush();
+        
+        // On transmet le stage à la vue chargée de l'afficher
+        return $this->render('btsappliUserBundle:User:vueStageEtu.html.twig', array('user' => $user));
     }
     
     public function suiviStagesFiltrerPromoAction($idPromo)
@@ -250,7 +326,7 @@ class UserController extends Controller
                                 array('user' => $user));
     }
     
-    public function voirStageAction($id)
+    public function reinitialiserStagesAction()
     {
         // On récupère le gestionnaire d'entité
         $gestionnaireEntite = $this->getDoctrine()->getManager();
@@ -259,17 +335,41 @@ class UserController extends Controller
         $repositoryUser = $gestionnaireEntite->getRepository('btsappliUserBundle:User');
     
         // On récupère l'user dont l'id est le paramètre $id
-        $user = $repositoryUser->find($id);
+        $user = $repositoryUser->findAll();
+        $count = count($user);
         
-        // On récupère le stage de l'user
-        $stageASupprimer = $user->getStage();
+        for ( $i = 0; $i<$count; $i++){
+            $stage = $user->getStage();
+            
+            if ($stage!=null){
+                
+            $userCourant = $user[$i];
+            // On récupère le stage de l'user
+            $stageASupprimer = $userCourant->getStage();
+            
+            // On met à NULL le stage de l'user
+            $userCourant->setStage(null);
+            
+            // On supprime le stage récupéré de la BD
+            $gestionnaireEntite->remove($stageASupprimer);
+            $gestionnaireEntite->flush();
+            }
+            
+        }
+        // On récupère tous les users avec leur stage
+        $tabUsersEtStages = $repositoryUser->getUsersEtStages();     
         
         // On transmet l'entreprise à la vue chargée de l'afficher
-        return $this->render('btsappliUserBundle:User:supprimerStage.html.twig',  array(
-                                'stage' => $stageASupprimer,
-                                'user' => $user));
-                             
-    }    
+        return $this->render('btsappliUserBundle:User:suiviStages.html.twig', 
+                             array('tabUsersEtStages' => $tabUsersEtStages));
+    }
+    
+    public function reinitStagesValidationAction()
+    {
+        
+        // On transmet l'entreprise à la vue chargée de l'afficher
+        return $this->render('btsappliUserBundle:User:suiviStagesReinitValidation.html.twig');
+    }
     
 // *********** Gérer inscriptions *************************************************************************************
     

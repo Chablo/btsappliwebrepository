@@ -22,9 +22,23 @@ btsappli_utilisateurs_suiviEtudiantFiltrer:
     
 #************************************************************************************************************
 
+btsappli_utilisateurs_ajoutPromo:
+    path:   /ajouterPromo
+    defaults: { _controller: btsappliUserBundle:User:ajoutPromo }
+
+#************************************************************************************************************
+
 btsappli_utilisateurs_suiviStages:
     path:   /suiviStages
     defaults: { _controller: btsappliUserBundle:User:suiviStages }
+    
+btsappli_utilisateurs_voirStageEtu:
+    path:   /voirStageEtu/{id}
+    defaults: { _controller: btsappliUserBundle:User:voirStageEtu }
+    
+btsappli_utilisateurs_setEtatConv:
+    path:   /voirStageEtu/{id}
+    defaults: { _controller: btsappliUserBundle:User:setEtatConv }
     
 btsappli_utilisateurs_suiviStagesFiltrerPromo:
     path:   /suiviStagesFiltrerPromo
@@ -53,6 +67,14 @@ btsappli_utilisateurs_supprimerStage:
 btsappli_utilisateurs_supprimerStageValidation:
     path:   /suiviStages/supprimerStageValidation/{id}
     defaults: { _controller: btsappliUserBundle:User:supprimerStageValidation }
+
+btsappli_utilisateurs_ReinitialiserStages:
+    path:   /suiviStages/ReinitialiserStages
+    defaults: { _controller: btsappliUserBundle:User:reinitialiserStages }
+    
+btsappli_utilisateurs_ReinitStagesValidation:
+    path:   /suiviStages/ReinitStagesValidation
+    defaults: { _controller: btsappliUserBundle:User:reinitStagesValidation }
 
 #************************************************************************************************************
 

@@ -9,10 +9,10 @@
     <div class="col-lg-8 col-lg-offset-2">
         <div class="panel panel-danger">
             <div class="panel-heading">
-                <h3 class="panel-title"></h3>Suppression de stage</h3>
+                <h3 class="panel-title"></h3>Réinitialisation des stages</h3>
             </div>
             <div class="panel-body">
-                <p>Voulez-vous vraiment supprimer le stage de {{user.prenom}} {{user.nom}} ?</p>
+                <p>Voulez-vous vraiment réinitialiser le tableau et supprimer les stages ?</p>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
     <a href="{{ path('btsappli_utilisateurs_suiviStages') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
     </div>
     <div class="col-lg-1 col-lg-offset-6">
-    <a href="{{ path('btsappli_utilisateurs_supprimerStage', {'id':user.id}) }}" role="button" class="btn btn-danger pull-right" type="button" style="width:140px">Supprimer</a> 
+    <a href="{{ path('btsappli_utilisateurs_ReinitialiserStages') }}" role="button" class="btn btn-danger pull-right" type="button" style="width:140px">Réinitialiser</a> 
     </div>
 </div>
 {% endblock %}
