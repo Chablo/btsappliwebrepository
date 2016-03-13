@@ -16,20 +16,26 @@ class EcritType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('duree',      'time', array(
-                        'label' => 'Durée'))
-            ->add('debut',      'time', array(
-                        'label' => 'Début'))
-            ->add('salle',      'entity', array(
-                        'class' => 'btsappliCCFBundle:Salle',
-                        'property' => 'nom'))
-            ->add('promotion',  'entity', array(
-                        'label' => 'Promotion concernée',
-                        'class' => 'btsappliUserBundle:Promotion',
-                        'property' => 'anneePromo',
-                        'query_builder' => function (PromotionRepository $pr) {
+            ->add('date',       'date')
+            ->add('matiere',    'choice', 
+                    array('label' => 'Matière',
+                          'choices' => array('maths' => 'Mathématiques',
+                                             'francais' => 'Français',
+                                             'anglais' => 'Anglais')))
+            ->add('debut',      'time', 
+                    array('label' => 'Heure de début'))
+            ->add('fin',        'time', 
+                    array('label' => 'Heure de fin'))
+            ->add('salle',      'entity', 
+                    array('class' => 'btsappliCCFBundle:Salle',
+                          'property' => 'nom'))
+            ->add('promotion',  'entity', 
+                    array('label' => 'Promotion concernée',
+                          'class' => 'btsappliUserBundle:Promotion',
+                          'property' => 'anneePromo',
+                          'query_builder' => function (PromotionRepository $pr) {
                                 return $pr->getPromoEnCours();
-                        }))
+                          }))
         ;
     }
     

@@ -5,7 +5,7 @@
 <div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3> Planning des CCF </h3> 
+        <h3> Planning des oraux </h3> 
         <!-- bouton de filtrage qui affiche CCF oral ou ecrit -->
         <div class="row">
             <div class="col-lg-2 col-lg-offset-10">
@@ -14,9 +14,9 @@
                     Filtrer <span class="caret"></span>
                     </button>
                         <ul class="dropdown-menu pull-right" style="width:150px" >
-                            <li role="presentation"><a id="oral" role="menuitem" onclick="Resolve()"> Oral </a></li>
+                            <li role="presentation"><a id="oral" role="menuitem" onclick="Resolve()"> Oraux </a></li>
                             <li role="separator" class="divider"></li>
-                            <li role="presentation"><a id="ecrit" role="menuitem" onclick="Resolve()" > Ecrit </a></li>
+                            <li role="presentation"><a id="ecrit" role="menuitem" onclick="Resolve()" > Ecrits </a></li>
                         </ul>
                 </div>
             </div>
@@ -26,43 +26,41 @@
     <!-- Création du tableau contenant la liste des étudiants et leurs CCF -->
     <div class="table-responsive">
         <table class="table table-striped table-hover">
-           
-            <!-- Création de la première ligne contenant le nom de chaque colonne principale -->
-            <tr align="center">
-                <td class="warning"></td> 
-                <td class="warning">Etudiants</td> 
-                <td class="warning"></td>
-
-                <td class="success"></td>
-                <td class="success"></td>
-                <td class="success">CCF</td>
-                <td class="success"></td>
-                <td class="success"></td>
-                <td class="success"></td>
-            </tr>
-            <!-- Création de la première ligne contenant le nom de chaque colonne secondaire -->
-            <tr class="info " align="center">
-                <td>Nom</td>
-                <td>Prénom</td>
-                <td>Promotion</td>
-            
-                <td>Type</td>
-                <td>Matière</td>
-                <td>Date</td>
-                <td>Salle</td>
-                <td>Heure début</td>
-                <td>Heure fin</td>
-            </tr>
-            
+           <thead>
+                <!-- Création de la première ligne contenant le nom de chaque colonne principale -->
+                <tr align="center">
+                    <td class="warning"></td> 
+                    <td class="warning">Etudiants</td> 
+                    <td class="warning"></td>
+    
+                    <td class="success"></td>
+                    <td class="success">Oraux</td>
+                    <td class="success"></td>
+                    <td class="success"></td>
+                    <td class="success"></td>
+                </tr>
+                <!-- Création de la première ligne contenant le nom de chaque colonne secondaire -->
+                <tr class="info " align="center">
+                    <td>Nom</td>
+                    <td>Prénom</td>
+                    <td>Promotion</td>
+                
+                    <td>Matière</td>
+                    <td>Date</td>
+                    <td>Salle</td>
+                    <td>Heure début</td>
+                    <td>Heure fin</td>
+                </tr>
+            </thead>
             <!-- Affichage de tous des CCF par étudiants -->
             {% for userCourant in tabUserEtCCF %}  
             
                 <tr align="center">
                     <td>{{userCourant.nom}}</td>
                     <td>{{userCourant.prenom}}</td>
-                  {#  <td>{{userCourant.promo}}</td> #}
+                    <td>{{userCourant.promotion.anneePromo}}</td>
                 
-              {#  {% if userCourant.ccf is not null %}
+              {#  {% if userCourant.oral is not null %}
                     <td>{{userCourant.ccf.type}}</td>
                     <td>{{userCourant.ccf.matiere}}</td>
                     <td>{{userCourant.ccf.dateCCF|date("m/d/Y")}}</td>

@@ -1,15 +1,23 @@
-btsappli_CCF_accueilCCF:
-    path:   /accueilCCF
-    defaults: { _controller: btsappliCCFBundle:CCF:accueilCCF }
+btsappli_CCF_editionChoixTypeCCF:
+    path:   /administration/editer/choisirTypeCCF
+    defaults: { _controller: btsappliCCFBundle:CCF:editionChoixTypeCCF }
+
+btsappli_CCF_planningChoixTypeCCF:
+    path:   /administration/planning/choisirTypeCCF
+    defaults: { _controller: btsappliCCFBundle:CCF:planningChoixTypeCCF }
 
 btsappli_CCF_ajoutEcrit:
-    path:   /ajouterEcrit
+    path:   /administration/editer/ecrit
     defaults: { _controller: btsappliCCFBundle:CCF:ajoutEcrit }
-    
-btsappli_CCF_planningCCFAdmin:
-    path:   /planningCCFAdmin
-    defaults: { _controller: btsappliCCFBundle:CCF:planningCCFAdmin }
-    
+
+btsappli_CCF_planningOraux:
+    path:   /administration/planningOraux
+    defaults: { _controller: btsappliCCFBundle:CCF:planningOraux }
+
+btsappli_CCF_planningEcrits:
+    path:   /administration/planningEcrits
+    defaults: { _controller: btsappliCCFBundle:CCF:planningEcrits }
+
 btsappli_CCF_planningCCFEtu:
     path:   /planningCCFEtu/{id}
     defaults: { _controller: btsappliCCFBundle:CCF:planningCCFEtu }

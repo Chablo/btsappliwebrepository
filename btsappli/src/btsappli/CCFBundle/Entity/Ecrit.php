@@ -24,16 +24,30 @@ class Ecrit
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="duree", type="time")
-     */
-    private $duree;
-
-    /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="debut", type="time")
      */
     private $debut;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fin", type="time")
+     */
+    private $fin;
+    
+    /**
+     * @var \date
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
+    
+    /**
+     * @var \string
+     *
+     * @ORM\Column(name="matiere", type="string")
+     */
+    private $matiere;
 
     /**
      *
@@ -55,29 +69,6 @@ class Ecrit
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set duree
-     *
-     * @param \DateTime $duree
-     * @return Ecrit
-     */
-    public function setDuree($duree)
-    {
-        $this->duree = $duree;
-
-        return $this;
-    }
-
-    /**
-     * Get duree
-     *
-     * @return \DateTime 
-     */
-    public function getDuree()
-    {
-        return $this->duree;
     }
 
     /**
@@ -147,5 +138,74 @@ class Ecrit
     public function getPromotion()
     {
         return $this->promotion;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Ecrit
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set matiere
+     *
+     * @param string $matiere
+     * @return Ecrit
+     */
+    public function setMatiere($matiere)
+    {
+        $this->matiere = $matiere;
+
+        return $this;
+    }
+
+    /**
+     * Get matiere
+     *
+     * @return string 
+     */
+    public function getMatiere()
+    {
+        return $this->matiere;
+    }
+
+    /**
+     * Set fin
+     *
+     * @param \DateTime $fin
+     * @return Ecrit
+     */
+    public function setFin($fin)
+    {
+        $this->fin = $fin;
+
+        return $this;
+    }
+
+    /**
+     * Get fin
+     *
+     * @return \DateTime 
+     */
+    public function getFin()
+    {
+        return $this->fin;
     }
 }

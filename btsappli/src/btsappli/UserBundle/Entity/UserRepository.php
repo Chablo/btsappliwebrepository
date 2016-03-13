@@ -71,4 +71,16 @@ class UserRepository extends EntityRepository
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();
 	}
+	
+	public function findByPromoEnCours()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT u FROM btsappliUserBundle:User u LEFT JOIN u.promotion p WHERE p.enCours = true');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
 }
