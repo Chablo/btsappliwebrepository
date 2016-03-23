@@ -5,12 +5,12 @@ namespace btsappli\CCFBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Ecrit
+ * Oral
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="btsappli\CCFBundle\Entity\EcritRepository")
+ * @ORM\Entity(repositoryClass="btsappli\CCFBundle\Entity\OralRepository")
  */
-class Ecrit
+class Oral
 {
     /**
      * @var integer
@@ -24,50 +24,37 @@ class Ecrit
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="debut", type="time")
-     */
-    private $debut;
-    
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fin", type="time")
-     */
-    private $fin;
-    
-    /**
-     * @var \date
-     *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="dateDebut", type="date")
      */
     private $date;
     
     /**
-     * @var \string
+     * @var \DateTime
      *
-     * @ORM\Column(name="matiere", type="string")
+     * @ORM\Column(name="heure", type="time")
+     */
+    private $heure;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="matiere", type="string", length=30)
      */
     private $matiere;
     
     /**
      * @var \string
      *
-     * @ORM\Column(name="salle1", type="string")
+     * @ORM\Column(name="salle", type="string")
      */
-    private $salle1;
-    
-    /**
-     * @var \string
-     *
-     * @ORM\Column(name="salle2", type="string")
-     */
-    private $salle2;
+    private $salle;
     
     /**
      *
      * @ORM\ManyToOne(targetEntity="btsappli\UserBundle\Entity\Promotion")
      */
     private $promotion;
+
 
     /**
      * Get id
@@ -80,26 +67,26 @@ class Ecrit
     }
 
     /**
-     * Set debut
+     * Set matiere
      *
-     * @param \DateTime $debut
-     * @return Ecrit
+     * @param string $matiere
+     * @return Oral
      */
-    public function setDebut($debut)
+    public function setMatiere($matiere)
     {
-        $this->debut = $debut;
+        $this->matiere = $matiere;
 
         return $this;
     }
 
     /**
-     * Get debut
+     * Get matiere
      *
-     * @return \DateTime 
+     * @return string 
      */
-    public function getDebut()
+    public function getMatiere()
     {
-        return $this->debut;
+        return $this->matiere;
     }
 
 
@@ -107,7 +94,7 @@ class Ecrit
      * Set promotion
      *
      * @param \btsappli\UserBundle\Entity\Promotion $promotion
-     * @return Ecrit
+     * @return Oral
      */
     public function setPromotion(\btsappli\UserBundle\Entity\Promotion $promotion = null)
     {
@@ -127,10 +114,33 @@ class Ecrit
     }
 
     /**
+     * Set salle
+     *
+     * @param string $salle
+     * @return Oral
+     */
+    public function setSalle($salle)
+    {
+        $this->salle = $salle;
+
+        return $this;
+    }
+
+    /**
+     * Get salle
+     *
+     * @return string 
+     */
+    public function getSalle()
+    {
+        return $this->salle;
+    }
+
+    /**
      * Set date
      *
      * @param \DateTime $date
-     * @return Ecrit
+     * @return Oral
      */
     public function setDate($date)
     {
@@ -150,48 +160,25 @@ class Ecrit
     }
 
     /**
-     * Set matiere
+     * Set heure
      *
-     * @param string $matiere
-     * @return Ecrit
+     * @param \DateTime $heure
+     * @return Oral
      */
-    public function setMatiere($matiere)
+    public function setHeure($heure)
     {
-        $this->matiere = $matiere;
+        $this->heure = $heure;
 
         return $this;
     }
 
     /**
-     * Get matiere
-     *
-     * @return string 
-     */
-    public function getMatiere()
-    {
-        return $this->matiere;
-    }
-
-    /**
-     * Set fin
-     *
-     * @param \DateTime $fin
-     * @return Ecrit
-     */
-    public function setFin($fin)
-    {
-        $this->fin = $fin;
-
-        return $this;
-    }
-
-    /**
-     * Get fin
+     * Get heure
      *
      * @return \DateTime 
      */
-    public function getFin()
+    public function getHeure()
     {
-        return $this->fin;
+        return $this->heure;
     }
 }

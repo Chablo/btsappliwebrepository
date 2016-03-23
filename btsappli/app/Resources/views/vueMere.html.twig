@@ -9,11 +9,14 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/imprim.css') }}" media="print" />
+    <link rel="stylesheet" href="{{ asset('css/panelTable.css') }}">
+
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
     </head>
     
 
@@ -29,11 +32,22 @@
           <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-header">
                 {% block header %}
-                  <a href="{{ path('btsappli_utilisateurs_accueilEtu') }}">
-                  <svg  height="65px" width="550px" xmlns="http://www.w3.org/2000/svg" > 
-                    <image x="-223px" y="0px" height="100%" width="100%"  xlink:href="{{ asset('images/LogoV5.svg') }}" />
+                <?php 
+                
+                ?>
+               {% if is_granted('ROLE_SUPER_ADMIN')  %} 
+                <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}">
+                  <svg height="65px" width="550px" xmlns="http://www.w3.org/2000/svg" > 
+                    <image x="-240px" y="0px" height="100%" width="100%"  xlink:href="{{ asset('images/LogoFinishV1simplifié.svg') }}" />
                   </svg>
                   </a>
+                {% else %} 
+                <a href="{{ path('btsappli_utilisateurs_accueilEtu') }}">
+                  <svg  height="65px" width="550px" xmlns="http://www.w3.org/2000/svg" > 
+                    <image x="-240px" y="0px" height="100%" width="100%"  xlink:href="{{ asset('images/LogoFinishV1simplifié.svg') }}" />
+                  </svg>
+                  </a>
+                  {% endif %} 
                 {% endblock %}
             </div>
           </nav>
@@ -41,10 +55,8 @@
       </div>
       
       <!-- Ligne 2 -->
-      <div class="row">
         {% block contenuCentral %} 
         {% endblock %}
-      </div>  
       
       <!-- Ligne 3 -->
       <div class="row">

@@ -2,13 +2,18 @@ btsappli_CCF_editionChoixTypeCCF:
     path:   /administration/editer/choisirTypeCCF
     defaults: { _controller: btsappliCCFBundle:CCF:editionChoixTypeCCF }
 
-btsappli_CCF_planningChoixTypeCCF:
-    path:   /administration/planning/choisirTypeCCF
-    defaults: { _controller: btsappliCCFBundle:CCF:planningChoixTypeCCF }
-
 btsappli_CCF_ajoutEcrit:
     path:   /administration/editer/ecrit
     defaults: { _controller: btsappliCCFBundle:CCF:ajoutEcrit }
+
+btsappli_CCF_ajoutOral:
+    path:   /administration/editer/oral
+    defaults: { _controller: btsappliCCFBundle:CCF:ajoutOral }
+
+
+btsappli_CCF_planningChoixTypeCCF:
+    path:   /administration/planning/choisirTypeCCF
+    defaults: { _controller: btsappliCCFBundle:CCF:planningChoixTypeCCF }
 
 btsappli_CCF_planningOraux:
     path:   /administration/planningOraux
@@ -17,7 +22,3 @@ btsappli_CCF_planningOraux:
 btsappli_CCF_planningEcrits:
     path:   /administration/planningEcrits
     defaults: { _controller: btsappliCCFBundle:CCF:planningEcrits }
-
-btsappli_CCF_planningCCFEtu:
-    path:   /planningCCFEtu/{id}
-    defaults: { _controller: btsappliCCFBundle:CCF:planningCCFEtu }

@@ -1,4 +1,4 @@
-{# src/btsappli/UserBundle/Resources/views/User/ajoutEcrit.html.twig #}
+{# src/btsappli/UserBundle/Resources/views/User/ajoutOral.html.twig #}
 
 {% extends "::vueMere.html.twig" %}
 
@@ -6,10 +6,10 @@
 <div class="col-lg-10 col-lg-offset-1">
     <div style="margin-top:18px;">
         <div class="panel panel-default">
-            <div class="panel-heading"><h3>Ajout d'un CCF écrit :</h3></div>
+            <div class="panel-heading"><h3>Ajout d'un CCF oral :</h3></div>
                 <div class="panel-body">
-                    <form method="post" {{ form_enctype(formulaireEcrit) }}>
-                        {{ form_widget(formulaireEcrit) }}
+                    <form method="post" {{ form_enctype(formulaireOral) }}>
+                        {{ form_widget(formulaireOral) }}
                         
                            <div class="col-lg-1 col-lg-offset-1">
                             <a href="{{ path('btsappli_CCF_editionChoixTypeCCF') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Annuler</a>

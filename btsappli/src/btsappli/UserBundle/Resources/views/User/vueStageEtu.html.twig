@@ -6,23 +6,30 @@
 <div class="col-lg-10 col-lg-offset-1">
 	<div style="margin-top:18px;">
 	    <div class="panel panel-default">
-	        <div class="panel-heading"><h3>Récapitulatif de ton stage :</h3>
-        	{% if user.stage.etatConvention == 1 %}
-                <h4>(Convention Non Validée)</h4>
-            {% endif %}
-            {% if user.stage.etatConvention == 2 %}
-                <h4>(Convention Validée)</h4>
-            {% endif %}
-            {% if user.stage.etatConvention == 3 %}
-                <h4>(Convention Signée)</h4>
-            {% endif %}
+	        <div class="panel-heading"><h3>Récapitulatif du stage :</h3>
+	        <div class="row">
+		        <div class="col-lg-4 ">
+		        	{% if user.stage.etatConvention == 1 %}
+		                <h4>(Convention <b>Non Validée</b>)</h4>
+		            {% endif %}
+		            {% if user.stage.etatConvention == 2 %}
+		                <h4>(Convention <b>Validée</b>)</h4>
+		            {% endif %}
+		            {% if user.stage.etatConvention == 3 %}
+		                <h4>(Convention <b>Signée</b>)</h4>
+		            {% endif %}
+	            </div>
+	            <div class="col-lg-3 col-lg-offset-5">
+	            	<h5>Du <b>{{ user.stage.dateDebut|date("d/m/Y") }}</b> au <b>{{ user.stage.dateFin|date("d/m/Y") }}</b></h5>
+	            </div>
+            </div>
             </div>
 	        <div class="panel-body">
 	        	<div class="row">
 	        		<div class="col-lg-6">
-			            <h4>Etudiant <em>{{ user.nom }} {{ user.prenom }}</em> :</h4>
+			            <h4>Etudiant <b><em>{{ user.nom }} {{ user.prenom }}</em></b> :</h4>
 			            <dl class="dl-horizontal">
-					        <dt>Date de naissance</dt><dd>{{ user.stage.entreprise.fax }}</dd>
+					        <dt>Date de naissance</dt><dd>{{ user.dateNaiss|date("d/m/Y") }}</dd>
 					        <dt>Email</dt><dd>{{ user.email }}</dd>
 					        <dt>Téléphone</dt><dd>{{ user.telephone }}</dd>
 					        <dt>Adresse<dt><dd>{{ user.adresse }}</dd>
@@ -30,16 +37,16 @@
 					        <dt>Ville<dt><dd>{{ user.ville }}</dd>
 			            </dl>
 			            
-			            <h4>Tuteur <em>{{ user.stage.tuteur.nom }} {{ user.stage.tuteur.prenom }}</em> :</h4>
+			            <h4>Tuteur <b><em>{{ user.stage.tuteur.nom }} {{ user.stage.tuteur.prenom }}</em></b> :</h4>
 			            <dl class="dl-horizontal">
 					        <dt>Email</dt><dd>{{ user.stage.tuteur.adresseMail }}</dd>
-					        <dt>Téléphone<dt><dd>{{ user.stage.tuteur.telephone }}</dd>
+					        <dt>Téléphone<dt><dd>0{{ user.stage.tuteur.telephone }}</dd>
 					        <dt>Fonctions</dt><dd>{{ user.stage.tuteur.fonction }}</dd>
 					        <dt>Infos Complémentaires<dt><dd>{{ user.stage.tuteur.infosComplementaires }}</dd>
 			            </dl>
 	        		</div>
 	        		<div class="col-lg-6">
-			            <h4>Entreprise <em>{{ user.stage.entreprise.nom }}</em> :</h4>
+			            <h4>Entreprise <b><em>{{ user.stage.entreprise.nom }}</em></b> :</h4>
 			            <dl class="dl-horizontal">
 					        <dt>Représentant</dt><dd>{{ user.stage.entreprise.representant }}</dd><br/>
 					        
@@ -49,8 +56,8 @@
 					        <dt>Pays</dt><dd>{{ user.stage.entreprise.pays }}</dd><br/>
 					        
 					        <dt>Adresse email<dt><dd>{{ user.stage.entreprise.adresseMail }}</dd>
-					        <dt>Téléphone</dt><dd>{{ user.stage.entreprise.telephone }}</dd>
-					        <dt>Fax</dt><dd>{{ user.stage.entreprise.fax }}</dd><br/>
+					        <dt>Téléphone</dt><dd>0{{ user.stage.entreprise.telephone }}</dd>
+					        <dt>Fax</dt><dd>0{{ user.stage.entreprise.fax }}</dd><br/>
 					        
 					        <dt>Service d'accueil</dt><dd>{{ user.stage.entreprise.serviceAccueil }}</dd><br/>
 					        

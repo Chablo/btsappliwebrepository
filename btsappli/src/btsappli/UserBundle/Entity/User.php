@@ -45,6 +45,8 @@ class User extends BaseUser
      */
     private $dateNaiss;
 
+    
+    
     /**
      * @var string
      *
@@ -105,9 +107,15 @@ class User extends BaseUser
      
     /**
      *
-     * @ORM\ManyToMany(targetEntity="btsappli\CCFBundle\Entity\Ecrit")
+     * @ORM\ManyToOne(targetEntity="btsappli\CCFBundle\Entity\Ecrit")
      */
-    private $ecrits; // avec un s car un étudiant a plusieurs écrits
+    private $ecrit; // sans s car un étudiant a un seul écrit
+    
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="btsappli\CCFBundle\Entity\Oral")
+     */
+    private $oraux; // un étudiant a plusieurs oraux
 
     
     //GET ET SET
@@ -376,35 +384,58 @@ class User extends BaseUser
     
 
     /**
-     * Add ecrits
+     * Set ecrit
      *
-     * @param \btsappli\CCFBundle\Entity\Ecrit $ecrits
+     * @param \btsappli\CCFBundle\Entity\Ecrit $ecrit
      * @return User
      */
-    public function addEcrit(\btsappli\CCFBundle\Entity\Ecrit $ecrits)
+    public function setEcrit(\btsappli\CCFBundle\Entity\Ecrit $ecrit = null)
     {
-        $this->ecrits[] = $ecrits;
+        $this->ecrit = $ecrit;
 
         return $this;
     }
 
     /**
-     * Remove ecrits
+     * Get ecrit
      *
-     * @param \btsappli\CCFBundle\Entity\Ecrit $ecrits
+     * @return \btsappli\CCFBundle\Entity\Ecrit 
      */
-    public function removeEcrit(\btsappli\CCFBundle\Entity\Ecrit $ecrits)
+    public function getEcrit()
     {
-        $this->ecrits->removeElement($ecrits);
+        return $this->ecrit;
     }
 
     /**
-     * Get ecrits
+     * Add oraux
+     *
+     * @param \btsappli\CCFBundle\Entity\Oral $oraux
+     * @return User
+     */
+    public function addOraux(\btsappli\CCFBundle\Entity\Oral $oraux)
+    {
+        $this->oraux[] = $oraux;
+
+        return $this;
+    }
+
+    /**
+     * Remove oraux
+     *
+     * @param \btsappli\CCFBundle\Entity\Oral $oraux
+     */
+    public function removeOraux(\btsappli\CCFBundle\Entity\Oral $oraux)
+    {
+        $this->oraux->removeElement($oraux);
+    }
+
+    /**
+     * Get oraux
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getEcrits()
+    public function getOraux()
     {
-        return $this->ecrits;
+        return $this->oraux;
     }
 }

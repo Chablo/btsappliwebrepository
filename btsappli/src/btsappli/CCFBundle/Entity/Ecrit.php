@@ -48,12 +48,20 @@ class Ecrit
      * @ORM\Column(name="matiere", type="string")
      */
     private $matiere;
-
+    
     /**
+     * @var \string
      *
-     * @ORM\ManyToOne(targetEntity="btsappli\CCFBundle\Entity\Salle")
+     * @ORM\Column(name="salle1", type="string")
      */
-    private $salle;
+    private $salle1;
+    
+    /**
+     * @var \string
+     *
+     * @ORM\Column(name="salle2", type="string")
+     */
+    private $salle2;
     
     /**
      *
@@ -94,28 +102,6 @@ class Ecrit
         return $this->debut;
     }
 
-    /**
-     * Set salle
-     *
-     * @param \btsappli\CCFBundle\Entity\Salle $salle
-     * @return Ecrit
-     */
-    public function setSalle(\btsappli\CCFBundle\Entity\Salle $salle = null)
-    {
-        $this->salle = $salle;
-
-        return $this;
-    }
-
-    /**
-     * Get salle
-     *
-     * @return \btsappli\CCFBundle\Entity\Salle 
-     */
-    public function getSalle()
-    {
-        return $this->salle;
-    }
 
     /**
      * Set promotion
@@ -207,5 +193,51 @@ class Ecrit
     public function getFin()
     {
         return $this->fin;
+    }
+
+    /**
+     * Set salle1
+     *
+     * @param string $salle1
+     * @return Ecrit
+     */
+    public function setSalle1($salle1)
+    {
+        $this->salle1 = $salle1;
+
+        return $this;
+    }
+
+    /**
+     * Get salle1
+     *
+     * @return string 
+     */
+    public function getSalle1()
+    {
+        return $this->salle1;
+    }
+
+    /**
+     * Set salle2
+     *
+     * @param string $salle2
+     * @return Ecrit
+     */
+    public function setSalle2($salle2)
+    {
+        $this->salle2 = $salle2;
+
+        return $this;
+    }
+
+    /**
+     * Get salle2
+     *
+     * @return string 
+     */
+    public function getSalle2()
+    {
+        return $this->salle2;
     }
 }

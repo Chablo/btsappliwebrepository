@@ -21,7 +21,7 @@ class AppKernel extends Kernel
             new btsappli\UserBundle\btsappliUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new btsappli\CCFBundle\btsappliCCFBundle(),
-            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            //new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

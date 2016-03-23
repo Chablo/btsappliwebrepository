@@ -1,0 +1,54 @@
+{# src/btsappli/UserBundle/Resources/views/User/ajoutPromotion.html.twig #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+<div class="col-lg-8 col-lg-offset-2">
+    <div style="margin-top:80px;">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>Modifier les promotions courantes :</h3></div>
+                    <!-- Création du tableau contenant la liste des promotions -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <!-- Création de la première ligne contenant le nom de chaque colonne -->
+                        <tr class="info" align="center">
+                            <td>Promotion</td>
+                            <td>En cours</td>
+                            <td>Sélectionner nouvelles promos</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Affichage de toutes les promotions -->
+                        {% for promoCourante in tabPromotions %} 
+                            {% if promoCourante.anneePromo > 0 %}
+                                <tr align="center">
+                                    <td>
+                                        Promotion {{promoCourante.anneePromo}}
+                                    </td>
+                                    <td>
+                                        {% if promoCourante.enCours == 1 %}
+                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <input type="checkbox"> 
+                                        </div>
+                                    </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+        
+                <a href="{{ path('btsappli_utilisateurs_validerInscriptions') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Annuler</a>
+                
+                <a href="{{ path('btsappli_utilisateurs_modifierPromoValidation') }}" role="submit" class="btn btn-primary pull-right" type="button" style="width:140px">Valider</a>
+           
+        </div>
+    </div>
+</div>
+{% endblock %}

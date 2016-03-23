@@ -39,9 +39,13 @@ class UserController extends Controller
         // on récupère toutes les promos
         $tabPromotions = $repositoryPromotion -> findAll();
         
+        // On récupère les promotions en cours
+        $tabPromotions2 = $repositoryPromotion->findByEnCours(true);
+        
         //on envoie la liste des étudiants dans la vue chargée de les afficher
         return $this->render('btsappliUserBundle:User:suiviEtudiant.html.twig', array(
                                             'tabUser'=>$tabUser,
+                                            'tabPromotions2'=>$tabPromotions2,
                                             'tabPromotions'=>$tabPromotions));
     }
     
@@ -60,9 +64,13 @@ class UserController extends Controller
         // on récupère toutes les promos
         $tabPromotions = $repositoryPromotion -> findAll();
         
+        // On récupère les promotions en cours
+        $tabPromotions2 = $repositoryPromotion->findByEnCours(true);
+        
         //on envoie la liste des étudiants dans la vue chargée de les afficher
         return $this->render('btsappliUserBundle:User:suiviEtudiant.html.twig', array(
                                             'tabUser'=>$tabUser,
+                                            'tabPromotions2'=>$tabPromotions2,
                                             'tabPromotions'=>$tabPromotions));
     }
     
@@ -100,6 +108,8 @@ class UserController extends Controller
                                             'tabPromotions'=>$tabPromotions));
     }
     
+    
+    
 // ************* PROMOTIONS ***********************************************************************************
 
     public function ajoutPromoAction(Request $requeteUtilisateur)
@@ -130,10 +140,31 @@ class UserController extends Controller
                         array('formulairePromotion' => $formulairePromotion -> createView()));
     }
 
-
-
-
-
+    public function modifierPromoAction()
+    {
+        // On récupère le repository de l'entité Promotion
+        $repositoryPromotion = $this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:Promotion');
+        
+        // On récupère les promotions en cours
+        $tabPromotions = $repositoryPromotion->findAll();
+        
+        // On transmet les promotions à la vue chargée de l'afficher
+        return $this->render('btsappliUserBundle:User:modifierPromotion.html.twig', array(
+                                                                'tabPromotions'=>$tabPromotions));
+    }
+    
+        public function modifierPromoValidationAction()
+    {
+        // On récupère le repository de l'entité Promotion
+        $repositoryPromotion = $this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:Promotion');
+        
+        // On récupère les promotions en cours
+        $tabPromotions = $repositoryPromotion->findAll();
+        
+        // On transmet les promotions à la vue chargée de l'afficher
+        return $this->render('btsappliUserBundle:User:modifierPromotion.html.twig', array(
+                                                                'tabPromotions'=>$tabPromotions));
+    }
 
 
 // **************************************************************************************************************
@@ -409,16 +440,24 @@ class UserController extends Controller
     
     public function validationsUserAction()
     {
-        //on met la liste des étudiants demandant une inscription dans tabUser afin de la récupérer dans validerInscriptions.html.twig
-        //on récupère le repository de l'entité fos_user
-        $repositoryUser=$this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:User');
+        // On récupère le repository de l'entité User
+        $repositoryUser = $this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:User');
         
-        //on récupère tous les étudiants demandant une inscription en bd
-        $tabUser=$repositoryUser->findAll();
+        // On récupère tous les étudiants demandant une inscription en bd
+        $tabUser = $repositoryUser->findByValide(false);
+        
+        // On récupère le repository de l'entité Promotion
+        $repositoryPromotion = $this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:Promotion');
+        
+        // On récupère les promotions en cours
+        $tabPromotions = $repositoryPromotion->findByEnCours(true);
         
         //on envoie la liste des étudiants demandant une inscription dans la vue chargée de les afficher
-        return $this->render('btsappliUserBundle:User:validerInscriptions.html.twig', array('tabUser'=>$tabUser));
+        return $this->render('btsappliUserBundle:User:validerInscriptions.html.twig', 
+                                                              array('tabUser'=>$tabUser,
+                                                                    'tabPromotions' => $tabPromotions));
     }
+    
     
     public function supprimerValidationAction($id)
     {
@@ -435,21 +474,29 @@ class UserController extends Controller
         $gestionnaireEntite->remove($user);
         $gestionnaireEntite->flush();
 
-        // On récupère tous les users avec leur stage
-        $tabUser = $repositoryUser->findAll();  
+        // On récupère tous les users non validés
+        $tabUser = $repositoryUser->findByValide(false);  
         
-        // On transmet l'entreprise à la vue chargée de l'afficher
-        return $this->render('btsappliUserBundle:User:validerInscriptions.html.twig', array('tabUser'=>$tabUser));
+        // On récupère le repository de l'entité Promotion
+        $repositoryPromotion = $gestionnaireEntite->getRepository('btsappliUserBundle:Promotion');
+        
+        // On récupère les promos en cours
+        $tabPromotions = $repositoryPromotion -> findByEnCours(true);
+        
+        // On transmet les étudiants non valide et les promo à la vue chargée de l'afficher
+        return $this->render('btsappliUserBundle:User:validerInscriptions.html.twig', array(
+                                                                'tabUser'=>$tabUser,
+                                                                'tabPromotions'=>$tabPromotions));
     }
 
     public function accepterValidationAction($id)
     {
         // On récupère le gestionnaire d'entité
         $gestionnaireEntite = $this->getDoctrine()->getManager();
-        
+            
         // On récupère le repository de l'entité User
         $repositoryUser = $gestionnaireEntite->getRepository('btsappliUserBundle:User');
-    
+        
         // On récupère l'user dont l'id est le paramètre $id
         $user = $repositoryUser->find($id);
         
@@ -457,11 +504,54 @@ class UserController extends Controller
         $user->setValide(true); 
         $gestionnaireEntite->persist($user);
         $gestionnaireEntite->flush();
-
-        // On récupère tous les users
-        $tabUser = $repositoryUser->findAll();     
-        
+    
+        // On récupère les users non validés
+        $tabUser = $repositoryUser->findByValide(false);
+            
+        // On récupère le repository de l'entité Promotion
+        $repositoryPromotion = $this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:Promotion');
+            
+        // On récupère les promos en cours
+        $tabPromotions = $repositoryPromotion -> findByEnCours(true);
+            
         // On transmet les user à la vue
-        return $this->render('btsappliUserBundle:User:validerInscriptions.html.twig', array('tabUser'=>$tabUser));
+        return $this->render('btsappliUserBundle:User:validerInscriptions.html.twig', array(
+                                                                'tabUser'=>$tabUser,
+                                                                'tabPromotions'=>$tabPromotions));
+    }
+    
+    public function setPromoInscriptionAction($id, $idPromo)
+    {
+        // On récupère le gestionnaire d'entité
+        $gestionnaireEntite = $this->getDoctrine()->getManager();
+        
+        // On récupère le repository de l'entité User
+        $repositoryUser = $gestionnaireEntite->getRepository('btsappliUserBundle:User');
+        
+        // On récupère l'user dont l'id est le paramètre $id
+        $user = $repositoryUser->find($id);
+        
+        // On récupère le repository de l'entité Promotion
+        $repositoryPromotion = $gestionnaireEntite->getRepository('btsappliUserBundle:Promotion');
+        
+        $promo = $repositoryPromotion -> find($idPromo);
+        
+        $user->setPromotion($promo); 
+        $gestionnaireEntite->persist($user);
+        $gestionnaireEntite->flush();
+        
+        // On récupère tous les users qui ne sont pas validés
+        $tabUser = $repositoryUser->findByValide(false);
+        
+        // On récupère le repository de l'entité Promotion
+        $repositoryPromotion = $this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:Promotion');
+        
+        // on récupère les promos en cours
+        $tabPromotions = $repositoryPromotion -> findByEnCours(true);
+        
+        //on envoie la liste des étudiants dans la vue chargée de les afficher
+        return $this->render('btsappliUserBundle:User:validerInscriptions.html.twig', array(
+                                            'tabUser'=>$tabUser,
+                                            'tabPromotions'=>$tabPromotions));
     }
 }

@@ -10,7 +10,7 @@ security:
     
     providers:
         in_memory:
-            memory: ~
+            memory: 
         fos_userbundle:
             id: fos_user.user_provider.username
 
@@ -43,6 +43,8 @@ security:
         - { path: ^/profile/edit, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        
+        - { path: ^/administration, role: ROLE_ADMIN }
         
        # a ajouter plus tard
         # - { path: ^/accueilAdmin, role: ROLE_ADMIN } #}

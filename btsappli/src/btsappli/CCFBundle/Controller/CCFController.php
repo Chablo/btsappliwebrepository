@@ -5,7 +5,9 @@ namespace btsappli\CCFBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use btsappli\CCFBundle\Entity\Ecrit;
+use btsappli\CCFBundle\Entity\Oral;
 use btsappli\CCFBundle\Form\EcritType;
+use btsappli\CCFBundle\Form\OralType;
 
 class CCFController extends Controller
 {
@@ -49,7 +51,7 @@ class CCFController extends Controller
             $tabUsers = $repositoryUser->findByPromotion($promotion);
             
             // On attribue aux users récupérés l'écrit
-            for ($i = 0, $size = count($tabUsers);$i < $size; ++$i)
+            for ($i = 0, $size = count($tabUsers) ; $i < $size ; ++$i)
             {
                 $tabUsers[$i] -> addEcrit($ecrit);
                 
@@ -66,6 +68,93 @@ class CCFController extends Controller
         return $this->render('btsappliCCFBundle:CCF:ajoutEcrit.html.twig',
                                 array('formulaireEcrit' => $formulaireEcrit -> createView()));
     }
+    
+    public function ajoutOralAction(Request $requeteUtilisateur)
+    {
+        // On créé un objet Oral "vide"
+        $oral = new Oral();
+        
+        // Création du formulaire permettant de saisir un oral
+        $formulaireOral = $this->createForm(new OralType, $oral);
+        
+        // Enregistrement des données dans $oral dès soumission du formulaire
+        $formulaireOral->handleRequest($requeteUtilisateur);
+        
+        // Si le formulaire a été soumis et que les données sont valides
+        if($formulaireOral->isValid())
+        {
+            // On récupère le repository de l'entité User
+            $gestionnaireEntite = $this->getDoctrine()->getManager();
+            $repositoryUser=$gestionnaireEntite->getRepository('btsappliUserBundle:User');
+            
+            // On récupère la promotion concernée par l'oral
+            $promotion = $oral->getPromotion();
+            
+            // On récupère les User concernés par l'oral
+            $tabUsers = $repositoryUser->findByPromotion($promotion);
+            
+            // On établit l'heure du matin à 07:40 car ensuite incrémenté dans la boucle pour 08:30
+            $heureMatin = (\DateTime::createFromFormat('H:i', '07:40'));
+            // On établit l'heure de l'après-midi (12:40 car on va ensuite incrémenter pour 13:30)
+            $heureAprem = (\DateTime::createFromFormat('H:i', '12:40'));
+            
+            $duree = (\DateInterval::createFromDateString('50 minutes'));
+            $fin = (\DateTime::createFromFormat('H:i', '00:00'));
+            
+            // On attribue aux users récupérés l'oral
+            for ($i = 0, $size = count($tabUsers) ; $i < $size ; ++$i)
+            {
+                // On créé l'Oral propre à l'étudiant
+                $oralUser = new Oral();
+                $oralUser->setMatiere($oral->getMatiere());
+                $oralUser->setSalle($oral->getSalle());
+                $oralUser->setPromotion($oral->getPromotion());
+                $oralUser->setDate($oral->getDate());
+                
+                // Si la fin de l'oral dépasse 12:30
+                if($fin > (\DateTime::createFromFormat('H:i', '12:00')))
+                {
+                    // On incrémente l'horaire
+                    $heureAprem -> add($duree);
+                    
+                    $oralUser->setHeure($heureAprem);
+                    
+                    $fin = ($heureAprem -> add($duree));
+                }
+                else 
+                {
+                    // On incrémente l'horaire
+                    $heureMatin -> add($duree);
+                
+                    $oralUser->setHeure($heureMatin);
+                    
+                    $fin = ($heureMatin -> add($duree));
+                }
+                
+                // On lie cet oral à l'user
+                $tabUsers[$i] -> addOraux($oralUser);
+                
+                // On enregistre en bd l'oral
+                $gestionnaireEntite->persist($oralUser);
+                $gestionnaireEntite->flush();
+                
+                // On enregistre en bd l'user
+                $gestionnaireEntite->persist($tabUsers[$i]);
+                $gestionnaireEntite->flush();
+            }
+            
+            // On redirige vers la page de planning des CCF
+            return $this->redirect($this->generateUrl('btsappli_CCF_planningOraux'));
+        }
+        
+        // On appelle la vue chargée d'afficher le formulaire et on lui transmet la représentation graphique du formulaire
+        return $this->render('btsappliCCFBundle:CCF:ajoutOral.html.twig',
+                                array('formulaireOral' => $formulaireOral -> createView()));
+    }
+    
+    
+    
+    
     
     public function planningOrauxAction()
     {
@@ -93,6 +182,19 @@ class CCFController extends Controller
     }
     
      public function planningCCFEtuAction($id)
+    {
+        //on met la liste des étudiants dans tabUserEtCCF afin de la récupérer dans planningCCFAdmin.html.twig
+        //on récupère le repository de l'entité CCF
+        $repositoryUser=$this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:User');
+        
+        //on récupère tous les étudiants enregistrés en bd
+        $user=$repositoryUser->find($id);
+        
+        //on envoie la liste des étudiants dans la vue chargée de les afficher
+        return $this->render('btsappliCCFBundle:CCF:planningCCFEtu.html.twig', array('user'=>$user));
+    }
+    
+    public function planningCCFAction($id)
     {
         //on met la liste des étudiants dans tabUserEtCCF afin de la récupérer dans planningCCFAdmin.html.twig
         //on récupère le repository de l'entité CCF

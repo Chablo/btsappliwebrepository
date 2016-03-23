@@ -26,11 +26,6 @@ btsappli_stages_ajoutStageTut:
     path:     /stage/ajouterTut
     defaults: { _controller: btsappliStagesBundle:Stages:ajoutStageTut }
 
-btsappli_stages_generate_pdf:
-    path: /generate-pdf
-    defaults: { _controller: btsappliStagesBundle:Stages:generatePdf }
-    requirements:
-        _method: GET
 
 
 #************************************************************************************************************

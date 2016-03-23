@@ -6,39 +6,37 @@
 
 <div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
 
-<div class="panel panel-default">
+<div class="panel panel-default filterable">
 
     <div class="panel-heading">
          
          <h3> Liste des étudiants </h3> 
         <div class="row">
-            <div class="col-lg-6">
-                <!--debut du formulaire-->
-                <form class="form-inline " action="search.php" method="get">
-                  <div class="form-group">
-                    <input type="text" name="q" id="q" class="form-control" style="width:333px" placeholder="Recherche..."/>
-                    <button type="submit" class="btn btn-primary" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                  </div>
-                </form>
-                <!--fin du formulaire-->
-                 
-                <!--preparation de l'affichage des resultats-->
-                <div id="results"></div>
-                  
-                  
+            <div class="col-lg-5">
+                <p>Promotions en cours : 
+                    {% for promotionCourante in tabPromotions2 %}
+                        Promotion {{ promotionCourante.anneePromo }} {% if not loop.last %} - {% endif %}
+                    {% endfor %}
+                </p>
             </div>
-            <div class="col-lg-2 col-lg-offset-4">
+         	<div class="col-lg-2 col-lg-offset-3">
+                <div class=" btn-group ">
+                    <button class="btn btn-primary btn-filter " style="width:140px" type="button">Recherche</button>
+                </div>    
+			</div>
+            <div class="col-lg-2 ">
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                         Filtrer par promotion <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
                     </button>
-                        <ul class="dropdown-menu pull-right" style="width:200px">
+                        <ul class="dropdown-menu dropdown-menu-left" style="width:200px">
                             <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiant') }}"> Tous </a></li>
                             <li role="separator" class="divider"></li>
                             {% for promoCourante in tabPromotions %}
                                 <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiantFiltrer', {'idPromo':promoCourante.id}) }}">
                                     {% if promoCourante.anneePromo is same as(0) %}
-                                        Démission
+                                    Démission
                                     {% else %}
                                         {{promoCourante.anneePromo}}
                                     {% endif %}
@@ -46,6 +44,7 @@
                             {% endfor %}
                         </ul>
                 </div>
+             
             </div>
         </div>
             
@@ -54,20 +53,22 @@
         
         <!-- Création du tableau contenant la liste des étudiants -->
         <div class="table-responsive">
-            <table class="table table-striped table-hover">
+            <table class=" flterable table table-striped table-hover">
                
                 <!-- Création de la première ligne contenant le nom de chaque colonne -->
-                <tr class="info" align="center">
-                    <td>Nom</td>
-                    <td>Prenom</td>
-                    <td>Email</td>
-                    <td>Telephone</td>
-                    <td>Adresse</td>
-                    <td>CodePostal</td>
-                    <td>Ville</td>
-                    <td>Promotion</td>
-                    <td>Modif Promotion</td>
+                <thead>
+                <tr class="filters info" align="center">
+                    <th><input style="margin-left: 30px;" type="text" class="form-control " placeholder="Nom" disabled></th>
+                    <th><input style="margin-left: 18px;" type="text" class="form-control" placeholder="Prénom" disabled></th>
+                    <th><input style="margin-left: 64px;" type="text" class="form-control" placeholder="E-Mail" disabled></th>
+                    <th><input style="margin-left: 28px;" type="text" class="form-control" placeholder="Tél" disabled></th>
+                    <th><input style="margin-left: 12px;" type="text" class="form-control" placeholder="Adresse" disabled></th>
+                    <th><input type="text" class="form-control" placeholder="CP" disabled></th>
+                    <th><input type="text" class="form-control" placeholder="Ville" disabled></th>
+                    <th><input type="text" class="form-control" placeholder="Promotion" disabled></th>
+                    <td><b>Modif Promotion</b></td>
                 </tr>
+                </thead>
                 
                 <!-- Affichage de tous les étudiants -->
                 {% for userCourant in tabUser %} 
@@ -138,11 +139,395 @@
                         </td>
                     </tr> 
                 {% endfor %}
-                
             </table>
         </div>
 </div>
 </div>
 <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
 
+
+<script>
+    $(document).ready(function(){
+    $('.filterable .btn-filter').click(function(){
+        var $panel = $(this).parents('.filterable'),
+        $filters = $panel.find('.filters input'),
+        $tbody = $panel.find('.table tbody');
+        if ($filters.prop('disabled') == true) {
+            $filters.prop('disabled', false);
+            $filters.first().focus();
+        } else {
+            $filters.val('').prop('disabled', true);
+            $tbody.find('.no-result').remove();
+            $tbody.find('tr').show();
+        }
+    });
+
+    $('.filterable .filters input').keyup(function(e){
+        /* Ignore tab key */
+        var code = e.keyCode || e.which;
+        if (code == '9') return;
+        /* Useful DOM data and selectors */
+        if(!$table) $table = $panel;
+        var $input = $(this),
+        inputContent = $input.val().toLowerCase(),
+        $panel = $input.parents('.filterable'),
+        column = $panel.find('.filters th').index($input.parents('th')),
+        $table = $panel.find('.table'),
+        $rows = $table.find('tbody tr');
+        /* Dirtiest filter function ever ;) */
+        var $filteredRows = $rows.filter(function(){
+            var value = $(this).find('td').eq(column).text().toLowerCase();
+            return value.indexOf(inputContent) === -1;
+        });
+        /* Clean previous no-result if exist */
+        $table.find('tbody .no-result').remove();
+        /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
+        $rows.show();
+        $filteredRows.hide();
+        /* Prepend no-result row if all rows are filtered */
+        if ($filteredRows.length === $rows.length) {
+            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
+        }
+    });
+});
+</script>
+
+<script>
+    (function($){
+        $.fn.extend({
+            tableExport: function(options) {
+                var defaults = {
+						separator: ',',
+						ignoreColumn: [],
+						tableName:'yourTableName',
+						type:'csv',
+						pdfFontSize:14,
+						pdfLeftMargin:20,
+						escape:'true',
+						htmlContent:'false',
+						consoleLog:'false'
+				};
+                
+				var options = $.extend(defaults, options);
+				var el = this;
+				
+				if(defaults.type == 'csv' || defaults.type == 'txt'){
+				
+					// Header
+					var tdData ="";
+					$(el).find('thead').find('tr').each(function() {
+					tdData += "\n";					
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									tdData += '"' + parseString($(this)) + '"' + defaults.separator;									
+								}
+							}
+							
+						});
+						tdData = $.trim(tdData);
+						tdData = $.trim(tdData).substring(0, tdData.length -1);
+					});
+					
+					// Row vs Column
+					$(el).find('tbody').find('tr').each(function() {
+					tdData += "\n";
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									tdData += '"'+ parseString($(this)) + '"'+ defaults.separator;
+								}
+							}
+						});
+						//tdData = $.trim(tdData);
+						tdData = $.trim(tdData).substring(0, tdData.length -1);
+					});
+					
+					//output
+					if(defaults.consoleLog == 'true'){
+						console.log(tdData);
+					}
+					var base64data = "base64," + $.base64.encode(tdData);
+					window.open('data:application/'+defaults.type+';filename=exportData;' + base64data);
+				}else if(defaults.type == 'sql'){
+				
+					// Header
+					var tdData ="INSERT INTO `"+defaults.tableName+"` (";
+					$(el).find('thead').find('tr').each(function() {
+					
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									tdData += '`' + parseString($(this)) + '`,' ;									
+								}
+							}
+							
+						});
+						tdData = $.trim(tdData);
+						tdData = $.trim(tdData).substring(0, tdData.length -1);
+					});
+					tdData += ") VALUES ";
+					// Row vs Column
+					$(el).find('tbody').find('tr').each(function() {
+					tdData += "(";
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									tdData += '"'+ parseString($(this)) + '",';
+								}
+							}
+						});
+						
+						tdData = $.trim(tdData).substring(0, tdData.length -1);
+						tdData += "),";
+					});
+					tdData = $.trim(tdData).substring(0, tdData.length -1);
+					tdData += ";";
+					
+					//output
+					//console.log(tdData);
+					
+					if(defaults.consoleLog == 'true'){
+						console.log(tdData);
+					}
+					
+					var base64data = "base64," + $.base64.encode(tdData);
+					window.open('data:application/sql;filename=exportData;' + base64data);
+					
+				
+				}else if(defaults.type == 'json'){
+				
+					var jsonHeaderArray = [];
+					$(el).find('thead').find('tr').each(function() {
+						var tdData ="";	
+						var jsonArrayTd = [];
+					
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									jsonArrayTd.push(parseString($(this)));									
+								}
+							}
+						});									
+						jsonHeaderArray.push(jsonArrayTd);						
+						
+					});
+					
+					var jsonArray = [];
+					$(el).find('tbody').find('tr').each(function() {
+						var tdData ="";	
+						var jsonArrayTd = [];
+					
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									jsonArrayTd.push(parseString($(this)));									
+								}
+							}
+						});									
+						jsonArray.push(jsonArrayTd);									
+						
+					});
+					
+					var jsonExportArray =[];
+					jsonExportArray.push({header:jsonHeaderArray,data:jsonArray});
+					
+					//Return as JSON
+					//console.log(JSON.stringify(jsonExportArray));
+					
+					//Return as Array
+					//console.log(jsonExportArray);
+					if(defaults.consoleLog == 'true'){
+						console.log(JSON.stringify(jsonExportArray));
+					}
+					var base64data = "base64," + $.base64.encode(JSON.stringify(jsonExportArray));
+					window.open('data:application/json;filename=exportData;' + base64data);
+				}else if(defaults.type == 'xml'){
+				
+					var xml = '<?xml version="1.0" encoding="utf-8"?>';
+					xml += '<tabledata><fields>';
+
+					// Header
+					$(el).find('thead').find('tr').each(function() {
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){					
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									xml += "<field>" + parseString($(this)) + "</field>";
+								}
+							}
+						});									
+					});					
+					xml += '</fields><data>';
+					
+					// Row Vs Column
+					var rowCount=1;
+					$(el).find('tbody').find('tr').each(function() {
+						xml += '<row id="'+rowCount+'">';
+						var colCount=0;
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){	
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									xml += "<column-"+colCount+">"+parseString($(this))+"</column-"+colCount+">";
+								}
+							}
+							colCount++;
+						});															
+						rowCount++;
+						xml += '</row>';
+					});					
+					xml += '</data></tabledata>'
+					
+					if(defaults.consoleLog == 'true'){
+						console.log(xml);
+					}
+					
+					var base64data = "base64," + $.base64.encode(xml);
+					window.open('data:application/xml;filename=exportData;' + base64data);
+
+				}else if(defaults.type == 'excel' || defaults.type == 'doc'|| defaults.type == 'powerpoint'  ){
+					//console.log($(this).html());
+					var excel="<table>";
+					// Header
+					$(el).find('thead').find('tr').each(function() {
+						excel += "<tr>";
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){					
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									excel += "<td>" + parseString($(this))+ "</td>";
+								}
+							}
+						});	
+						excel += '</tr>';						
+						
+					});					
+					
+					
+					// Row Vs Column
+					var rowCount=1;
+					$(el).find('tbody').find('tr').each(function() {
+						excel += "<tr>";
+						var colCount=0;
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){	
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									excel += "<td>"+parseString($(this))+"</td>";
+								}
+							}
+							colCount++;
+						});															
+						rowCount++;
+						excel += '</tr>';
+					});					
+					excel += '</table>'
+					
+					if(defaults.consoleLog == 'true'){
+						console.log(excel);
+					}
+					
+					var excelFile = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:"+defaults.type+"' xmlns='http://www.w3.org/TR/REC-html40'>";
+					excelFile += "<head>";
+					excelFile += "<!--[if gte mso 9]>";
+					excelFile += "<xml>";
+					excelFile += "<x:ExcelWorkbook>";
+					excelFile += "<x:ExcelWorksheets>";
+					excelFile += "<x:ExcelWorksheet>";
+					excelFile += "<x:Name>";
+					excelFile += "{worksheet}";
+					excelFile += "</x:Name>";
+					excelFile += "<x:WorksheetOptions>";
+					excelFile += "<x:DisplayGridlines/>";
+					excelFile += "</x:WorksheetOptions>";
+					excelFile += "</x:ExcelWorksheet>";
+					excelFile += "</x:ExcelWorksheets>";
+					excelFile += "</x:ExcelWorkbook>";
+					excelFile += "</xml>";
+					excelFile += "<![endif]-->";
+					excelFile += "</head>";
+					excelFile += "<body>";
+					excelFile += excel;
+					excelFile += "</body>";
+					excelFile += "</html>";
+
+					var base64data = "base64," + $.base64.encode(excelFile);
+					window.open('data:application/vnd.ms-'+defaults.type+';filename=exportData.doc;' + base64data);
+					
+				}else if(defaults.type == 'png'){
+					html2canvas($(el), {
+						onrendered: function(canvas) {										
+							var img = canvas.toDataURL("image/png");
+							window.open(img);
+							
+							
+						}
+					});		
+				}else if(defaults.type == 'pdf'){
+	
+					var doc = new jsPDF('p','pt', 'a4', true);
+					doc.setFontSize(defaults.pdfFontSize);
+					
+					// Header
+					var startColPosition=defaults.pdfLeftMargin;
+					$(el).find('thead').find('tr').each(function() {
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){					
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									var colPosition = startColPosition+ (index * 50);									
+									doc.text(colPosition,20, parseString($(this)));
+								}
+							}
+						});									
+					});					
+				
+				
+					// Row Vs Column
+					var startRowPosition = 20; var page =1;var rowPosition=0;
+					$(el).find('tbody').find('tr').each(function(index,data) {
+						rowCalc = index+1;
+						
+					if (rowCalc % 26 == 0){
+						doc.addPage();
+						page++;
+						startRowPosition=startRowPosition+10;
+					}
+					rowPosition=(startRowPosition + (rowCalc * 10)) - ((page -1) * 280);
+						
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){	
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									var colPosition = startColPosition+ (index * 50);									
+									doc.text(colPosition,rowPosition, parseString($(this)));
+								}
+							}
+							
+						});															
+						
+					});					
+										
+					// Output as Data URI
+					doc.output('datauri');
+	
+				}
+				
+				
+				function parseString(data){
+				
+					if(defaults.htmlContent == 'true'){
+						content_data = data.html().trim();
+					}else{
+						content_data = data.text().trim();
+					}
+					
+					if(defaults.escape == 'true'){
+						content_data = escape(content_data);
+					}
+					
+					
+					
+					return content_data;
+				}
+			
+			}
+        });
+    })(jQuery);
+</script>
 {% endblock %}
