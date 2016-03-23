@@ -14,9 +14,14 @@
                     Filtrer <span class="caret"></span>
                     </button>
                         <ul class="dropdown-menu pull-right" style="width:150px" >
-                            <li role="presentation"><a id="oral" role="menuitem" onclick="Resolve()"> Oraux </a></li>
+                            {% for promoCourante in tabPromos %}
+                                <li role="presentation"><a href="{{ path('btsappli_CCF_planningOrauxPromo', {'idPromo':promoCourante.id}) }}" role="menuitem">
+                                        Promotion {{promoCourante.anneePromo}}
+                                </a></li>
+                            {% endfor %}
                             <li role="separator" class="divider"></li>
-                            <li role="presentation"><a id="ecrit" role="menuitem" onclick="Resolve()" > Ecrits </a></li>
+                            <li role="presentation"><a href="{{ path('btsappli_CCF_planningOrauxMatiere', {'matiere':e5})}}" role="menuitem">Matière E5</a></li>
+                            <li role="presentation"><a href="{{ path('btsappli_CCF_planningOrauxMatiere', {'matiere':e42})}}" role="menuitem">Matière E42 </a></li>
                         </ul>
                 </div>
             </div>
@@ -37,7 +42,6 @@
                     <td class="success">Oraux</td>
                     <td class="success"></td>
                     <td class="success"></td>
-                    <td class="success"></td>
                 </tr>
                 <!-- Création de la première ligne contenant le nom de chaque colonne secondaire -->
                 <tr class="info " align="center">
@@ -47,36 +51,37 @@
                 
                     <td>Matière</td>
                     <td>Date</td>
+                    <td>Heure</td>
                     <td>Salle</td>
-                    <td>Heure début</td>
-                    <td>Heure fin</td>
                 </tr>
             </thead>
             <!-- Affichage de tous des CCF par étudiants -->
-            {% for userCourant in tabUserEtCCF %}  
-            
-                <tr align="center">
-                    <td>{{userCourant.nom}}</td>
-                    <td>{{userCourant.prenom}}</td>
-                    <td>{{userCourant.promotion.anneePromo}}</td>
+            {% for userCourant in tabUsers %}  
+                {% if userCourant.oraux is not empty %}
+                    {% for oralCourant in userCourant.oraux %}
+                        <tr align="center">
+                            <td>{{userCourant.nom}}</td>
+                            <td>{{userCourant.prenom}}</td>
+                            <td>{{userCourant.promotion.anneePromo}}</td>
                 
-              {#  {% if userCourant.oral is not null %}
-                    <td>{{userCourant.ccf.type}}</td>
-                    <td>{{userCourant.ccf.matiere}}</td>
-                    <td>{{userCourant.ccf.dateCCF|date("m/d/Y")}}</td>
-                    <td>{{userCourant.ccf.salle}}</td>
-                    <td>{{userCourant.ccf.heureDeb|date("")}}</td>
-                    <td>{{userCourant.ccf.heureFin|date("")}}</td>
-                    
+                            <td>{{oralCourant.matiere}}</td>
+                            <td>{{oralCourant.date|date("m/d/Y")}}</td>
+                            <td>{{oralCourant.heure|date("H:i")}}</td>
+                            <td>{{oralCourant.salle}}</td>
+                        </tr>
+                    {% endfor %}
                 {% else %}
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                {% endif %} #}
-                </tr>
+                    <tr align="center">
+                        <td>{{userCourant.nom}}</td>
+                        <td>{{userCourant.prenom}}</td>
+                        <td>{{userCourant.promotion.anneePromo}}</td>
+                        
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endif %}
            {% endfor %} 
         </table>
     </div>

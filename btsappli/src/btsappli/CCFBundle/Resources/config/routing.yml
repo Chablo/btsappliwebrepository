@@ -19,6 +19,16 @@ btsappli_CCF_planningOraux:
     path:   /administration/planningOraux
     defaults: { _controller: btsappliCCFBundle:CCF:planningOraux }
 
+btsappli_CCF_planningOrauxPromo:
+    path:   /administration/planningOraux/{idPromo}
+    defaults: { _controller: btsappliCCFBundle:CCF:planningOrauxPromo }
+    requirements:
+        idPromo:   \d+
+
+btsappli_CCF_planningOrauxMatiere:
+    path:   /administration/planningOraux/{matiere}
+    defaults: { _controller: btsappliCCFBundle:CCF:planningOrauxMatiere }
+
 btsappli_CCF_planningEcrits:
     path:   /administration/planningEcrits
     defaults: { _controller: btsappliCCFBundle:CCF:planningEcrits }

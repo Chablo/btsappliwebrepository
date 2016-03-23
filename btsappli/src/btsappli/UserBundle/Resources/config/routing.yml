@@ -15,10 +15,15 @@ btsappli_utilisateurs_suiviEtudiant:
 btsappli_utilisateurs_setPromo:
     path:   /administration/suiviEtudiant/{id}/{idPromo}
     defaults: { _controller: btsappliUserBundle:User:setPromo }
+    requirements:
+        id:      \d+
+        idPromo: \d+
 
 btsappli_utilisateurs_suiviEtudiantFiltrer:
     path:   /administration/suiviEtudiantFiltrer/{idPromo}
     defaults: { _controller: btsappliUserBundle:User:suiviEtudiantFiltrer }
+    requirements:
+        idPromo:   \d+
     
 #************************************************************************************************************
 
@@ -43,14 +48,21 @@ btsappli_utilisateurs_suiviStages:
 btsappli_utilisateurs_voirStageEtu:
     path:   /administration/voirStageEtu/{id}
     defaults: { _controller: btsappliUserBundle:User:voirStageEtu }
+    requirements:
+        id:   \d+
     
 btsappli_utilisateurs_setEtatConv:
     path:   /administration/voirStageEtu/{id}/{etatConv}
     defaults: { _controller: btsappliUserBundle:User:setEtatConv }
+    requirements:
+        id:       \d+
+        etatConv: \d+
     
 btsappli_utilisateurs_suiviStagesFiltrerPromo:
     path:   /administration/suiviStagesFiltrerPromo/{idPromo}
     defaults: { _controller: btsappliUserBundle:User:suiviStagesFiltrerPromo }
+    requirements:
+        idPromo:   \d+
 
 btsappli_utilisateurs_suiviStagesFiltrerConventionValidee:
     path:   /administration/suiviStagesFiltrerConventionValidee
@@ -71,10 +83,14 @@ btsappli_utilisateurs_suiviStagesFiltrerPasStage:
 btsappli_utilisateurs_supprimerStage:
     path:   /administration/suiviStages/supprimerStage/{id}
     defaults: { _controller: btsappliUserBundle:User:supprimerStage }
+    requirements:
+        id:   \d+
     
 btsappli_utilisateurs_supprimerStageValidation:
     path:   /administration/suiviStages/supprimerStageValidation/{id}
     defaults: { _controller: btsappliUserBundle:User:supprimerStageValidation }
+    requirements:
+        id:   \d+
 
 btsappli_utilisateurs_ReinitialiserStages:
     path:   /administration/suiviStages/ReinitialiserStages
@@ -94,7 +110,8 @@ btsappli_utilisateurs_setPromoInscription:
     path:   /administration/validationsUser/setPromo/{id}/{idPromo}
     defaults: { _controller: btsappliUserBundle:User:setPromoInscription }
     requirements:
-        id:   \d+
+        id:      \d+
+        idPromo: \d+
     
 btsappli_utilisateurs_supprInscriptions:
     path:   /administration/validationsUser/suppr/{id}

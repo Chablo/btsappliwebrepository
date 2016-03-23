@@ -93,15 +93,17 @@ class CCFController extends Controller
             // On récupère les User concernés par l'oral
             $tabUsers = $repositoryUser->findByPromotion($promotion);
             
+            // On récupère la date du formulaire
+            $date = ($oral->getDate());
             // On établit l'heure du matin à 07:40 car ensuite incrémenté dans la boucle pour 08:30
             $heureMatin = (\DateTime::createFromFormat('H:i', '07:40'));
+            $finMatin = (\DateTime::createFromFormat('H:i', '08:30'));
             // On établit l'heure de l'après-midi (12:40 car on va ensuite incrémenter pour 13:30)
             $heureAprem = (\DateTime::createFromFormat('H:i', '12:40'));
-            
+            $finAprem = (\DateTime::createFromFormat('H:i', '13:30'));
             $duree = (\DateInterval::createFromDateString('50 minutes'));
-            $fin = (\DateTime::createFromFormat('H:i', '00:00'));
             
-            // On attribue aux users récupérés l'oral
+            // On va créer chaque oral et attribuer aux users récupérés
             for ($i = 0, $size = count($tabUsers) ; $i < $size ; ++$i)
             {
                 // On créé l'Oral propre à l'étudiant
@@ -109,34 +111,58 @@ class CCFController extends Controller
                 $oralUser->setMatiere($oral->getMatiere());
                 $oralUser->setSalle($oral->getSalle());
                 $oralUser->setPromotion($oral->getPromotion());
-                $oralUser->setDate($oral->getDate());
                 
-                // Si la fin de l'oral dépasse 12:30
-                if($fin > (\DateTime::createFromFormat('H:i', '12:00')))
+                // Si la fin de l'oral ne dépasse pas 12:00
+                // -> matin
+                if($finMatin <= (\DateTime::createFromFormat('H:i', '11:10')))
                 {
-                    // On incrémente l'horaire
-                    $heureAprem -> add($duree);
-                    
-                    $oralUser->setHeure($heureAprem);
-                    
-                    $fin = ($heureAprem -> add($duree));
-                }
-                else 
-                {
-                    // On incrémente l'horaire
+                    // On incrémente les horaires de l'oral
                     $heureMatin -> add($duree);
-                
-                    $oralUser->setHeure($heureMatin);
+                    $finMatin -> add($duree);
                     
-                    $fin = ($heureMatin -> add($duree));
+                    // On attribue l'heure de début à l'oral
+                    $oralUser->setHeure($heureMatin);
+                }
+                // Si la fin de l'oral dépasse 12:00
+                // -> après-midi
+                else
+                {
+                    // Si la fin ne dépasse pas 17:00
+                    if($finAprem <= (\DateTime::createFromFormat('H:i', '16:10')))
+                    {
+                        // On incrémente les horaires de l'oral
+                        $heureAprem -> add($duree);
+                        $finAprem -> add($duree);
+                        
+                        // On attribue l'heure de début à l'oral
+                        $oralUser->setHeure($heureAprem);
+                    }
+                    // Si la fin dépasse 17:00
+                    else
+                    {
+                        // On incrémente la date
+                        $date -> add(\DateInterval::createFromDateString('1 day'));
+                        
+                        // On redéfinit les heures du matin et de l'après-midi
+                        $heureMatin = (\DateTime::createFromFormat('H:i', '08:30'));
+                        $finMatin = (\DateTime::createFromFormat('H:i', '09:20'));
+                        $heureAprem = (\DateTime::createFromFormat('H:i', '12:40'));
+                        $finAprem = (\DateTime::createFromFormat('H:i', '13:30'));
+                        
+                        // On attribue l'heure de début à l'oral
+                        $oralUser->setHeure($heureMatin);
+                    }
                 }
                 
-                // On lie cet oral à l'user
-                $tabUsers[$i] -> addOraux($oralUser);
+                // On attribue la date à l'oral
+                $oralUser->setDate($date);
                 
                 // On enregistre en bd l'oral
                 $gestionnaireEntite->persist($oralUser);
                 $gestionnaireEntite->flush();
+                
+                // On lie cet oral à l'user
+                $tabUsers[$i] -> addOraux($oralUser);
                 
                 // On enregistre en bd l'user
                 $gestionnaireEntite->persist($tabUsers[$i]);
@@ -158,15 +184,62 @@ class CCFController extends Controller
     
     public function planningOrauxAction()
     {
-        //on met la liste des étudiants dans tabUserEtCCF afin de la récupérer dans planningCCFAdmin.html.twig
-        //on récupère le repository de l'entité CCF
+        // On récupère le repository de l'entité User
         $repositoryUser=$this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:User');
         
-        //on récupère tous les étudiants enregistrés en bd
-        $tabUserEtCCF=$repositoryUser->findByPromoEnCours();
+        // On récupère le repository de l'entité Promotion
+        $repositoryPromotion=$this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:Promotion');
+        
+        // On récupère tous les étudiants en cours avec leur oraux
+        $tabUsers = $repositoryUser->getUsersEtOraux();
+        
+        // On récupère les promos en cours
+        $tabPromos = $repositoryPromotion->findByEnCours(true);
         
         //on envoie la liste des étudiants dans la vue chargée de les afficher
-        return $this->render('btsappliCCFBundle:CCF:planningOraux.html.twig', array('tabUserEtCCF'=>$tabUserEtCCF));
+        return $this->render('btsappliCCFBundle:CCF:planningOraux.html.twig', array(
+                                            'tabUsers'=>$tabUsers,
+                                            'tabPromos'=>$tabPromos));
+    }
+    
+    public function planningOrauxPromoAction($idPromo)
+    {
+        // On récupère le repository de l'entité User
+        $repositoryUser=$this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:User');
+        
+        // On récupère le repository de l'entité Promotion
+        $repositoryPromotion=$this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:Promotion');
+        
+        // On récupère les étudiants de la promo dont l'id est passé en paramètre
+        $tabUsers = $repositoryUser->findByPromotion($idPromo);
+        
+        // On récupère les promos en cours
+        $tabPromos = $repositoryPromotion->findByEnCours(true);
+        
+        //on envoie la liste des étudiants dans la vue chargée de les afficher
+        return $this->render('btsappliCCFBundle:CCF:planningOraux.html.twig', array(
+                                            'tabUsers'=>$tabUsers,
+                                            'tabPromos'=>$tabPromos));
+    }
+    
+    public function planningOrauxMatiereAction($matiere)
+    {
+        // On récupère le repository de l'entité User
+        $repositoryUser=$this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:User');
+        
+        // On récupère le repository de l'entité Promotion
+        $repositoryPromotion=$this->getDoctrine()->getManager()->getRepository('btsappliUserBundle:Promotion');
+        
+        // On récupère les étudiants de la promo dont l'id est passé en paramètre
+        $tabUsers = $repositoryUser->findByPromotion($idPromo);
+        
+        // On récupère les promos en cours
+        $tabPromos = $repositoryPromotion->findByEnCours(true);
+        
+        //on envoie la liste des étudiants dans la vue chargée de les afficher
+        return $this->render('btsappliCCFBundle:CCF:planningOraux.html.twig', array(
+                                            'tabUsers'=>$tabUsers,
+                                            'tabPromos'=>$tabPromos));
     }
     
     public function planningEcritsAction()
