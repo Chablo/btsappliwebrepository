@@ -8,15 +8,18 @@ btsappli_stages_tuteurFormulaire:
     requirements:
         id:   \d+
 
+#************************************************************************************************************
 
 btsappli_stages_modificationEnt:
-    path:     /stage/modifierEnt
+    path:     /entreprise/modifier
     defaults: { _controller: btsappliStagesBundle:Stages:modificationEnt }
 
 btsappli_stages_modificationTut:
-    path:     /stage/modifierTut
+    path:     /tuteur/modifier
     defaults: { _controller: btsappliStagesBundle:Stages:modificationTut }
 
+
+#************************************************************************************************************
 
 btsappli_stages_ajoutStageEnt:
     path:     /stage/ajouterEnt
@@ -25,7 +28,6 @@ btsappli_stages_ajoutStageEnt:
 btsappli_stages_ajoutStageTut:
     path:     /stage/ajouterTut
     defaults: { _controller: btsappliStagesBundle:Stages:ajoutStageTut }
-
 
 
 #************************************************************************************************************
@@ -43,14 +45,7 @@ btsappli_stages_voirStage:
     defaults: { _controller: btsappliStagesBundle:Stages:voirStage }
 
 #************************************************************************************************************
-
-btsappli_stages_rechercheEntreprise:
-    path:     /entreprise/rechercher
-    defaults: { _controller: btsappliStagesBundle:Stages:rechercherEntreprise }
-
-btsappli_stages_resultatRecherche:
-    path:     /entreprise/resultat
-    defaults: { _controller: btsappliStagesBundle:Stages:resultatRecherche }
-    requirements:
-        _method: POST
     
+btsappli_stages_pdf:
+    path:   /pdf
+    defaults: { _controller: btsappliStagesBundle:Stages:pdf }

@@ -25,7 +25,8 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
-                default_target_path: /accueilEtudiant
+                success_handler: redirect.after.login
+                
             logout:       
                 path: /logout
                 target: /login
@@ -44,25 +45,8 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         
-        - { path: ^/administration, role: ROLE_ADMIN }
-        
-       # a ajouter plus tard
-        # - { path: ^/accueilAdmin, role: ROLE_ADMIN } #}
-        # - { path: ^/suiviEtudiant, role: ROLE_ADMIN } #}
-        # - { path: ^/suiviStages, role: ROLE_ADMIN } #}
-      
         #coté admin
-        - { path: ^/accueilAdmin, role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/suiviEtudiant, role: IS_AUTHENTICATED_REMEMBERED } 
-        - { path: ^/suiviStages, role: IS_AUTHENTICATED_REMEMBERED } 
-
+        - { path: ^/administration, role: ROLE_ADMIN }
+      
         #coté étudiant
-        - { path: ^/accueilEtudiant, role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/entreprise/ajouter, role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/tuteur/ajouter/id, role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/stage/ajouter1, role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/stage/ajouter2, role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/stage/id, role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/entreprise/rechercher, role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/entreprise/id, role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/entreprise/resultat, role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/, role: IS_AUTHENTICATED_REMEMBERED }

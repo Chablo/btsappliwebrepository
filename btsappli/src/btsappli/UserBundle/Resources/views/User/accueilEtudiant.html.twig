@@ -4,7 +4,7 @@
   <!-- Ligne 2 Bouton d'accès au Planning des CCF de l'étudiant -->
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
-      <href="#" role="button" class="btn btn-info btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;">Planning CCF</button>
+      <a href="{{ path('btsappli_CCF_planningCCFEtu') }}" role="button" class="btn btn-info btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;">Planning CCF</a>
     </div>
   </div>
   
@@ -24,7 +24,7 @@
  <!-- Ligne  4 Bouton d'accès à la Modification du profil de l'Etudiant-->
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
-      <a role="button" class="btn btn-danger btn-lg btn-block" style="padding: 50px 16px;" href="{{ path('fos_user_profile_edit') }}" >Modifier le profil</a>
+      <a role="button" class="btn btn-warning btn-lg btn-block" style="padding: 50px 16px;" href="{{ path('fos_user_profile_edit') }}" >Modifier le profil</a>
     </div>
   </div>
       

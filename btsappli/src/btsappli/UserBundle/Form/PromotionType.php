@@ -15,7 +15,7 @@ class PromotionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('anneePromo', 'text', array('label'=>'Année de promotion'))
+            ->add('anneePromo', 'number', array('label'=>'Année de promotion'))
             ->add('enCours',    'checkbox', array('label'=>'En cours ?'))
         ;
     }

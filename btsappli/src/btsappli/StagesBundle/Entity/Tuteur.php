@@ -3,6 +3,8 @@
 namespace btsappli\StagesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Tuteur
@@ -25,6 +27,7 @@ class Tuteur
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=40)
+     * @Assert\NotBlank(message="Le nom du tuteur doit être spécifié.")
      */
     private $nom;
 
@@ -32,6 +35,7 @@ class Tuteur
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=40)
+     * @Assert\NotBlank(message="Le prénom du tuteur doit être spécifié.")
      */
     private $prenom;
 
@@ -39,6 +43,8 @@ class Tuteur
      * @var string
      *
      * @ORM\Column(name="adresseMail", type="string", length=60)
+     * @Assert\NotBlank(message="L'adresse mail du tuteur doit être spécifié.")
+     * @Assert\Email(message="L'adresse mail spécifiée n'est pas valide.")
      */
     private $adresseMail;
 
@@ -46,6 +52,7 @@ class Tuteur
      * @var string
      *
      * @ORM\Column(name="telephone", type="string", length=14)
+     * @Assert\NotBlank(message="Le téléphone du tuteur doit être spécifié.")
      */
     private $telephone;
 
@@ -60,6 +67,7 @@ class Tuteur
      * @var string
      *
      * @ORM\Column(name="fonction", type="string", length=100)
+     * @Assert\NotBlank(message="La fonction du tuteur doit être spécifiée.")
      */
     private $fonction;
     

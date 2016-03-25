@@ -1,149 +1,166 @@
+{# src/btsappli/UserBundle/Resources/views/User/suiviEtudiant.html.twig #}
+
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
 {# Contient la liste des étudiants ... #}
 
 
+<!-- Import de table export à partir de github, voir http://stackoverflow.com/questions/17341122/link-and-execute-external-javascript-file-hosted-on-github pour explications -->
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/tableExport.js"></script>
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/html2canvas.js"></script>
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jspdf/libs/sprintf.js"></script>
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jspdf/jspdf.js"></script>
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jspdf/libs/base64.js"></script>
+
+
 <div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
-
-<div class="panel panel-default filterable">
-
-    <div class="panel-heading">
-         
-         <h3> Liste des étudiants </h3> 
-        <div class="row">
-            <div class="col-lg-5">
-                <p>Promotions en cours : 
-                    {% for promotionCourante in tabPromotions2 %}
-                        Promotion {{ promotionCourante.anneePromo }} {% if not loop.last %} - {% endif %}
-                    {% endfor %}
-                </p>
-            </div>
-         	<div class="col-lg-2 col-lg-offset-3">
-                <div class=" btn-group ">
-                    <button class="btn btn-primary btn-filter " style="width:140px" type="button">Recherche</button>
-                </div>    
-			</div>
-            <div class="col-lg-2 ">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                        Filtrer par promotion <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                        <ul class="dropdown-menu dropdown-menu-left" style="width:200px">
-                            <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiant') }}"> Tous </a></li>
-                            <li role="separator" class="divider"></li>
-                            {% for promoCourante in tabPromotions %}
-                                <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiantFiltrer', {'idPromo':promoCourante.id}) }}">
-                                    {% if promoCourante.anneePromo is same as(0) %}
-                                    Démission
-                                    {% else %}
-                                        {{promoCourante.anneePromo}}
-                                    {% endif %}
-                                </a></li>
-                            {% endfor %}
-                        </ul>
-                </div>
-             
-            </div>
-        </div>
-            
-        <!-- bouton de filtrage qui affiche toutes les promotions existantes -->
-    </div>
-        
-        <!-- Création du tableau contenant la liste des étudiants -->
-        <div class="table-responsive">
-            <table class=" flterable table table-striped table-hover">
-               
-                <!-- Création de la première ligne contenant le nom de chaque colonne -->
-                <thead>
-                <tr class="filters info" align="center">
-                    <th><input style="margin-left: 30px;" type="text" class="form-control " placeholder="Nom" disabled></th>
-                    <th><input style="margin-left: 18px;" type="text" class="form-control" placeholder="Prénom" disabled></th>
-                    <th><input style="margin-left: 64px;" type="text" class="form-control" placeholder="E-Mail" disabled></th>
-                    <th><input style="margin-left: 28px;" type="text" class="form-control" placeholder="Tél" disabled></th>
-                    <th><input style="margin-left: 12px;" type="text" class="form-control" placeholder="Adresse" disabled></th>
-                    <th><input type="text" class="form-control" placeholder="CP" disabled></th>
-                    <th><input type="text" class="form-control" placeholder="Ville" disabled></th>
-                    <th><input type="text" class="form-control" placeholder="Promotion" disabled></th>
-                    <td><b>Modif Promotion</b></td>
-                </tr>
-                </thead>
-                
-                <!-- Affichage de tous les étudiants -->
-                {% for userCourant in tabUser %} 
-                
-                    <tr align="center">
-                        <td>{{userCourant.nom}}</td>
-                        <td>{{userCourant.prenom}}</td>
-                        <td>{{userCourant.email}}</td>
-                        <td>{{userCourant.telephone}}</td>
-                        <td>{{userCourant.adresse}}</td>
-                        <td>{{userCourant.codePostal}}</td>
-                        <td>{{userCourant.ville}}</td>
-                        
-                        {% if  userCourant.promotion is not null %}
-                        <td>                                                
-                            {% if userCourant.promotion.anneePromo is same as(0) %}
-                                Démission
-                            {% else %}
-                                {{userCourant.promotion.anneePromo}}
-                            {% endif %}
-                        </td> 
-                        {% else %} 
-                        <td></td> 
-                        {% endif %}
-                        
-                        <td>
-                        <!-- bouton pour changer la promotion -->
-                        {% if loop.last %}
-                            <div class="btn-group dropup">
-        					    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        					        Promotion <span class="caret"></span>
-        					        <span class="sr-only">Toggle Dropdown</span>
-        					    </button>
-        					    <ul class="dropdown-menu dropdown-menu-left">
-        					    	{% for promoCourante in tabPromotions %}
-                                        
-                                            <li><a href="{{ path('btsappli_utilisateurs_setPromo', {'id':userCourant.id, 'idPromo':promoCourante.id}) }}">
-                                                {% if promoCourante.anneePromo is same as(0) %}
-                                                    Démission
-                                                {% else %}
-                                                    {{promoCourante.anneePromo}}
-                                                {% endif %}
-                                            </a></li>
-                                        
-                                    {% endfor %}
-        					    </ul>
-        					</div>
-        				{% else %}
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Promotion <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-left">
-                                    {% for promoCourante in tabPromotions %}
-                                        
-                                            <li><a href="{{ path('btsappli_utilisateurs_setPromo', {'id':userCourant.id, 'idPromo':promoCourante.id}) }}">
-                                                {% if promoCourante.anneePromo is same as(0) %}
-                                                    Démission
-                                                {% else %}
-                                                    {{promoCourante.anneePromo}}
-                                                {% endif %}
-                                            </a></li>
-                                       
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endif %}
-                        </td>
-                    </tr> 
-                {% endfor %}
-            </table>
-        </div>
-</div>
+	<div class="panel panel-primary filterable">
+	    <div class="panel-heading">
+	        <h3> Liste des étudiants </h3>
+	        <div class="row">
+	            <div class="col-lg-5">
+	                <p>Promotions en cours :
+	                    {% for promotionCourante in tabPromotions2 %}
+	                        Promotion {{ promotionCourante.anneePromo }} {% if not loop.last %} - {% endif %}
+	                    {% endfor %}
+	                </p>
+	            </div>
+	         	<div class="col-lg-2 col-lg-offset-3">
+	                <div class=" btn-group ">
+	                    <button class="btn btn-default btn-filter " style="width:140px" type="button">Recherche</button>
+	                </div>
+				</div>
+	            <div class="col-lg-2 ">
+	                <div class="btn-group ">
+	                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+	                        Filtrer par promotion <span class="caret"></span>
+	                        <span class="sr-only">Toggle Dropdown</span>
+	                    </button>
+	                    <ul class="dropdown-menu dropdown-menu-right" >
+	                        <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiant') }}"> Tous </a></li>
+	                        <li role="separator" class="divider"></li>
+	                        {% for promoCourante in tabPromotions %}
+	                            <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiantFiltrer', {'idPromo':promoCourante.id}) }}">
+	                                {% if promoCourante.anneePromo is same as(0) %}
+	                                Démission
+	                                {% else %}
+	                                    {{promoCourante.anneePromo}}
+	                                {% endif %}
+	                            </a></li>
+	                        {% endfor %}
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	
+	        <!-- Création du tableau contenant la liste des étudiants -->
+	        <div class="table-responsive">
+	            <table id="customers" class=" flterable table table-striped table-hover">
+	
+	                <!-- Création de la première ligne contenant le nom de chaque colonne -->
+	                <thead>
+	                <tr class="filters info" align="center">
+	                    <th><input type="text" class="form-control text-center " placeholder="Nom" disabled></th>
+	                    <th><input type="text" class="form-control text-center" placeholder="Prénom" disabled></th>
+	                    <th><input type="text" class="form-control text-center" placeholder="E-Mail" disabled></th>
+	                    <th><input type="text" class="form-control text-center" placeholder="Tél" disabled></th>
+	                    <th><input type="text" class="form-control text-center" placeholder="Adresse" disabled></th>
+	                    <th><input type="text" class="form-control text-center" placeholder="CP" disabled></th>
+	                    <th><input type="text" class="form-control text-center" placeholder="Ville" disabled></th>
+	                    <th><input type="text" class="form-control text-center" placeholder="Promotion" disabled></th>
+	                    <td><b>Modif Promotion</b></td>
+	                </tr>
+	                </thead>
+	
+	                <!-- Affichage de tous les étudiants -->
+	                {% for userCourant in tabUsers %}
+	                	{% if userCourant.isGranted("ROLE_SUPER_ADMIN") != 1 %}
+	                    <tr align="center">
+	                        <td>{{userCourant.nom}}</td>
+	                        <td>{{userCourant.prenom}}</td>
+	                        <td>{{userCourant.email}}</td>
+	                        <td>{{userCourant.telephone}}</td>
+	                        <td>{{userCourant.adresse}}</td>
+	                        <td>{{userCourant.codePostal}}</td>
+	                        <td>{{userCourant.ville}}</td>
+	
+	                        {% if  userCourant.promotion is not null %}
+	                        <td>
+	                            {% if userCourant.promotion.anneePromo is same as(0) %}
+	                                Démission
+	                            {% else %}
+	                                {{userCourant.promotion.anneePromo}}
+	                            {% endif %}
+	                        </td>
+	                        {% else %}
+	                        <td></td>
+	                        {% endif %}
+	
+	                        <td>
+	                        <!-- bouton pour changer la promotion -->
+	                        {% if loop.last %}
+	                            <div class="btn-group dropup">
+	        					    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	        					        Promotion <span class="caret"></span>
+	        					        <span class="sr-only">Toggle Dropdown</span>
+	        					    </button>
+	        					    <ul class="dropdown-menu dropdown-menu-right">
+	        					    	{% for promoCourante in tabPromotions %}
+	
+	                                            <li><a href="{{ path('btsappli_utilisateurs_setPromo', {'id':userCourant.id, 'idPromo':promoCourante.id}) }}">
+	                                                {% if promoCourante.anneePromo is same as(0) %}
+	                                                    Démission
+	                                                {% else %}
+	                                                    {{promoCourante.anneePromo}}
+	                                                {% endif %}
+	                                            </a></li>
+	
+	                                    {% endfor %}
+	        					    </ul>
+	        					</div>
+	        				{% else %}
+	                            <div class="btn-group">
+	                                <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                Promotion <span class="caret"></span>
+	                                </button>
+	                                <ul class="dropdown-menu dropdown-menu-right">
+	                                    {% for promoCourante in tabPromotions %}
+	
+	                                            <li><a href="{{ path('btsappli_utilisateurs_setPromo', {'id':userCourant.id, 'idPromo':promoCourante.id}) }}">
+	                                                {% if promoCourante.anneePromo is same as(0) %}
+	                                                    Démission
+	                                                {% else %}
+	                                                    {{promoCourante.anneePromo}}
+	                                                {% endif %}
+	                                            </a></li>
+	
+	                                    {% endfor %}
+	                                </ul>
+	                            </div>
+	                        {% endif %}
+	                        </td>
+	                    </tr>
+	                    {% endif %}
+	                {% endfor %}
+	            </table>
+	        </div>
+	</div>
 </div>
 <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
+
+<div class="btn-group dropup pull-right">
+    <button type="button" class="btn btn-primary dropdown-toggle " style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+    Exporter la table <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right" >
+        <li><a onClick ="$('#customers').tableExport({type:'pdf',escape:'false'});"> PDF </a></li>
+        <li><a onClick ="$('#customers').tableExport({type:'excel',escape:'false'});"> Excel </a></li>
+        <li><a onClick ="$('#customers').tableExport({type:'png',escape:'false'});"> Image </a></li>
+    </ul>
+</div>
 
 
 <script>
@@ -193,7 +210,7 @@
 </script>
 
 <script>
-    (function($){
+	(function($){
         $.fn.extend({
             tableExport: function(options) {
                 var defaults = {
@@ -529,5 +546,138 @@
 			}
         });
     })(jQuery);
+</script>
+
+
+<script>
+	jQuery.base64 = ( function( $ ) {
+  
+  var _PADCHAR = "=",
+    _ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+    _VERSION = "1.0";
+
+
+  function _getbyte64( s, i ) {
+    // This is oddly fast, except on Chrome/V8.
+    // Minimal or no improvement in performance by using a
+    // object with properties mapping chars to value (eg. 'A': 0)
+
+    var idx = _ALPHA.indexOf( s.charAt( i ) );
+
+    if ( idx === -1 ) {
+      throw "Cannot decode base64";
+    }
+
+    return idx;
+  }
+  
+  
+  function _decode( s ) {
+    var pads = 0,
+      i,
+      b10,
+      imax = s.length,
+      x = [];
+
+    s = String( s );
+    
+    if ( imax === 0 ) {
+      return s;
+    }
+
+    if ( imax % 4 !== 0 ) {
+      throw "Cannot decode base64";
+    }
+
+    if ( s.charAt( imax - 1 ) === _PADCHAR ) {
+      pads = 1;
+
+      if ( s.charAt( imax - 2 ) === _PADCHAR ) {
+        pads = 2;
+      }
+
+      // either way, we want to ignore this last block
+      imax -= 4;
+    }
+
+    for ( i = 0; i < imax; i += 4 ) {
+      b10 = ( _getbyte64( s, i ) << 18 ) | ( _getbyte64( s, i + 1 ) << 12 ) | ( _getbyte64( s, i + 2 ) << 6 ) | _getbyte64( s, i + 3 );
+      x.push( String.fromCharCode( b10 >> 16, ( b10 >> 8 ) & 0xff, b10 & 0xff ) );
+    }
+
+    switch ( pads ) {
+      case 1:
+        b10 = ( _getbyte64( s, i ) << 18 ) | ( _getbyte64( s, i + 1 ) << 12 ) | ( _getbyte64( s, i + 2 ) << 6 );
+        x.push( String.fromCharCode( b10 >> 16, ( b10 >> 8 ) & 0xff ) );
+        break;
+
+      case 2:
+        b10 = ( _getbyte64( s, i ) << 18) | ( _getbyte64( s, i + 1 ) << 12 );
+        x.push( String.fromCharCode( b10 >> 16 ) );
+        break;
+    }
+
+    return x.join( "" );
+  }
+  
+  
+  function _getbyte( s, i ) {
+    var x = s.charCodeAt( i );
+
+    if ( x > 255 ) {
+      throw "INVALID_CHARACTER_ERR: DOM Exception 5";
+    }
+    
+    return x;
+  }
+
+
+  function _encode( s ) {
+    if ( arguments.length !== 1 ) {
+      throw "SyntaxError: exactly one argument required";
+    }
+
+    s = String( s );
+
+    var i,
+      b10,
+      x = [],
+      imax = s.length - s.length % 3;
+
+    if ( s.length === 0 ) {
+      return s;
+    }
+
+    for ( i = 0; i < imax; i += 3 ) {
+      b10 = ( _getbyte( s, i ) << 16 ) | ( _getbyte( s, i + 1 ) << 8 ) | _getbyte( s, i + 2 );
+      x.push( _ALPHA.charAt( b10 >> 18 ) );
+      x.push( _ALPHA.charAt( ( b10 >> 12 ) & 0x3F ) );
+      x.push( _ALPHA.charAt( ( b10 >> 6 ) & 0x3f ) );
+      x.push( _ALPHA.charAt( b10 & 0x3f ) );
+    }
+
+    switch ( s.length - imax ) {
+      case 1:
+        b10 = _getbyte( s, i ) << 16;
+        x.push( _ALPHA.charAt( b10 >> 18 ) + _ALPHA.charAt( ( b10 >> 12 ) & 0x3F ) + _PADCHAR + _PADCHAR );
+        break;
+
+      case 2:
+        b10 = ( _getbyte( s, i ) << 16 ) | ( _getbyte( s, i + 1 ) << 8 );
+        x.push( _ALPHA.charAt( b10 >> 18 ) + _ALPHA.charAt( ( b10 >> 12 ) & 0x3F ) + _ALPHA.charAt( ( b10 >> 6 ) & 0x3f ) + _PADCHAR );
+        break;
+    }
+
+    return x.join( "" );
+  }
+
+
+  return {
+    decode: _decode,
+    encode: _encode,
+    VERSION: _VERSION
+  };
+      
+}( jQuery ) );
 </script>
 {% endblock %}

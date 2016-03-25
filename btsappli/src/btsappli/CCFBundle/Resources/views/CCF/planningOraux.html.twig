@@ -1,3 +1,5 @@
+{# src/btsappli/CCFBundle/Resources/views/CCF/planningOraux.html.twig #}
+
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
@@ -5,24 +7,25 @@
 <div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3> Planning des oraux </h3> 
-        <!-- bouton de filtrage qui affiche CCF oral ou ecrit -->
+        <h3> Planning des CCF oraux </h3> 
         <div class="row">
-            <div class="col-lg-2 col-lg-offset-10">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle dropdown pull-right" style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                    Filtrer <span class="caret"></span>
+            <div class="panel-heading">
+        <!-- bouton de filtrage qui affiche CCF oral ou ecrit -->
+                <a type="button" class="btn btn-success"  href="{{ path('btsappli_CCF_ajoutOral') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true" ></span> Ajouter un oral</a>
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown" style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                        Filtrer <span class="caret"></span>
                     </button>
-                        <ul class="dropdown-menu pull-right" style="width:150px" >
-                            {% for promoCourante in tabPromos %}
-                                <li role="presentation"><a href="{{ path('btsappli_CCF_planningOrauxPromo', {'idPromo':promoCourante.id}) }}" role="menuitem">
-                                        Promotion {{promoCourante.anneePromo}}
-                                </a></li>
-                            {% endfor %}
-                            <li role="separator" class="divider"></li>
-                            <li role="presentation"><a href="{{ path('btsappli_CCF_planningOrauxMatiere', {'matiere':e5})}}" role="menuitem">Matière E5</a></li>
-                            <li role="presentation"><a href="{{ path('btsappli_CCF_planningOrauxMatiere', {'matiere':e42})}}" role="menuitem">Matière E42 </a></li>
-                        </ul>
+                    <ul class="dropdown-menu pull-right" style="width:150px" >
+                        {% for promoCourante in tabPromos %}
+                            <li role="presentation"><a href="{{ path('btsappli_CCF_planningOrauxPromo', {'idPromo':promoCourante.id}) }}" role="menuitem">
+                                Promotion {{promoCourante.anneePromo}}
+                            </a></li>
+                        {% endfor %}
+                        <li role="separator" class="divider"></li>
+                        <li role="presentation"><a href="{{ path('btsappli_CCF_planningOrauxMatiereE5')}}" role="menuitem">Matière E5</a></li>
+                        <li role="presentation"><a href="{{ path('btsappli_CCF_planningOrauxMatiereE42')}}" role="menuitem">Matière E42 </a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -56,32 +59,17 @@
                 </tr>
             </thead>
             <!-- Affichage de tous des CCF par étudiants -->
-            {% for userCourant in tabUsers %}  
-                {% if userCourant.oraux is not empty %}
-                    {% for oralCourant in userCourant.oraux %}
-                        <tr align="center">
-                            <td>{{userCourant.nom}}</td>
-                            <td>{{userCourant.prenom}}</td>
-                            <td>{{userCourant.promotion.anneePromo}}</td>
+            {% for oralCourant in tabOraux %}  
+                <tr align="center">
+                    <td>{{oralCourant.user.nom}}</td>
+                    <td>{{oralCourant.user.prenom}}</td>
+                    <td>{{oralCourant.user.promotion.anneePromo}}</td>
                 
-                            <td>{{oralCourant.matiere}}</td>
-                            <td>{{oralCourant.date|date("m/d/Y")}}</td>
-                            <td>{{oralCourant.heure|date("H:i")}}</td>
-                            <td>{{oralCourant.salle}}</td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr align="center">
-                        <td>{{userCourant.nom}}</td>
-                        <td>{{userCourant.prenom}}</td>
-                        <td>{{userCourant.promotion.anneePromo}}</td>
-                        
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                {% endif %}
+                    <td>{{oralCourant.matiere}}</td>
+                    <td>{{oralCourant.date|date("d/m/Y")}}</td>
+                    <td>{{oralCourant.debut|date("H:i")}}</td>
+                    <td>{{oralCourant.salle}}</td>
+                </tr>
            {% endfor %} 
         </table>
     </div>
@@ -90,14 +78,14 @@
 
 <div class="row">
         <div class="col-lg-1  col-lg-offset-2">
-            <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
+            <a href="{{ path('btsappli_CCF_choixTypeCCF') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
         </div>
     
         <div class="col-lg-1  col-lg-offset-2">
             <a href="#" role="button" onclick="javascript:window.print()" class="btn btn-primary" type="button" style="width:140px">Imprimer</a>  <!--&nbsp; = espace-->
         </div>
         <div class="col-lg-1 col-lg-offset-2">
-            <a href="#" role="button" class="btn btn-primary" type="button" style="width:140px">Réinitialiser</a>  <!--&nbsp; = espace-->
+            <a href="{{ path('btsappli_CCF_reinitialiserOrauxValidation') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Réinitialiser</a>  <!--&nbsp; = espace-->
         </div>
 </div>
 

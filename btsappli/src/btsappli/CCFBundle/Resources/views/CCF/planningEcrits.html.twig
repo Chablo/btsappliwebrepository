@@ -1,3 +1,5 @@
+{# src/btsappli/CCFBundle/Resources/views/CCF/planningEcrits.html.twig #}
+
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
@@ -5,20 +7,10 @@
 <div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3> Planning des écrits </h3> 
-        <!-- bouton de filtrage qui affiche CCF oral ou ecrit -->
+        <h3> Planning des CCF écrits </h3>
         <div class="row">
-            <div class="col-lg-2 col-lg-offset-10">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle dropdown pull-right" style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                    Filtrer <span class="caret"></span>
-                    </button>
-                        <ul class="dropdown-menu pull-right" style="width:150px" >
-                            <li role="presentation"><a id="oral" role="menuitem" onclick="Resolve()"> Oral </a></li>
-                            <li role="separator" class="divider"></li>
-                            <li role="presentation"><a id="ecrit" role="menuitem" onclick="Resolve()" > Ecrit </a></li>
-                        </ul>
-                </div>
+            <div class="panel-heading">
+                <a type="button" class="btn btn-success pull-left"  href="{{ path('btsappli_CCF_ajoutEcrit') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true" ></span> Ajouter un écrit</a>
             </div>
         </div>
     </div>
@@ -32,21 +24,23 @@
                     <td>Promotion</td>
                     <td>Matière</td>
                     <td>Date</td>
-                    <td>Salle</td>
+                    <td>Salle 1</td>
+                    <td>Salle 2</td>
                     <td>Heure début</td>
                     <td>Heure fin</td>
                 </tr>
             </thead>
             <!-- Affichage de tous les écrits -->
             {% for ecritCourant in tabEcrits %}  
-            <tr align="center">
-                <td>{{ecritCourant.promotion.anneePromo}}</td>
-                <td>{{ecritCourant.matiere}}</td>
-                <td>{{ecritCourant.date|date("m/d/Y")}}</td>
-                <td>{{ecritCourant.salle1}}</td>
-                <td>{{ecritCourant.debut|date("H:i")}}</td>
-                <td>{{ecritCourant.fin|date("H:i")}}</td>
-            </tr>
+                <tr align="center" onclick="document.location.href='{{ path('btsappli_CCF_modifierEcrit', {'id':ecritCourant.id}) }}'">
+                    <td>{{ecritCourant.promotion.anneePromo}}</td>
+                    <td>{{ecritCourant.matiere}}</td>
+                    <td>{{ecritCourant.date|date("m/d/Y")}}</td>
+                    <td>{{ecritCourant.salle1}}</td>
+                    <td>{{ecritCourant.salle2}}</td>
+                    <td>{{ecritCourant.debut|date("H:i")}}</td>
+                    <td>{{ecritCourant.fin|date("H:i")}}</td>
+                </tr>
            {% endfor %} 
         </table>
     </div>
@@ -55,14 +49,14 @@
 
 <div class="row">
         <div class="col-lg-1  col-lg-offset-2">
-            <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
+            <a href="{{ path('btsappli_CCF_choixTypeCCF') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
         </div>
     
         <div class="col-lg-1  col-lg-offset-2">
             <a href="#" role="button" onclick="javascript:window.print()" class="btn btn-primary" type="button" style="width:140px">Imprimer</a>  <!--&nbsp; = espace-->
         </div>
         <div class="col-lg-1 col-lg-offset-2">
-            <a href="#" role="button" class="btn btn-primary" type="button" style="width:140px">Réinitialiser</a>  <!--&nbsp; = espace-->
+            <a href="{{ path('btsappli_CCF_reinitialiserEcritsValidation') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Réinitialiser</a>  <!--&nbsp; = espace-->
         </div>
 </div>
 

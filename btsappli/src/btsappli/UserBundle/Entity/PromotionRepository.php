@@ -21,7 +21,7 @@ class PromotionRepository extends EntityRepository
 		return $qb;
 	}
 	
-    /*public function getAnciennePromo($anneePromo)
+    public function getAnciennePromo($anneePromo)
 	{
 	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
 		$gestionnaireEntite = $this -> _em;
@@ -29,12 +29,10 @@ class PromotionRepository extends EntityRepository
 		// écriture de la requête personnalisée
 		$requete = $gestionnaireEntite->createQuery('SELECT p FROM btsappliUserBundle:Promotion p WHERE p.anneePromo = :anneePromo');
 		
-		$anneeAnciennePromo = $anneePromo - 2;
-		
 		// On définit la valeur du paramètre anneePromo de la requête
-		$requete->setParameter('anneePromo', $anneeAnciennePromo);
+		$requete->setParameter('anneePromo', $anneePromo);
 		
 		// On exécute la requête et on renvoie les résultats
-		return $requete->getResult();
-	}*/
+		return $requete->getOneOrNullResult();
+	}
 }

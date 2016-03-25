@@ -20,10 +20,9 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "knplabs/knp-paginator-bundle": "^2.5",
-        "knplabs/knp-snappy-bundle": "^1.4",
         "h4cc/wkhtmltopdf-i386": "0.12.x",
-        "h4cc/wkhtmltopdf-amd64": "0.12.x"
-        //"knplabs/knp-snappy-bundle": "dev-master"
+        "h4cc/wkhtmltopdf-amd64": "0.12.x",
+        "knplabs/knp-snappy-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

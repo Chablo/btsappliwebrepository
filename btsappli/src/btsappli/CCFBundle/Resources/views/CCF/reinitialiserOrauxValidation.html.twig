@@ -1,0 +1,30 @@
+{# src/btsappli/CCFBundle/Resources/views/CCF/reinitialiserOrauxValidation.html.twig #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+{# Contient la liste des étudiants avec leurs CCF ... #}
+<div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        <h3>Réinitialisation des oraux</h3> 
+    </div>
+    <div class="panel-body">
+        <p>Voulez-vous vraiment réinitialiser le tableau et supprimer tous les oraux ?</p>
+    </div>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-1 col-lg-offset-2">
+    <a href="{{ path('btsappli_CCF_planningOraux') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
+    </div>
+    <div class="col-lg-1 col-lg-offset-6">
+    <a href="{{ path('btsappli_CCF_reinitialiserOraux') }}" role="button" class="btn btn-danger pull-right" type="button" style="width:140px">Réinitialiser</a> 
+    </div>
+</div>
+
+
+    <script src="resolve.js" type="text/javascript"></script>
+{% endblock %}
+

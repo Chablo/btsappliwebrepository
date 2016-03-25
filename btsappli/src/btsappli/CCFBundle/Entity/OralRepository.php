@@ -12,4 +12,69 @@ use Doctrine\ORM\EntityRepository;
  */
 class OralRepository extends EntityRepository
 {
+    public function getUsersEtOraux()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT o, u FROM btsappliCCFBundle:Oral o LEFT JOIN o.user u');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
+	
+	public function getUsersEtOrauxPromo($idPromo)
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT o, u FROM btsappliCCFBundle:Oral o LEFT JOIN o.user u WHERE o.promotion = :idPromo');
+		
+		// On définit la valeur du paramètre idPromo de la requête
+		$requete -> setParameter('idPromo', $idPromo);
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
+	
+	public function getUsersEtOrauxMatiereE5()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT o, u FROM btsappliCCFBundle:Oral o LEFT JOIN o.user u WHERE o.matiere = \'E5\' ');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
+	
+	public function getUsersEtOrauxMatiereE42()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT o, u FROM btsappliCCFBundle:Oral o LEFT JOIN o.user u WHERE o.matiere = \'E42\' ');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
+	
+	public function getOrauxUser($id)
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT o, u FROM btsappliCCFBundle:Oral o LEFT JOIN o.user u WHERE u.id = :id');
+		
+		// On définit la valeur du paramètre id de la requête
+		$requete -> setParameter('id', $id);
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
 }

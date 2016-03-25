@@ -31,9 +31,16 @@ class Oral
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="heure", type="time")
+     * @ORM\Column(name="debut", type="time")
      */
-    private $heure;
+    private $debut;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fin", type="time")
+     */
+    private $fin;
 
     /**
      * @var string
@@ -54,6 +61,12 @@ class Oral
      * @ORM\ManyToOne(targetEntity="btsappli\UserBundle\Entity\Promotion")
      */
     private $promotion;
+    
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="btsappli\UserBundle\Entity\User")
+     */
+    private $user; // sans s car un oral concerne un seul étudiant
 
 
     /**
@@ -160,25 +173,72 @@ class Oral
     }
 
     /**
-     * Set heure
+     * Set user
      *
-     * @param \DateTime $heure
+     * @param \btsappli\UserBundle\Entity\User $user
      * @return Oral
      */
-    public function setHeure($heure)
+    public function setUser(\btsappli\UserBundle\Entity\User $user = null)
     {
-        $this->heure = $heure;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get heure
+     * Get user
+     *
+     * @return \btsappli\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+
+    /**
+     * Set debut
+     *
+     * @param \DateTime $debut
+     * @return Oral
+     */
+    public function setDebut($debut)
+    {
+        $this->debut = $debut;
+
+        return $this;
+    }
+
+    /**
+     * Get debut
      *
      * @return \DateTime 
      */
-    public function getHeure()
+    public function getDebut()
     {
-        return $this->heure;
+        return $this->debut;
+    }
+
+    /**
+     * Set fin
+     *
+     * @param \DateTime $fin
+     * @return Oral
+     */
+    public function setFin($fin)
+    {
+        $this->fin = $fin;
+
+        return $this;
+    }
+
+    /**
+     * Get fin
+     *
+     * @return \DateTime 
+     */
+    public function getFin()
+    {
+        return $this->fin;
     }
 }

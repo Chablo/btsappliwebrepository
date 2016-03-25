@@ -22,9 +22,11 @@ class EntrepriseType extends AbstractType
             ->add('ville',          'text')
             ->add('pays',           'text')
             ->add('adresseMail',    'email')
-            ->add('telephone',      'number')
-            ->add('fax',            'number')
-            ->add('description',    'textarea')
+            ->add('telephone',      'text')
+            ->add('fax',            'text', array(
+                                'required' => false))
+            ->add('description',    'textarea', array(
+                                'required' => false))
             ->add('serviceAccueil', 'text')
         ;
     }

@@ -3,6 +3,8 @@
 namespace btsappli\StagesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Entreprise
@@ -25,6 +27,7 @@ class Entreprise
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=80)
+     * @Assert\NotBlank(message="Le nom de l'entreprise doit être spécifié.")
      */
     private $nom;
 
@@ -32,6 +35,7 @@ class Entreprise
      * @var string
      *
      * @ORM\Column(name="representant", type="string", length=80)
+     * @Assert\NotBlank(message="Le représentant de l'entreprise doit être spécifié.")
      */
     private $representant;
 
@@ -39,6 +43,7 @@ class Entreprise
      * @var string
      *
      * @ORM\Column(name="adresse", type="string", length=100)
+     * @Assert\NotBlank(message="L'adresse' de l'entreprise doit être spécifiée.")
      */
     private $adresse;
 
@@ -46,6 +51,7 @@ class Entreprise
      * @var integer
      *
      * @ORM\Column(name="codePostal", type="integer")
+     * @Assert\NotBlank(message="Le code postal de l'entreprise doit être spécifié.")
      */
     private $codePostal;
 
@@ -53,6 +59,7 @@ class Entreprise
      * @var string
      *
      * @ORM\Column(name="ville", type="string", length=50)
+     * @Assert\NotBlank(message="La ville de l'entreprise doit être spécifiée.")
      */
     private $ville;
 
@@ -60,6 +67,7 @@ class Entreprise
      * @var string
      *
      * @ORM\Column(name="pays", type="string", length=30)
+     * @Assert\NotBlank(message="Le pays de l'entreprise doit être spécifié.")
      */
     private $pays;
 
@@ -67,6 +75,8 @@ class Entreprise
      * @var string
      *
      * @ORM\Column(name="adresseMail", type="string", length=100)
+     * @Assert\NotBlank(message="L'adresse mail de l'entreprise doit être spécifiée.")
+     * @Assert\Email(message="L'adresse mail spécifiée n'est pas valide.")
      */
     private $adresseMail;
 
@@ -74,6 +84,7 @@ class Entreprise
      * @var string
      *
      * @ORM\Column(name="telephone", type="string", length=14)
+     * @Assert\NotBlank(message="Le téléphone de l'entreprise doit être spécifié.")
      */
     private $telephone;
 
@@ -95,6 +106,7 @@ class Entreprise
      * @var string
      *
      * @ORM\Column(name="serviceAccueil", type="string", length=100)
+     * @Assert\NotBlank(message="Le service d'accueil de l'entreprise doit être spécifié.")
      */
     private $serviceAccueil;
 

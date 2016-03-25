@@ -1,31 +1,27 @@
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
-  <!-- Ligne 2 Boutons d'accès aux suivis des Stages et des Etudiants -->
-  <div class="row">
-    <div class="col-lg-6 ">
-      <a role="button" class="btn btn-success btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_utilisateurs_suiviStages') }}">Suivi des stages</a>
+<div style="margin-top:80px;">
+    <!-- Ligne 2 Boutons d'accès aux suivis des Stages et des Etudiants -->
+    <div class="row">
+        <div class="col-lg-6 ">
+            <a role="button" class="btn btn-info btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_utilisateurs_suiviStages') }}">Suivi des stages</a>
+        </div>
+        <div class="col-lg-6">
+            <a role="button" class="btn btn-warning btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_utilisateurs_suiviEtudiant') }}"> Suivi des étudiants</a>
+        </div>
     </div>
-    <div class="col-lg-6">
-      <a role="button" class="btn btn-warning btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_utilisateurs_suiviEtudiant') }}"> Suivi des étudiants</a>
-    </div>
-  </div>
-
+    <!-- espace entre les boutons -->
+    <br>
   <!-- Ligne 3 Boutons d'accès aux CCF -->
-  <div class="row">
-    <div class="col-lg-6 ">
-      <a href="{{ path('btsappli_CCF_planningChoixTypeCCF') }}" role="button" class="btn btn-info btn-lg btn-block" style="padding: 50px 16px;">Planning CCF</a>
+    <div class="row">
+        <div class="col-lg-6 ">
+            <a href="{{ path('btsappli_CCF_choixTypeCCF') }}" role="button" class="btn btn-success btn-lg btn-block" style="padding: 50px 16px;">Planning et Edition CCF</a>
+        </div>
+        <div class="col-lg-6">
+            <a href="{{ path('btsappli_utilisateurs_validerInscriptions') }}" role="button" class="btn btn-primary btn-lg btn-block" style="padding: 50px 16px;">Valider les inscriptions</a>
+        </div>
     </div>
-    <div class="col-lg-6">
-      <a href="{{ path('btsappli_CCF_editionChoixTypeCCF') }}" role="button" class="btn btn-primary btn-lg btn-block" style="padding: 50px 16px;">Editer CCF</a>
-    </div>
-  </div>
-  
-  <!-- Ligne 4 Bonton d'accès à la validation des inscriptions  -->
-  <div class="row">
-    <div class="col-lg-6 col-lg-offset-3">
-      <a role="button" class="btn btn-danger btn-lg btn-block" style="padding: 50px 16px;" href="{{ path('btsappli_utilisateurs_validerInscriptions') }}">Valider les incriptions</a>
-    </div>
-  </div>
+</div>
       
 {% endblock %}

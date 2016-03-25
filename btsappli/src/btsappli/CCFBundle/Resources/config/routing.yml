@@ -1,34 +1,83 @@
-btsappli_CCF_editionChoixTypeCCF:
-    path:   /administration/editer/choisirTypeCCF
-    defaults: { _controller: btsappliCCFBundle:CCF:editionChoixTypeCCF }
+btsappli_CCF_choixTypeCCF:
+    path:   /administration/choisirTypeCCF
+    defaults: { _controller: btsappliCCFBundle:CCF:choixTypeCCF }
+
+#************************************************************************************************************
 
 btsappli_CCF_ajoutEcrit:
-    path:   /administration/editer/ecrit
+    path:   /administration/ecrits/ajouter
     defaults: { _controller: btsappliCCFBundle:CCF:ajoutEcrit }
 
 btsappli_CCF_ajoutOral:
-    path:   /administration/editer/oral
+    path:   /administration/oraux/ajouter
     defaults: { _controller: btsappliCCFBundle:CCF:ajoutOral }
 
 
-btsappli_CCF_planningChoixTypeCCF:
-    path:   /administration/planning/choisirTypeCCF
-    defaults: { _controller: btsappliCCFBundle:CCF:planningChoixTypeCCF }
+#************************************************************************************************************
 
 btsappli_CCF_planningOraux:
-    path:   /administration/planningOraux
+    path:   /administration/oraux/planning
     defaults: { _controller: btsappliCCFBundle:CCF:planningOraux }
 
+btsappli_CCF_planningOrauxMatiereE5:
+    path:   /administration/oraux/planning/E5
+    defaults: { _controller: btsappliCCFBundle:CCF:planningOrauxMatiereE5 }
+
+btsappli_CCF_planningOrauxMatiereE42:
+    path:   /administration/oraux/planning/E42
+    defaults: { _controller: btsappliCCFBundle:CCF:planningOrauxMatiereE42 }
+
 btsappli_CCF_planningOrauxPromo:
-    path:   /administration/planningOraux/{idPromo}
+    path:   /administration/oraux/planning/promo/{idPromo}
     defaults: { _controller: btsappliCCFBundle:CCF:planningOrauxPromo }
     requirements:
         idPromo:   \d+
 
-btsappli_CCF_planningOrauxMatiere:
-    path:   /administration/planningOraux/{matiere}
-    defaults: { _controller: btsappliCCFBundle:CCF:planningOrauxMatiere }
+btsappli_CCF_reinitialiserOrauxValidation:
+    path:   /administration/oraux/validerReinitialisation
+    defaults: { _controller: btsappliCCFBundle:CCF:reinitialiserOrauxValidation }
+
+btsappli_CCF_reinitialiserOraux:
+    path:   /administration/oraux/reinitialiser
+    defaults: { _controller: btsappliCCFBundle:CCF:reinitialiserOraux }
+
+
+#************************************************************************************************************
+
 
 btsappli_CCF_planningEcrits:
-    path:   /administration/planningEcrits
+    path:   /administration/ecrits/planning
     defaults: { _controller: btsappliCCFBundle:CCF:planningEcrits }
+
+btsappli_CCF_reinitialiserEcritsValidation:
+    path:   /administration/ecrits/validerReinitialisation
+    defaults: { _controller: btsappliCCFBundle:CCF:reinitialiserEcritsValidation }
+
+btsappli_CCF_reinitialiserEcrits:
+    path:   /administration/ecrits/reinitialiser
+    defaults: { _controller: btsappliCCFBundle:CCF:reinitialiserEcrits }
+
+btsappli_CCF_modifierEcrit:
+    path:   /administration/ecrits/modifier/{id}
+    defaults: { _controller: btsappliCCFBundle:CCF:modifierEcrit }
+    requirements:
+        idPromo:   \d+
+
+btsappli_CCF_supprimerEcrit:
+    path:   /administration/ecrits/supprimer/{id}
+    defaults: { _controller: btsappliCCFBundle:CCF:supprimerEcrit }
+    requirements:
+        idPromo:   \d+
+
+btsappli_CCF_supprimerEcritValidation:
+    path:   /administration/ecrits/validerSuppression/{id}
+    defaults: { _controller: btsappliCCFBundle:CCF:supprimerEcritValidation }
+    requirements:
+        idPromo:   \d+
+
+
+#************************************************************************************************************
+
+btsappli_CCF_planningCCFEtu:
+    path:   /planningCCF
+    defaults: { _controller: btsappliCCFBundle:CCF:planningCCFEtudiant }

@@ -15,3 +15,7 @@ services:
         arguments: [%fos_user.model.user.class%]
         tags:
             - { name: form.type, alias: btsappli_user_profile }
+    
+    redirect.after.login:
+        class: btsappli\UserBundle\Redirection\AfterLoginRedirection
+        arguments: [@router]

@@ -90,6 +90,16 @@ fos_user:
     registration:
         form:
             type: btsappli_user_registration
+        
+            
+
     profile:
         form:
             type: btsappli_user_profile
+        
+    resetting:
+        email:
+            from_email:
+
+                address:        mybtscg@gmail.com
+                sender_name:    MyBTSCG

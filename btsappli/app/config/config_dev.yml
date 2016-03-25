@@ -43,6 +43,10 @@ monolog:
 
 assetic:
     use_controller: true
+swiftmailer:
+    transport: gmail
+    username:  mybtscg@gmail.com
+    password:  becatmateu
 
 #swiftmailer:
 #    delivery_address: me@example.com

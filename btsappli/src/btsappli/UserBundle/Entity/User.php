@@ -111,11 +111,6 @@ class User extends BaseUser
      */
     private $ecrit; // sans s car un étudiant a un seul écrit
     
-    /**
-     *
-     * @ORM\ManyToMany(targetEntity="btsappli\CCFBundle\Entity\Oral")
-     */
-    private $oraux; // un étudiant a plusieurs oraux
 
     
     //GET ET SET
@@ -405,37 +400,9 @@ class User extends BaseUser
     {
         return $this->ecrit;
     }
-
-    /**
-     * Add oraux
-     *
-     * @param \btsappli\CCFBundle\Entity\Oral $oraux
-     * @return User
-     */
-    public function addOraux(\btsappli\CCFBundle\Entity\Oral $oraux)
+    
+        public function isGranted($role)
     {
-        $this->oraux[] = $oraux;
-
-        return $this;
-    }
-
-    /**
-     * Remove oraux
-     *
-     * @param \btsappli\CCFBundle\Entity\Oral $oraux
-     */
-    public function removeOraux(\btsappli\CCFBundle\Entity\Oral $oraux)
-    {
-        $this->oraux->removeElement($oraux);
-    }
-
-    /**
-     * Get oraux
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getOraux()
-    {
-        return $this->oraux;
+        return in_array($role, $this->getRoles());
     }
 }

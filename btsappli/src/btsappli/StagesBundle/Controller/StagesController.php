@@ -61,48 +61,43 @@ class StagesController extends Controller
         // On récupère l'utilisateur qui est connecté
         $user = $this -> getUser();
         
-        if (empty($user->getStage()) or empty($user->getStage()->getTuteur()))
+        // Si l'utilisateur n'a pas de stage
+        if (empty($user->getStage()))
         {
-            if (empty($user->getStage()))
-            {
-                // Création d'un nouvel objet stage vide
-                $stage = new Stage();
+            // Création d'un nouvel objet stage vide
+            $stage = new Stage();
             
-                // On lie l'objet stage à l'utilisateur
-                $user -> setStage($stage);
-            }
-            else
-            {
-                $stage=$user->getStage();
-            }
-            
-            // Création du formulaire permettant de saisir un stage
-            $formulaireStage = $this -> createForm(new StageType, $stage);
-                
-            // Enregistrement des données dans $stage dès soumission du formulaire
-            $formulaireStage->handleRequest($requeteUtilisateur);
-                
-            // Si le formulaire a été soumis et que les données sont valides
-            if($formulaireStage->isValid())
-            {
-                // On enregistre l'objet $stage en base de données
-                $gestionnaireEntite = $this->getDoctrine()->getManager();
-                $gestionnaireEntite->persist($stage);
-                $gestionnaireEntite->flush();
-        
-                // On redirige vers la page d'affichage de l'entreprise choisie
-                return $this->redirect($this->generateUrl('btsappli_stages_voirEntreprise'));
-            }
-                
-            // On appelle la vue chargée d'afficher le formulaire et on lui transmet la représentation graphique du formulaire
-            return $this -> render('btsappliStagesBundle:Stages:ajoutStageEnt.html.twig',array (
-                                                'formulaireStage' => $formulaireStage -> createView()));
+            // On lie l'objet stage à l'utilisateur
+            $user -> setStage($stage);
         }
+        // Si l'utilisateur a déjà un stage
         else
         {
-            return $this -> render('btsappliStagesBundle:Stages:erreurStage.html.twig', array(
-                                                'id' => $user -> getStage()-> getId()));
+            // On récupère le stage de l'utilisateur
+            $stage=$user->getStage();
         }
+            
+        // Création du formulaire permettant de saisir un stage
+        $formulaireStage = $this -> createForm(new StageType, $stage);
+                
+        // Enregistrement des données dans $stage dès soumission du formulaire
+        $formulaireStage->handleRequest($requeteUtilisateur);
+                
+        // Si le formulaire a été soumis et que les données sont valides
+        if($formulaireStage->isValid())
+        {
+            // On enregistre l'objet $stage en base de données
+            $gestionnaireEntite = $this->getDoctrine()->getManager();
+            $gestionnaireEntite->persist($stage);
+            $gestionnaireEntite->flush();
+        
+            // On redirige vers la page d'affichage de l'entreprise choisie
+            return $this->redirect($this->generateUrl('btsappli_stages_voirEntreprise'));
+        }
+                
+        // On appelle la vue chargée d'afficher le formulaire et on lui transmet la représentation graphique du formulaire
+        return $this -> render('btsappliStagesBundle:Stages:ajoutStageEnt.html.twig',array (
+                                            'formulaireStage' => $formulaireStage -> createView()));
     }
     
     public function ajoutStageTutAction(Request $requeteUtilisateur)
@@ -110,6 +105,7 @@ class StagesController extends Controller
         // On récupère l'objet stage de l'utilisateur
         $stage = $this -> getUser() -> getStage();
         
+        // Si le stage possède déjà un tuteur 
         if(!empty($stage->getTuteur()))
         {
             // On met le tuteur du stage à null
@@ -291,78 +287,27 @@ class StagesController extends Controller
                               'tuteur' => $tuteur));
     }
     
-    
-    
-    
-    public function rechercherEntrepriseAction(Request $requeteUtilisateur)
-    {
-        // On récupère le repository de l'entité Entreprise
-        $repositoryEntreprise = $this->getDoctrine()->getManager() -> getRepository('btsappliStagesBundle:Entreprise');
-                                   
-        // On récupère l'entreprise dont l'id est le paramètre $id
-        $entreprises = $repositoryEntreprise->findAll();
+
+    // Action qui va générer la convention de stage de l'utilisateur connecté
+    public function pdfAction() {
         
-        $formulaireRecherche = $this -> createForm(new EntrepriseRechercheForm());
-	
-	    return $this->render('btsappliStagesBundle:Stages:rechercheEntreprise.html.twig', 
-	                            array('entreprises' => $entreprises,
-	                                  'formulaireRecherche' => $formulaireRecherche->createView()));
+        // On récupère les données de l'utilisateur
+        $user = $this -> getUser();
+        
+        // On récupère le stage de l'utilisateur
+        $stage = $this -> getUser() -> getStage();
+        
+        // On envoie les données de l'utilisateur et de son stage à la vue qu'on va convertir en PDF
+        $html = $this->renderView('btsappliStagesBundle:Stages:convention.html.twig', array(
+                                                                                            'stage' => $stage,
+                                                                                            'user' => $user));
+        $response = new Response();
+        $response->setContent($this->get('knp_snappy.pdf')->getOutputFromHtml($html,array('orientation' => 'Portrait')));
+        $response->headers->set('Content-Type', 'application/pdf');
+        //$response->headers->set('Content-Type: application/pdf', 'application/force-download');
+        $response->headers->set('Content-disposition', 'filename=1.pdf');
+        return $response;
     }
-    
-    public function resultatRechercheAction()
-    {
-        $request = $this->getRequest();
-    
-        if($request->isXmlHttpRequest())
-        {
-            $motcle = '';
-            $motcle = $request->getRequest('motcle');
-            
-            // On récupère le gestionnaire d'entité
-            $gestionnaireEntite = $this->getDoctrine()->getManager();
-    
-            if($motcle != '')
-            {
-                   $qb = $gestionnaireEntite->createQueryBuilder();
-    
-                   $qb->select('e')
-                      ->from('btsappliStagesBundle:Entreprise', 'e')
-                      ->where("e.nom LIKE :motcle")
-                      ->orderBy('e.nom', 'ASC')
-                      ->setParameter('motcle', '%'.$motcle.'%');
-    
-                   $query = $qb->getQuery();               
-                   $entreprises = $query->getResult();
-            }
-            else {
-                $entreprises = $gestionnaireEntite->getRepository('btsappliStagesBundle:Entreprise')->findAll();
-            }
-    
-            return $this->render('btsappliStagesBundle:Entreprise:resultatRecherche.html.twig', array(
-                'entreprises' => $entreprises
-                ));
-        }
-        else {
-            return $this->rechercheEntrepriseAction();
-        }
-    }
-    
-    public function generatePdfAction(Request $request)
-    {
-       // initialize the $emp variable
-        $html = $this->renderView('btsappliStagesBundle:Stages:vueStage.html.twig',
-            array('stage'=> $this->getUser()->getStage())
-        );
-
-        return new Response(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            200,
-            array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="file.pdf"'
-            )
-        );
-    }
-
-}
+ }
+ 
 ?>

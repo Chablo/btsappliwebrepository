@@ -29,9 +29,9 @@ class SecurityController extends Controller
         }
 
         // get the error if any (works with forward and redirect -- see below)
-        if ($request->attributes->has($authErrorKey)) {
+        if (($request->attributes->has($authErrorKey))) {
             $error = $request->attributes->get($authErrorKey);
-        } elseif (null !== $session && $session->has($authErrorKey)) {
+        } elseif ((null !== $session) && ($session->has($authErrorKey))) {
             $error = $session->get($authErrorKey);
             $session->remove($authErrorKey);
         } else {
@@ -42,6 +42,9 @@ class SecurityController extends Controller
         }
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
+        
+
+        
         if ($this->has('security.csrf.token_manager')) {
             $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
         } else {

@@ -9,7 +9,7 @@ btsappli_utilisateurs_accueilAdmin:
 #************************************************************************************************************
     
 btsappli_utilisateurs_suiviEtudiant:
-    path:   /administration/suiviEtudiant
+    path:   /administration/suiviEtudiants
     defaults: { _controller: btsappliUserBundle:User:suiviEtudiant }
     
 btsappli_utilisateurs_setPromo:
@@ -30,14 +30,6 @@ btsappli_utilisateurs_suiviEtudiantFiltrer:
 btsappli_utilisateurs_ajoutPromo:
     path:   /administration/ajouterPromo
     defaults: { _controller: btsappliUserBundle:User:ajoutPromo }
-    
-btsappli_utilisateurs_modifierPromo:
-    path:   /administration/modifierPromo
-    defaults: { _controller: btsappliUserBundle:User:modifierPromo }
-
-btsappli_utilisateurs_modifierPromoValidation:
-    path:   /administration/modifierPromo/valide
-    defaults: { _controller: btsappliUserBundle:User:modifierPromoValidation }
     
 #************************************************************************************************************
 
@@ -125,10 +117,3 @@ btsappli_utilisateurs_acceptInscriptions:
     requirements:
         id:   \d+
     
-btsappli_utilisateurs_pdf:
-    path:   /pdf
-    defaults: { _controller: btsappliUserBundle:User:pdf }
-    
-btsappli_utilisateurs_pdfCapture:
-    path:   /pdf/capture
-    defaults: { _controller: btsappliUserBundle:User:pdfCapture }

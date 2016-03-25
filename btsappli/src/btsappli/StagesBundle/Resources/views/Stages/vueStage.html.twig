@@ -37,8 +37,8 @@
 						        <dt>Pays</dt><dd>{{ stage.entreprise.pays }}</dd><br/>
 						        
 						        <dt>Adresse email<dt><dd>{{ stage.entreprise.adresseMail }}</dd>
-						        <dt>Téléphone</dt><dd>0{{ stage.entreprise.telephone }}</dd>
-						        <dt>Fax</dt><dd>0{{ stage.entreprise.fax }}</dd><br/>
+						        <dt>Téléphone</dt><dd>{{ stage.entreprise.telephone }}</dd>
+						        <dt>Fax</dt><dd>{{ stage.entreprise.fax }}</dd><br/>
 						        
 						        <dt>Service d'accueil</dt><dd>{{ stage.entreprise.serviceAccueil }}</dd><br/>
 						        
@@ -50,16 +50,25 @@
 				            <dl class="dl-horizontal">
 						        
 						        <dt>Email</dt><dd>{{ stage.tuteur.adresseMail }}</dd>
-						        <dt>Téléphone<dt><dd>0{{ stage.tuteur.telephone }}</dd>
+						        <dt>Téléphone<dt><dd>{{ stage.tuteur.telephone }}</dd>
 						        <dt>Fonctions</dt><dd>{{ stage.tuteur.fonction }}</dd><br/>
 						        
 						        <dt>Infos Complémentaires<dt><dd>{{ stage.tuteur.infosComplementaires }}</dd>
 				            </dl>
 			     		</div>
 					</div>
-				{#	<a href="{{ path('btsappli_stages_generate_pdf') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Imprimer</a> #}
-					<a href="#" role="button" class="btn btn-primary pull-left" type="button" >Générer la convention</a>
-		            <a href="{{ path('btsappli_utilisateurs_accueilEtu') }}" role="button" class="btn btn-primary pull-right" type="button" style="width:140px">Accueil</a>
+					
+					<div class="row">
+		        		<div class="col-lg-5 ">
+							{#	<a href="{{ path('btsappli_stages_generate_pdf') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Imprimer</a> #}
+							<a href="{{ path('btsappli_stages_pdf') }}" role="button" class="btn btn-primary" type="button" >Générer la convention</a>
+						</div>
+						<div class="col-lg-3 ">
+							<a href="{{ path('btsappli_stages_ajoutStageEnt') }}" role="button" class="btn btn-primary" type="button"  style="width:140px">Modifier</a>
+		            	</div>	
+		            	<div class="col-lg-4 ">
+		            		<a href="{{ path('btsappli_utilisateurs_accueilEtu') }}" role="button" class="btn btn-primary pull-right" type="button" style="width:140px">Accueil</a>
+		        		</div>
 		        </div>
 	    </div>
 	</div>  
