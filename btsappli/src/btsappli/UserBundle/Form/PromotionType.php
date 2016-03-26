@@ -16,7 +16,6 @@ class PromotionType extends AbstractType
     {
         $builder
             ->add('anneePromo', 'number', array('label'=>'Année de promotion'))
-            ->add('enCours',    'checkbox', array('label'=>'En cours ?'))
         ;
     }
     

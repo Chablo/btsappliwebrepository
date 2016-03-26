@@ -3,31 +3,41 @@
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
+
+<!-- Import de table export à partir de github, voir http://stackoverflow.com/questions/17341122/link-and-execute-external-javascript-file-hosted-on-github pour explications -->
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/tableExport.js"></script>
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/html2canvas.js"></script>
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jspdf/libs/sprintf.js"></script>
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jspdf/jspdf.js"></script>
+<script type="text/javascript" src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jspdf/libs/base64.js"></script>
+
+
 {# Contient la liste des étudiants avec leurs CCF ... #}
-<div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3> Planning des CCF écrits </h3>
-        <div class="row">
-            <div class="panel-heading">
-                <a type="button" class="btn btn-success pull-left"  href="{{ path('btsappli_CCF_ajoutEcrit') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true" ></span> Ajouter un écrit</a>
+<div style="margin-top:80px;"> <!-- pour descendre le contenu de x pixels -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3> Planning des CCF écrits </h3>
+            <div class="row">
+                <div class="col-lg-2 col-lg-offset-10">
+                    <a type="button" class="btn btn-success" style="width:140px" href="{{ path('btsappli_CCF_ajoutEcrit') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true" ></span> Ajouter </a>
+                </div>
             </div>
         </div>
     </div>
-      
     <!-- Création du tableau contenant la liste des étudiants et leurs CCF -->
     <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table id="customers" class="table table-striped table-hover">
            <thead>
                 <!-- Création de la première ligne contenant le nom de chaque colonne secondaire -->
                 <tr class="info " align="center">
-                    <td>Promotion</td>
-                    <td>Matière</td>
-                    <td>Date</td>
-                    <td>Salle 1</td>
-                    <td>Salle 2</td>
-                    <td>Heure début</td>
-                    <td>Heure fin</td>
+                    <td><b>Promotion</b></td>
+                    <td><b>Matière</b></td>
+                    <td><b>Date</b></td>
+                    <td><b>Salle 1</b></td>
+                    <td><b>Salle 2</b></td>
+                    <td><b>Heure début</b></td>
+                    <td><b>Heure fin</b></td>
                 </tr>
             </thead>
             <!-- Affichage de tous les écrits -->
@@ -44,23 +54,502 @@
            {% endfor %} 
         </table>
     </div>
-</div>
+    <!-- Bouton de Retour-->
+    <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a>  <!--&nbsp; = espace-->
+    <!-- Bouton d'Exportation-->
+   <div class="btn-group dropup pull-right">
+        <button type="button" class="btn btn-primary dropdown-toggle " style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+            Exporter <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+            <li><a onClick ="$('#customers').tableExport({type:'excel',escape:'false'});"> Excel </a></li>
+            <li><a onClick ="$('#customers').tableExport({type:'png',escape:'false'});"> PNG </a></li>
+        </ul>
+    </div>
+    <!-- Bouton de Reinitialisation-->   
+    <div class="row">
+        <div class="col-lg-1  col-lg-offset-6">
+            <a href="{{ path('btsappli_CCF_reinitialiserEcritsValidation') }}" role="button" class="btn btn-danger" type="button" style="width:140px"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Réinitialiser</a>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-        <div class="col-lg-1  col-lg-offset-2">
-            <a href="{{ path('btsappli_CCF_choixTypeCCF') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
-        </div>
-    
-        <div class="col-lg-1  col-lg-offset-2">
-            <a href="#" role="button" onclick="javascript:window.print()" class="btn btn-primary" type="button" style="width:140px">Imprimer</a>  <!--&nbsp; = espace-->
-        </div>
-        <div class="col-lg-1 col-lg-offset-2">
-            <a href="{{ path('btsappli_CCF_reinitialiserEcritsValidation') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Réinitialiser</a>  <!--&nbsp; = espace-->
-        </div>
-</div>
 
 
     <script src="resolve.js" type="text/javascript"></script>
+    
+    
+    <script>
+	(function($){
+        $.fn.extend({
+            tableExport: function(options) {
+                var defaults = {
+						separator: ',',
+						ignoreColumn: [],
+						tableName:'yourTableName',
+						type:'csv',
+						pdfFontSize:14,
+						pdfLeftMargin:20,
+						escape:'true',
+						htmlContent:'false',
+						consoleLog:'false'
+				};
+                
+				var options = $.extend(defaults, options);
+				var el = this;
+				
+				if(defaults.type == 'csv' || defaults.type == 'txt'){
+				
+					// Header
+					var tdData ="";
+					$(el).find('thead').find('tr').each(function() {
+					tdData += "\n";					
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									tdData += '"' + parseString($(this)) + '"' + defaults.separator;									
+								}
+							}
+							
+						});
+						tdData = $.trim(tdData);
+						tdData = $.trim(tdData).substring(0, tdData.length -1);
+					});
+					
+					// Row vs Column
+					$(el).find('tbody').find('tr').each(function() {
+					tdData += "\n";
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									tdData += '"'+ parseString($(this)) + '"'+ defaults.separator;
+								}
+							}
+						});
+						//tdData = $.trim(tdData);
+						tdData = $.trim(tdData).substring(0, tdData.length -1);
+					});
+					
+					//output
+					if(defaults.consoleLog == 'true'){
+						console.log(tdData);
+					}
+					var base64data = "base64," + $.base64.encode(tdData);
+					window.open('data:application/'+defaults.type+';filename=exportData;' + base64data);
+				}else if(defaults.type == 'sql'){
+				
+					// Header
+					var tdData ="INSERT INTO `"+defaults.tableName+"` (";
+					$(el).find('thead').find('tr').each(function() {
+					
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									tdData += '`' + parseString($(this)) + '`,' ;									
+								}
+							}
+							
+						});
+						tdData = $.trim(tdData);
+						tdData = $.trim(tdData).substring(0, tdData.length -1);
+					});
+					tdData += ") VALUES ";
+					// Row vs Column
+					$(el).find('tbody').find('tr').each(function() {
+					tdData += "(";
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									tdData += '"'+ parseString($(this)) + '",';
+								}
+							}
+						});
+						
+						tdData = $.trim(tdData).substring(0, tdData.length -1);
+						tdData += "),";
+					});
+					tdData = $.trim(tdData).substring(0, tdData.length -1);
+					tdData += ";";
+					
+					//output
+					//console.log(tdData);
+					
+					if(defaults.consoleLog == 'true'){
+						console.log(tdData);
+					}
+					
+					var base64data = "base64," + $.base64.encode(tdData);
+					window.open('data:application/sql;filename=exportData;' + base64data);
+					
+				
+				}else if(defaults.type == 'json'){
+				
+					var jsonHeaderArray = [];
+					$(el).find('thead').find('tr').each(function() {
+						var tdData ="";	
+						var jsonArrayTd = [];
+					
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									jsonArrayTd.push(parseString($(this)));									
+								}
+							}
+						});									
+						jsonHeaderArray.push(jsonArrayTd);						
+						
+					});
+					
+					var jsonArray = [];
+					$(el).find('tbody').find('tr').each(function() {
+						var tdData ="";	
+						var jsonArrayTd = [];
+					
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									jsonArrayTd.push(parseString($(this)));									
+								}
+							}
+						});									
+						jsonArray.push(jsonArrayTd);									
+						
+					});
+					
+					var jsonExportArray =[];
+					jsonExportArray.push({header:jsonHeaderArray,data:jsonArray});
+					
+					//Return as JSON
+					//console.log(JSON.stringify(jsonExportArray));
+					
+					//Return as Array
+					//console.log(jsonExportArray);
+					if(defaults.consoleLog == 'true'){
+						console.log(JSON.stringify(jsonExportArray));
+					}
+					var base64data = "base64," + $.base64.encode(JSON.stringify(jsonExportArray));
+					window.open('data:application/json;filename=exportData;' + base64data);
+				}else if(defaults.type == 'xml'){
+				
+					var xml = '<?xml version="1.0" encoding="utf-8"?>';
+					xml += '<tabledata><fields>';
+
+					// Header
+					$(el).find('thead').find('tr').each(function() {
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){					
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									xml += "<field>" + parseString($(this)) + "</field>";
+								}
+							}
+						});									
+					});					
+					xml += '</fields><data>';
+					
+					// Row Vs Column
+					var rowCount=1;
+					$(el).find('tbody').find('tr').each(function() {
+						xml += '<row id="'+rowCount+'">';
+						var colCount=0;
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){	
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									xml += "<column-"+colCount+">"+parseString($(this))+"</column-"+colCount+">";
+								}
+							}
+							colCount++;
+						});															
+						rowCount++;
+						xml += '</row>';
+					});					
+					xml += '</data></tabledata>'
+					
+					if(defaults.consoleLog == 'true'){
+						console.log(xml);
+					}
+					
+					var base64data = "base64," + $.base64.encode(xml);
+					window.open('data:application/xml;filename=exportData;' + base64data);
+
+				}else if(defaults.type == 'excel' || defaults.type == 'doc'|| defaults.type == 'powerpoint'  ){
+					//console.log($(this).html());
+					var excel="<table>";
+					// Header
+					$(el).find('thead').find('tr').each(function() {
+						excel += "<tr>";
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){					
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									excel += "<td>" + parseString($(this))+ "</td>";
+								}
+							}
+						});	
+						excel += '</tr>';						
+						
+					});					
+					
+					
+					// Row Vs Column
+					var rowCount=1;
+					$(el).find('tbody').find('tr').each(function() {
+						excel += "<tr>";
+						var colCount=0;
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){	
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									excel += "<td>"+parseString($(this))+"</td>";
+								}
+							}
+							colCount++;
+						});															
+						rowCount++;
+						excel += '</tr>';
+					});					
+					excel += '</table>'
+					
+					if(defaults.consoleLog == 'true'){
+						console.log(excel);
+					}
+					
+					var excelFile = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:"+defaults.type+"' xmlns='http://www.w3.org/TR/REC-html40'>";
+					excelFile += "<head>";
+					excelFile += "<!--[if gte mso 9]>";
+					excelFile += "<xml>";
+					excelFile += "<x:ExcelWorkbook>";
+					excelFile += "<x:ExcelWorksheets>";
+					excelFile += "<x:ExcelWorksheet>";
+					excelFile += "<x:Name>";
+					excelFile += "{worksheet}";
+					excelFile += "</x:Name>";
+					excelFile += "<x:WorksheetOptions>";
+					excelFile += "<x:DisplayGridlines/>";
+					excelFile += "</x:WorksheetOptions>";
+					excelFile += "</x:ExcelWorksheet>";
+					excelFile += "</x:ExcelWorksheets>";
+					excelFile += "</x:ExcelWorkbook>";
+					excelFile += "</xml>";
+					excelFile += "<![endif]-->";
+					excelFile += "</head>";
+					excelFile += "<body>";
+					excelFile += excel;
+					excelFile += "</body>";
+					excelFile += "</html>";
+
+					var base64data = "base64," + $.base64.encode(excelFile);
+					window.open('data:application/vnd.ms-'+defaults.type+';filename=exportData.doc;' + base64data);
+					
+				}else if(defaults.type == 'png'){
+					html2canvas($(el), {
+						onrendered: function(canvas) {										
+							var img = canvas.toDataURL("image/png");
+							window.open(img);
+							
+							
+						}
+					});		
+				}else if(defaults.type == 'pdf'){
+	
+					var doc = new jsPDF('p','pt', 'a4', true);
+					doc.setFontSize(defaults.pdfFontSize);
+					
+					// Header
+					var startColPosition=defaults.pdfLeftMargin;
+					$(el).find('thead').find('tr').each(function() {
+						$(this).filter(':visible').find('th').each(function(index,data) {
+							if ($(this).css('display') != 'none'){					
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									var colPosition = startColPosition+ (index * 50);									
+									doc.text(colPosition,20, parseString($(this)));
+								}
+							}
+						});									
+					});					
+				
+				
+					// Row Vs Column
+					var startRowPosition = 20; var page =1;var rowPosition=0;
+					$(el).find('tbody').find('tr').each(function(index,data) {
+						rowCalc = index+1;
+						
+					if (rowCalc % 26 == 0){
+						doc.addPage();
+						page++;
+						startRowPosition=startRowPosition+10;
+					}
+					rowPosition=(startRowPosition + (rowCalc * 10)) - ((page -1) * 280);
+						
+						$(this).filter(':visible').find('td').each(function(index,data) {
+							if ($(this).css('display') != 'none'){	
+								if(defaults.ignoreColumn.indexOf(index) == -1){
+									var colPosition = startColPosition+ (index * 50);									
+									doc.text(colPosition,rowPosition, parseString($(this)));
+								}
+							}
+							
+						});															
+						
+					});					
+										
+					// Output as Data URI
+					doc.output('datauri');
+	
+				}
+				
+				
+				function parseString(data){
+				
+					if(defaults.htmlContent == 'true'){
+						content_data = data.html().trim();
+					}else{
+						content_data = data.text().trim();
+					}
+					
+					if(defaults.escape == 'true'){
+						content_data = escape(content_data);
+					}
+					
+					
+					
+					return content_data;
+				}
+			
+			}
+        });
+    })(jQuery);
+</script>
+
+
+<script>
+	jQuery.base64 = ( function( $ ) {
+  
+  var _PADCHAR = "=",
+    _ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+    _VERSION = "1.0";
+
+
+  function _getbyte64( s, i ) {
+    // This is oddly fast, except on Chrome/V8.
+    // Minimal or no improvement in performance by using a
+    // object with properties mapping chars to value (eg. 'A': 0)
+
+    var idx = _ALPHA.indexOf( s.charAt( i ) );
+
+    if ( idx === -1 ) {
+      throw "Cannot decode base64";
+    }
+
+    return idx;
+  }
+  
+  
+  function _decode( s ) {
+    var pads = 0,
+      i,
+      b10,
+      imax = s.length,
+      x = [];
+
+    s = String( s );
+    
+    if ( imax === 0 ) {
+      return s;
+    }
+
+    if ( imax % 4 !== 0 ) {
+      throw "Cannot decode base64";
+    }
+
+    if ( s.charAt( imax - 1 ) === _PADCHAR ) {
+      pads = 1;
+
+      if ( s.charAt( imax - 2 ) === _PADCHAR ) {
+        pads = 2;
+      }
+
+      // either way, we want to ignore this last block
+      imax -= 4;
+    }
+
+    for ( i = 0; i < imax; i += 4 ) {
+      b10 = ( _getbyte64( s, i ) << 18 ) | ( _getbyte64( s, i + 1 ) << 12 ) | ( _getbyte64( s, i + 2 ) << 6 ) | _getbyte64( s, i + 3 );
+      x.push( String.fromCharCode( b10 >> 16, ( b10 >> 8 ) & 0xff, b10 & 0xff ) );
+    }
+
+    switch ( pads ) {
+      case 1:
+        b10 = ( _getbyte64( s, i ) << 18 ) | ( _getbyte64( s, i + 1 ) << 12 ) | ( _getbyte64( s, i + 2 ) << 6 );
+        x.push( String.fromCharCode( b10 >> 16, ( b10 >> 8 ) & 0xff ) );
+        break;
+
+      case 2:
+        b10 = ( _getbyte64( s, i ) << 18) | ( _getbyte64( s, i + 1 ) << 12 );
+        x.push( String.fromCharCode( b10 >> 16 ) );
+        break;
+    }
+
+    return x.join( "" );
+  }
+  
+  
+  function _getbyte( s, i ) {
+    var x = s.charCodeAt( i );
+
+    if ( x > 255 ) {
+      throw "INVALID_CHARACTER_ERR: DOM Exception 5";
+    }
+    
+    return x;
+  }
+
+
+  function _encode( s ) {
+    if ( arguments.length !== 1 ) {
+      throw "SyntaxError: exactly one argument required";
+    }
+
+    s = String( s );
+
+    var i,
+      b10,
+      x = [],
+      imax = s.length - s.length % 3;
+
+    if ( s.length === 0 ) {
+      return s;
+    }
+
+    for ( i = 0; i < imax; i += 3 ) {
+      b10 = ( _getbyte( s, i ) << 16 ) | ( _getbyte( s, i + 1 ) << 8 ) | _getbyte( s, i + 2 );
+      x.push( _ALPHA.charAt( b10 >> 18 ) );
+      x.push( _ALPHA.charAt( ( b10 >> 12 ) & 0x3F ) );
+      x.push( _ALPHA.charAt( ( b10 >> 6 ) & 0x3f ) );
+      x.push( _ALPHA.charAt( b10 & 0x3f ) );
+    }
+
+    switch ( s.length - imax ) {
+      case 1:
+        b10 = _getbyte( s, i ) << 16;
+        x.push( _ALPHA.charAt( b10 >> 18 ) + _ALPHA.charAt( ( b10 >> 12 ) & 0x3F ) + _PADCHAR + _PADCHAR );
+        break;
+
+      case 2:
+        b10 = ( _getbyte( s, i ) << 16 ) | ( _getbyte( s, i + 1 ) << 8 );
+        x.push( _ALPHA.charAt( b10 >> 18 ) + _ALPHA.charAt( ( b10 >> 12 ) & 0x3F ) + _ALPHA.charAt( ( b10 >> 6 ) & 0x3f ) + _PADCHAR );
+        break;
+    }
+
+    return x.join( "" );
+  }
+
+
+  return {
+    decode: _decode,
+    encode: _encode,
+    VERSION: _VERSION
+  };
+      
+}( jQuery ) );
+</script>
+
 {% endblock %}
 

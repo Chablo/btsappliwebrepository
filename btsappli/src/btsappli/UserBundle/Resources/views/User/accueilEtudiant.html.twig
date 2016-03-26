@@ -1,6 +1,7 @@
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
+<div class="container">
   <!-- Ligne 2 Bouton d'accès au Planning des CCF de l'étudiant -->
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
@@ -14,7 +15,7 @@
   <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
     {% if (user.stage is null) or (user.stage.tuteur is null) %}
-      <a role="button" class="btn btn-success btn-lg btn-block" style=" padding: 50px 16px;" href="{{ path('btsappli_stages_ajoutStageEnt') }}">Stage</a>
+      <a role="button" class="btn btn-success btn-lg btn-block" style=" padding: 50px 16px;" href="{{ path('btsappli_stages_ajoutStageEntreprise') }}">Stage</a>
     {% else %}
       <a role="button" class="btn btn-success btn-lg btn-block" style="padding: 50px 16px;" href="{{ path('btsappli_stages_voirStage') }}">Stage</a>
     {% endif %}
@@ -27,5 +28,5 @@
       <a role="button" class="btn btn-warning btn-lg btn-block" style="padding: 50px 16px;" href="{{ path('fos_user_profile_edit') }}" >Modifier le profil</a>
     </div>
   </div>
-      
+</div>
 {% endblock %}

@@ -1,5 +1,7 @@
 {# src/btsappli/UserBundle/Resources/views/User/ajoutEcrit.html.twig #}
 
+{# Vue qui permet à l'administrateur d'ajouter un CCF Ecrit #}
+
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
@@ -8,10 +10,11 @@
         <div class="panel panel-default">
             <div class="panel-heading"><h3>Ajout d'un CCF écrit :</h3></div>
                 <div class="panel-body">
+                    <!-- On fait appel au formulaire dans EcritType.php -->
                     <form method="post" {{ form_enctype(formulaireEcrit) }}>
                         {{ form_widget(formulaireEcrit) }}
                         
-                           <div class="col-lg-1 col-lg-offset-1">
+                        <div class="col-lg-1 col-lg-offset-1">
                             <a href="{{ path('btsappli_CCF_planningEcrits') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Annuler</a>
                         </div>
                         <div class="col-lg-1  col-lg-offset-8">

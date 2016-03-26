@@ -75,13 +75,6 @@ class User extends BaseUser
      */
     private $telephone;
     
-     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="valide", type="boolean")
-     */
-    private $valide = false;
-    
     
     
     
@@ -351,29 +344,6 @@ class User extends BaseUser
     public function getPromotion()
     {
         return $this->promotion;
-    }
-    
-    /**
-     * Get valide
-     *
-     * @return boolean 
-     */
-    public function getValide()
-    {
-        return $this->valide;
-    }
-
-    /**
-     * Set valide
-     *
-     * @param boolean $valide
-     * @return User
-     */
-    public function setValide($valide)
-    {
-        $this->valide = $valide;
-
-        return $this;
     }
 
     

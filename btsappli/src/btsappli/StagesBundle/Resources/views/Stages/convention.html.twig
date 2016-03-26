@@ -1,158 +1,158 @@
+{# Vue qui permet à l'étudiant d'aafficher sa concention de stage remplie #}
+
 <page>
 <!doctype html>
 <html class="no-js" lang="fr">
 <head>
-		<meta charset="UTF-8">
-		<title>Convention de stage</title>
-		<style>
-
-body
-{
-   width : 20cm;
-   height : 27cm;
-}
-
-.flotte {
-float:left;
-}
-
-#titre {
-	padding-left:200px;
-	font-size: 17px;
-	font-family: Arial;
-	font-weight: bold;
-
-}
-
-#sousTitre {
-	font-size: 14px;
-	font-family: Arial;
-	font-weight: bold;
-}
-
-#cadre1 {
-	width:750px;
-	height: 220px;
-	background: lavender;
-	border: 2px solid;
-	border-bottom: 3px solid;
-	border-right: 3px solid;
-}
-
-#cadre2 {
-	width:750px;
-	height: 210px;
-	background: lavender;
-	border: 2px solid;
-	border-bottom: 3px solid;
-	border-right: 3px solid;
-}
-
-
-#cadre3 {
-	width:750px;
-	height: 200px;
-	background: lavender;
-	border: 2px solid;
-	border-bottom: 3px solid;
-	border-right: 3px solid;
-}
-
-#texte1 {
+	<meta charset="UTF-8">
+	<title>Convention de stage</title>
+	
+	<style>
+	body
+	{
+	   width : 20cm;
+	   height : 27cm;
+	}
+	
+	.flotte {
 	float:left;
-	padding-left: 50px;
-	font-family: Arial;
-	font-size: 14px;
-}
-
-#texte2 {
-	padding-top:70px;
-	padding-left: 400px;
-	font-family: Arial;
-	font-size: 14px;
-
-}
-
-#texte3 {
-	padding-left: 475px;
-	font-family: Arial;
-	font-size: 14px;
-
-}
-
-.marge1 {
-	margin-left: 165px;
-}
-
-.marge2 {
-	margin-left: 125px;
-}
-
-#duree {
-	width:500px;
-	border: 2px solid;
-	border-bottom: 3px solid;
-	border-right: 3px solid;
-	float: right;
-	font-size: 13px;
-}
+	}
 	
-#texte4 {
-	float: right;
-	padding-left: 420px;
-	font-size: 11px;
-}
-
-.colonne {
-	display: table-cell;
-	width:500px;
-	padding:15px;
-	text-align:justify;
-	font-size: 9px;
-}
-
-#tabSign {
-	border-collapse:collapse;
-}
+	#titre {
+		padding-left:200px;
+		font-size: 17px;
+		font-family: Arial;
+		font-weight: bold;
 	
-#signatures {
-	background: lavender;
-	width:500px;
-	border: 2px solid;
-	border-top: 3px solid;
-}
+	}
+	
+	#sousTitre {
+		font-size: 14px;
+		font-family: Arial;
+		font-weight: bold;
+	}
+	
+	#cadre1 {
+		width:750px;
+		height: 220px;
+		background: lavender;
+		border: 2px solid;
+		border-bottom: 3px solid;
+		border-right: 3px solid;
+	}
+	
+	#cadre2 {
+		width:750px;
+		height: 210px;
+		background: lavender;
+		border: 2px solid;
+		border-bottom: 3px solid;
+		border-right: 3px solid;
+	}
+	
+	
+	#cadre3 {
+		width:750px;
+		height: 200px;
+		background: lavender;
+		border: 2px solid;
+		border-bottom: 3px solid;
+		border-right: 3px solid;
+	}
+	
+	#texte1 {
+		float:left;
+		padding-left: 50px;
+		font-family: Arial;
+		font-size: 14px;
+	}
+	
+	#texte2 {
+		padding-top:70px;
+		padding-left: 400px;
+		font-family: Arial;
+		font-size: 14px;
+	
+	}
+	
+	#texte3 {
+		padding-left: 475px;
+		font-family: Arial;
+		font-size: 14px;
+	
+	}
+	
+	.marge1 {
+		margin-left: 165px;
+	}
+	
+	.marge2 {
+		margin-left: 125px;
+	}
+	
+	#duree {
+		width:500px;
+		border: 2px solid;
+		border-bottom: 3px solid;
+		border-right: 3px solid;
+		float: right;
+		font-size: 13px;
+	}
+		
+	#texte4 {
+		float: right;
+		padding-left: 420px;
+		font-size: 11px;
+	}
+	
+	.colonne {
+		display: table-cell;
+		width:500px;
+		padding:15px;
+		text-align:justify;
+		font-size: 9px;
+	}
+	
+	#tabSign {
+		border-collapse:collapse;
+	}
+		
+	#signatures {
+		background: lavender;
+		width:500px;
+		border: 2px solid;
+		border-top: 3px solid;
+	}
+	
+	#case {
+		padding-left:40px;
+		width:300px;
+		height: 140px;
+		font-family: Arial;
+		font-size: 11px;
+	}
+	
+	#codeTravail {
+		font-family: Arial;
+		font-size: 10px;
+	}
+	
+	.spacer{line-height:1px;}
 
-#case {
-	padding-left:40px;
-	width:300px;
-	height: 140px;
-	font-family: Arial;
-	font-size: 11px;
-}
-
-#codeTravail {
-	font-family: Arial;
-	font-size: 10px;
-}
-
-.spacer{line-height:1px;}
-
-</style>
+	</style>
 </head>
 
 <body>
 	<p class="flotte">
-	<img src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('bundles/btsapplistages/images/academie.jpg') }}" />
-
+		<img src="http://crtice33.ac-bordeaux.fr/CDL-STYZAN/logo%20MJER_IA33.gif"/>
 	</p>
-	
 	<div id="titre">
-			<strong>
-				<br><br>
-				CONVENTION DE STAGE<br><p class="spacer"></p>
-				DES ETUDIANTS DES SECTIONS DE TECHNICIENS<br><p class="spacer"></p>
-				SUPERIEURS<br>
-			</strong>
+		<strong>
+			<br><br>
+			CONVENTION DE STAGE<br><p class="spacer"></p>
+			DES ETUDIANTS DES SECTIONS DE TECHNICIENS<br><p class="spacer"></p>
+			SUPERIEURS<br>
+		</strong>
 	</div>
 	<p class="spacer"></p>
 	<strong id="sousTitre">Entre l'entreprise (ou organisme) ci-dessous d&eacutesign&eacute(e) </strong>
@@ -178,8 +178,8 @@ float:left;
 		</div>
 	</div>
 	
-		<p class="spacer"></p>
-		<strong id="sousTitre"> Et l'&eacutetablissement </strong>
+	<p class="spacer"></p>
+	<strong id="sousTitre"> Et l'&eacutetablissement </strong>
 	<div id="cadre2">
 		<div id="texte1">
 				Nom et adresse : &nbsp;&nbsp;&nbsp; 

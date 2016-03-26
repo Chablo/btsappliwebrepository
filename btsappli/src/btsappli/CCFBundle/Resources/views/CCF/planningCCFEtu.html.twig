@@ -1,18 +1,23 @@
+
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
-{# Contient la liste des étudiants avec leurs CCF ... #}
 <div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
     <div class="panel panel-primary">
         <div class="panel-heading"> <h3> Planning des CCF </h3> </div>
             <div class="panel-body">
                 <ul class="list-group">
+                    
                     {% if (ecrit is not null) or (tabOraux is not empty) %}
+                        
+                        <!-- Si l'étudiant est concerné par un CCF écrit on va l'afficher -->
                         {% if ecrit is not null %}
                             <li class="list-group-item">
                             <p><h5>{{ecrit.date|date("d/m/Y")}}: &nbsp; Ecrit de {{ecrit.matiere}} de {{ecrit.debut|date("H:i")}} à {{ecrit.fin|date("H:i")}} en salle {{ecrit.salle1}} et {{ecrit.salle2}}</h5></p><br/>
                             </li>
                         {% endif %}
+                        
+                        <!-- Si l'étudiant est concerné par un CCF oral on va l'afficher -->
                         {% if tabOraux is not empty %}
                             <li class="list-group-item">
                                 {% for oralCourant in tabOraux %} 
@@ -20,14 +25,19 @@
                                 {% endfor %}
                             </li>
                         {% endif %}
+                        
+                        <!-- Si l'étudiant n'est concrerné par aucun CCF on indique qu'il n'a aucun CCF de prévu -->
                         {% else %}  
                             <h4> Pas de CCF de prévu </h4>
-                        {% endif %}  
+                    
+                    {% endif %}  
+                
                 </ul>
             </div> 
     </div>
 </div>
 
-<a href="{{ path('btsappli_utilisateurs_accueilEtu') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
+<!-- Bouton qui permet de revenir à l'accueil étudiant -->
+<a href="{{ path('btsappli_utilisateurs_accueilEtu') }}" role="button" class="btn btn-primary" type="button" style="width:140px"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a> 
 
 {% endblock %}

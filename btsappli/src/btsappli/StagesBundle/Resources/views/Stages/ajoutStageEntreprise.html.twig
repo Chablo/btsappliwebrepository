@@ -1,0 +1,24 @@
+{# src/btsappli/StagesBundle/Resources/views/Stages/ajoutStageEntreprise.html.twig #}
+
+{# Vue qui permet à l'étudiant d'ajouter une entreprise à son stage #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+<div class="col-lg-8 col-lg-offset-2">
+    <div style="margin-top:80px;">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h3>Ajout d'un stage (étape 1/2)</h3></div>
+            <div class="panel-body">
+                <form id="formStage" method="post" {{ form_enctype(formulaireStage) }}>
+                    {{ form_widget(formulaireStage) }}
+                    <a href="{{ path('btsappli_utilisateurs_accueilEtu') }}" role="button" class="btn btn-primary" type="button" style="width:140px"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a>
+                    <button type="submit" class="btn btn-primary pull-right" style="width:140px">Suivant <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+                </form>
+                <p><br>Entreprise introuvable ?</p>
+                <a href="{{ path('btsappli_stages_entrepriseFormulaire') }}" role="button" class="btn btn-primary pull-left" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter entreprise</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

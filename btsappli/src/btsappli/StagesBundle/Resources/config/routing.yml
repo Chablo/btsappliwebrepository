@@ -1,6 +1,23 @@
+#******** ENTREPRISE *****************************************************************************
+
+btsappli_stages_voirEntreprise:
+    path:     /stage/entreprise
+    defaults: { _controller: btsappliStagesBundle:Stages:voirEntreprise }
+
 btsappli_stages_entrepriseFormulaire:
     path:     /entreprise/ajouter
     defaults: { _controller: btsappliStagesBundle:Stages:ajoutEntreprise }
+
+btsappli_stages_modificationEntreprise:
+    path:     /entreprise/modifier
+    defaults: { _controller: btsappliStagesBundle:Stages:modificationEntreprise }
+
+
+#******** TUTEUR **********************************************************************************
+
+btsappli_stages_voirTuteur:
+    path:     /stage/tuteur
+    defaults: { _controller: btsappliStagesBundle:Stages:voirTuteur }
 
 btsappli_stages_tuteurFormulaire:
     path:     /tuteur/ajouter/{id}
@@ -8,44 +25,25 @@ btsappli_stages_tuteurFormulaire:
     requirements:
         id:   \d+
 
-#************************************************************************************************************
-
-btsappli_stages_modificationEnt:
-    path:     /entreprise/modifier
-    defaults: { _controller: btsappliStagesBundle:Stages:modificationEnt }
-
-btsappli_stages_modificationTut:
+btsappli_stages_modificationTuteur:
     path:     /tuteur/modifier
-    defaults: { _controller: btsappliStagesBundle:Stages:modificationTut }
+    defaults: { _controller: btsappliStagesBundle:Stages:modificationTuteur }
 
 
-#************************************************************************************************************
+#******** STAGE ************************************************************************************
 
-btsappli_stages_ajoutStageEnt:
-    path:     /stage/ajouterEnt
-    defaults: { _controller: btsappliStagesBundle:Stages:ajoutStageEnt }
-
-btsappli_stages_ajoutStageTut:
-    path:     /stage/ajouterTut
-    defaults: { _controller: btsappliStagesBundle:Stages:ajoutStageTut }
-
-
-#************************************************************************************************************
-
-btsappli_stages_voirEntreprise:
-    path:     /stage/entreprise
-    defaults: { _controller: btsappliStagesBundle:Stages:voirEntreprise }
-
-btsappli_stages_voirTuteur:
-    path:     /stage/tuteur
-    defaults: { _controller: btsappliStagesBundle:Stages:voirTuteur }
-        
 btsappli_stages_voirStage:
     path:     /stage
     defaults: { _controller: btsappliStagesBundle:Stages:voirStage }
 
-#************************************************************************************************************
-    
-btsappli_stages_pdf:
-    path:   /pdf
-    defaults: { _controller: btsappliStagesBundle:Stages:pdf }
+btsappli_stages_ajoutStageEntreprise:
+    path:     /stage/entreprise/ajouter
+    defaults: { _controller: btsappliStagesBundle:Stages:ajoutStageEntreprise }
+
+btsappli_stages_ajoutStageTuteur:
+    path:     /stage/tuteur/ajouter
+    defaults: { _controller: btsappliStagesBundle:Stages:ajoutStageTuteur }
+
+btsappli_stages_generationConvention:
+    path:     /stage/convention
+    defaults: { _controller: btsappliStagesBundle:Stages:generationConvention }

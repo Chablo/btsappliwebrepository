@@ -11,11 +11,6 @@ use btsappli\CCFBundle\Form\OralType;
 
 class CCFController extends Controller
 {
-    public function choixTypeCCFAction()
-    {
-        return $this->render('btsappliCCFBundle:CCF:choisirTypeCCF.html.twig');
-    }
-
     public function ajoutEcritAction(Request $requeteUtilisateur)
     {
         // On créé un objet Ecrit "vide"

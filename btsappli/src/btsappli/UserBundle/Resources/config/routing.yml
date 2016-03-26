@@ -1,30 +1,43 @@
+#******* ACCUEILS *********************************************************************************************
 btsappli_utilisateurs_accueilEtu:
-    path:     /accueilEtudiant
+    path:     /accueil
     defaults: { _controller: btsappliUserBundle:User:accueilEtudiant }
 
 btsappli_utilisateurs_accueilAdmin:
     path:     /administration/accueil
     defaults: { _controller: btsappliUserBundle:User:accueilAdmin }
 
-#************************************************************************************************************
+#******* SUIVI ETUDIANTS **************************************************************************************
     
-btsappli_utilisateurs_suiviEtudiant:
+btsappli_utilisateurs_suiviEtudiants:
     path:   /administration/suiviEtudiants
-    defaults: { _controller: btsappliUserBundle:User:suiviEtudiant }
+    defaults: { _controller: btsappliUserBundle:User:suiviEtudiants }
     
 btsappli_utilisateurs_setPromo:
-    path:   /administration/suiviEtudiant/{id}/{idPromo}
+    path:   /administration/suiviEtudiants/{id}/{idPromo}
     defaults: { _controller: btsappliUserBundle:User:setPromo }
     requirements:
         id:      \d+
         idPromo: \d+
 
 btsappli_utilisateurs_suiviEtudiantFiltrer:
-    path:   /administration/suiviEtudiantFiltrer/{idPromo}
+    path:   /administration/suiviEtudiants/promotion/{idPromo}
     defaults: { _controller: btsappliUserBundle:User:suiviEtudiantFiltrer }
     requirements:
         idPromo:   \d+
-    
+
+btsappli_utilisateurs_suppressionEtudiantValidation:
+    path:   /administration/suiviEtudiants/supprimerValidation/{id}
+    defaults: { _controller: btsappliUserBundle:User:suppressionEtudiantValidation }
+    requirements:
+        id:   \d+
+
+btsappli_utilisateurs_suppressionEtudiant:
+    path:   /administration/suiviEtudiants/supprimer/{id}
+    defaults: { _controller: btsappliUserBundle:User:suppressionEtudiant }
+    requirements:
+        id:   \d+
+
 #************************************************************************************************************
 
 btsappli_utilisateurs_ajoutPromo:
@@ -94,26 +107,35 @@ btsappli_utilisateurs_ReinitStagesValidation:
 
 #************************************************************************************************************
 
-btsappli_utilisateurs_validerInscriptions:
-    path:   /administration/validationsUser
-    defaults: { _controller: btsappliUserBundle:User:validationsUser }
+btsappli_utilisateurs_validationInscriptions:
+    path:   /administration/validerInscriptions
+    defaults: { _controller: btsappliUserBundle:User:validationUsers }
     
 btsappli_utilisateurs_setPromoInscription:
-    path:   /administration/validationsUser/setPromo/{id}/{idPromo}
+    path:   /administration/validationInscriptions/setPromo/{id}/{idPromo}
     defaults: { _controller: btsappliUserBundle:User:setPromoInscription }
     requirements:
         id:      \d+
         idPromo: \d+
     
-btsappli_utilisateurs_supprInscriptions:
-    path:   /administration/validationsUser/suppr/{id}
-    defaults: { _controller: btsappliUserBundle:User:supprimerValidation }
+btsappli_utilisateurs_refuserInscription:
+    path:   /administration/validationsUser/refuser/{id}
+    defaults: { _controller: btsappliUserBundle:User:refuserInscription }
     requirements:
         id:   \d+
-    
-btsappli_utilisateurs_acceptInscriptions:
+
+btsappli_utilisateurs_refuserInscriptionValidation:
+    path:   /administration/validationsUser/validerRefus/{id}
+    defaults: { _controller: btsappliUserBundle:User:refuserInscriptionValidation }
+    requirements:
+        id:   \d+
+
+btsappli_utilisateurs_accepterInscription:
     path:   /administration/validationsUser/accepter/{id}
-    defaults: { _controller: btsappliUserBundle:User:accepterValidation }
+    defaults: { _controller: btsappliUserBundle:User:accepterInscription }
     requirements:
         id:   \d+
     
+btsappli_utilisateurs_etudiantNonValide:
+    path:   /login/nonValide
+    defaults: { _controller: btsappliUserBundle:User:etudiantNonValide }

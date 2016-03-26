@@ -1,8 +1,3 @@
-btsappli_CCF_choixTypeCCF:
-    path:   /administration/choisirTypeCCF
-    defaults: { _controller: btsappliCCFBundle:CCF:choixTypeCCF }
-
-#************************************************************************************************************
 
 btsappli_CCF_ajoutEcrit:
     path:   /administration/ecrits/ajouter

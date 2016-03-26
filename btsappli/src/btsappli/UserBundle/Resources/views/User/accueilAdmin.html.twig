@@ -1,27 +1,31 @@
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
-<div style="margin-top:80px;">
+<div class="container">
     <!-- Ligne 2 Boutons d'accès aux suivis des Stages et des Etudiants -->
     <div class="row">
         <div class="col-lg-6 ">
             <a role="button" class="btn btn-info btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_utilisateurs_suiviStages') }}">Suivi des stages</a>
         </div>
         <div class="col-lg-6">
-            <a role="button" class="btn btn-warning btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_utilisateurs_suiviEtudiant') }}"> Suivi des étudiants</a>
+            <a role="button" class="btn btn-warning btn-lg btn-block" style="margin-top:18px; padding: 50px 16px;" href="{{ path('btsappli_utilisateurs_suiviEtudiants') }}"> Suivi des étudiants</a>
         </div>
     </div>
-    <!-- espace entre les boutons -->
-    <br>
-  <!-- Ligne 3 Boutons d'accès aux CCF -->
+    <!-- Ligne 3 Boutons d'accès aux CCF -->
     <div class="row">
         <div class="col-lg-6 ">
-            <a href="{{ path('btsappli_CCF_choixTypeCCF') }}" role="button" class="btn btn-success btn-lg btn-block" style="padding: 50px 16px;">Planning et Edition CCF</a>
+            <a href="{{ path('btsappli_CCF_planningEcrits') }}" role="button" class="btn btn-success btn-lg btn-block" style="padding: 50px 16px;">CCF Ecrits</a>
         </div>
         <div class="col-lg-6">
-            <a href="{{ path('btsappli_utilisateurs_validerInscriptions') }}" role="button" class="btn btn-primary btn-lg btn-block" style="padding: 50px 16px;">Valider les inscriptions</a>
+            <a href="{{ path('btsappli_CCF_planningOraux') }}" role="button" class="btn btn-primary btn-lg btn-block" style="padding: 50px 16px;">CCF Oraux</a>
+        </div>
+    </div>
+    <!-- Ligne 4 Bouton des validations -->
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <a href="{{ path('btsappli_utilisateurs_validationInscriptions') }}" role="button" class="btn btn-default btn-lg btn-lg active btn-block" style="padding: 50px 16px;">Valider les inscriptions</a>
         </div>
     </div>
 </div>
-      
+
 {% endblock %}

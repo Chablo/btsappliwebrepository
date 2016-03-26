@@ -33,7 +33,7 @@ class Promotion
      *
      * @ORM\Column(name="enCours", type="boolean")
      */
-    private $enCours;
+    private $enCours = 1;
 
     /**
      * Get id

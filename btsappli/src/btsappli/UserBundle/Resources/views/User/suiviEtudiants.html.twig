@@ -23,23 +23,23 @@
 	            <div class="col-lg-5">
 	                <p>Promotions en cours :
 	                    {% for promotionCourante in tabPromotions2 %}
-	                        Promotion {{ promotionCourante.anneePromo }} {% if not loop.last %} - {% endif %}
+	                        {{ promotionCourante.anneePromo }} {% if not loop.last %} - {% endif %}
 	                    {% endfor %}
 	                </p>
 	            </div>
 	         	<div class="col-lg-2 col-lg-offset-3">
 	                <div class=" btn-group ">
-	                    <button class="btn btn-default btn-filter " style="width:140px" type="button">Recherche</button>
+	                    <button class="btn btn-default btn-filter " style="width:140px" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Recherche</button>
 	                </div>
 				</div>
 	            <div class="col-lg-2 ">
 	                <div class="btn-group ">
-	                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-	                        Filtrer par promotion <span class="caret"></span>
+	                    <button type="button" class="btn btn-default dropdown-toggle" style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+	                        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Filtrer  <span class="caret"></span>
 	                        <span class="sr-only">Toggle Dropdown</span>
 	                    </button>
 	                    <ul class="dropdown-menu dropdown-menu-right" >
-	                        <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiant') }}"> Tous </a></li>
+	                        <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiants') }}"> Tous </a></li>
 	                        <li role="separator" class="divider"></li>
 	                        {% for promoCourante in tabPromotions %}
 	                            <li><a href="{{ path('btsappli_utilisateurs_suiviEtudiantFiltrer', {'idPromo':promoCourante.id}) }}">
@@ -71,13 +71,13 @@
 	                    <th><input type="text" class="form-control text-center" placeholder="CP" disabled></th>
 	                    <th><input type="text" class="form-control text-center" placeholder="Ville" disabled></th>
 	                    <th><input type="text" class="form-control text-center" placeholder="Promotion" disabled></th>
-	                    <td><b>Modif Promotion</b></td>
+	                    <td><b>Modif. Promotion</b></td>
+	                    <td><b>Suppr. étu</b></td>
 	                </tr>
 	                </thead>
 	
 	                <!-- Affichage de tous les étudiants -->
 	                {% for userCourant in tabUsers %}
-	                	{% if userCourant.isGranted("ROLE_SUPER_ADMIN") != 1 %}
 	                    <tr align="center">
 	                        <td>{{userCourant.nom}}</td>
 	                        <td>{{userCourant.prenom}}</td>
@@ -142,23 +142,24 @@
 	                            </div>
 	                        {% endif %}
 	                        </td>
+	                        <td>
+                                <a type="button" class="btn btn-danger"  href="{{ path('btsappli_utilisateurs_suppressionEtudiantValidation', {'id':userCourant.id}) }}"><span class="glyphicon glyphicon-remove" aria-hidden="true" ></span></a>
+                            </td>
 	                    </tr>
-	                    {% endif %}
 	                {% endfor %}
 	            </table>
 	        </div>
 	</div>
 </div>
-<a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
+<a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a>  <!--&nbsp; = espace-->
 
 <div class="btn-group dropup pull-right">
     <button type="button" class="btn btn-primary dropdown-toggle " style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-    Exporter la table <span class="caret"></span>
+    Exporter <span class="caret"></span>
     </button>
     <ul class="dropdown-menu dropdown-menu-right" >
-        <li><a onClick ="$('#customers').tableExport({type:'pdf',escape:'false'});"> PDF </a></li>
         <li><a onClick ="$('#customers').tableExport({type:'excel',escape:'false'});"> Excel </a></li>
-        <li><a onClick ="$('#customers').tableExport({type:'png',escape:'false'});"> Image </a></li>
+        <li><a onClick ="$('#customers').tableExport({type:'png',escape:'false'});"> PNG </a></li>
     </ul>
 </div>
 

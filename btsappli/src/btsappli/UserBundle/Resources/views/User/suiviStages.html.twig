@@ -14,25 +14,30 @@
 
 
 
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
 {# Contient la liste des stages ... #}
-<div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
+<div style="margin-top:18px;"> 
 
 <div class="panel panel-primary filterable ">
     <div class="panel-heading">
         <h3> Liste des Stages </h3> 
-        <!-- bouton de filtrage qui affiche toutes les promotions existantes -->
         <div class="row">
-            <div class="col-lg-2 col-lg-offset-8">
-                <button class="btn btn-default btn-filter" style="width:140px" type="button">Recherche</button>
+            <div class="col-lg-5">
+	                 <p>Promotions :
+	                    {% for promotionCourante in tabPromotions %}
+	                        &nbsp;{{ promotionCourante.anneePromo }} {% if not loop.last %} - {% endif %}
+	                    {% endfor %}
+	                </p>
+	            </div>
+            <div class="col-lg-2 col-lg-offset-3">
+                <button class="btn btn-default btn-filter" style="width:140px" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Recherche</button>
             </div>
             <div class="col-lg-2 ">
+                <!-- bouton de filtrage qui affiche toutes les promotions existantes -->
                 <div class="btn-group ">
                     <button type="button" class="btn btn-default dropdown-toggle " style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                    Filtrer <span class="caret"></span>
+                    	<span class="glyphicon glyphicon-filter" aria-hidden="true"></span> Filtrer <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" >
                         <li><a href="{{ path('btsappli_utilisateurs_suiviStages') }}"> Tous </a></li>
@@ -149,33 +154,29 @@
 </div>
 </div>
 
-
-            <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>
-                
-                <div class="btn-group dropup pull-right">
-                    <button type="button" class="btn btn-primary dropdown-toggle " style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                    Exporter la table <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a onClick ="$('#customers').tableExport({type:'pdf',escape:'false'});"> PDF </a></li>
-                        <li><a onClick ="$('#customers').tableExport({type:'excel',escape:'false'});"> Excel </a></li>
-                        <li><a onClick ="$('#customers').tableExport({type:'png',escape:'false'});"> Image </a></li>
-                    </ul>
-                </div>
-
+<!-- Bouton de Retour-->  
+<a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a>
+<!-- Bouton d'Exportation-->  
+<div class="btn-group dropup pull-right">
+    <button type="button" class="btn btn-primary dropdown-toggle " style="width:140px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+    Exporter <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+        <li><a onClick ="$('#customers').tableExport({type:'excel',escape:'false'});">Excel</a></li>
+        <li><a onClick ="$('#customers').tableExport({type:'png',escape:'false'});">PNG</a></li>
+    </ul>
+</div>
+<!-- Bouton de Réinitialisation-->
 <div class="row">
-        
-        <div class="col-lg-1 col-lg-offset-6">
-            <a href="{{ path('btsappli_utilisateurs_ReinitStagesValidation') }}" role="button" class="btn btn-danger" type="button" style="width:140px"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>&nbsp;&nbsp;Réinitialiser</a>
-        </div>
-        
-        
-
+    <div class="col-lg-1 col-lg-offset-6">
+        <a href="{{ path('btsappli_utilisateurs_ReinitStagesValidation') }}" role="button" class="btn btn-danger" type="button" style="width:140px"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>&nbsp;&nbsp;Réinitialiser</a>
+    </div>
 </div>
 
-        <!--<div class="col-lg-1 col-lg-offset-2">
-            <a href="#" role="button" onClick ="$('#customers').tableExport({type:'excel',escape:'false'});" class="btn btn-info pull-right" type="button" style="width:140px"><span class="glyphicon glyphicon-print" aria-hidden="true"></span>&nbsp;&nbsp;Imprimer</a>
-        </div>-->
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
 <script>
     $(document).ready(function(){

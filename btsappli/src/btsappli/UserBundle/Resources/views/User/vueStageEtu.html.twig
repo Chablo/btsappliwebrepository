@@ -40,7 +40,7 @@
 			            <h4>Tuteur <b><em>{{ user.stage.tuteur.nom }} {{ user.stage.tuteur.prenom }}</em></b> :</h4>
 			            <dl class="dl-horizontal">
 					        <dt>Email</dt><dd>{{ user.stage.tuteur.adresseMail }}</dd>
-					        <dt>Téléphone<dt><dd>0{{ user.stage.tuteur.telephone }}</dd>
+					        <dt>Téléphone<dt><dd>{{ user.stage.tuteur.telephone }}</dd>
 					        <dt>Fonctions</dt><dd>{{ user.stage.tuteur.fonction }}</dd>
 					        <dt>Infos Complémentaires<dt><dd>{{ user.stage.tuteur.infosComplementaires }}</dd>
 			            </dl>
@@ -56,8 +56,8 @@
 					        <dt>Pays</dt><dd>{{ user.stage.entreprise.pays }}</dd><br/>
 					        
 					        <dt>Adresse email<dt><dd>{{ user.stage.entreprise.adresseMail }}</dd>
-					        <dt>Téléphone</dt><dd>0{{ user.stage.entreprise.telephone }}</dd>
-					        <dt>Fax</dt><dd>0{{ user.stage.entreprise.fax }}</dd><br/>
+					        <dt>Téléphone</dt><dd>{{ user.stage.entreprise.telephone }}</dd>
+					        <dt>Fax</dt><dd>{{ user.stage.entreprise.fax }}</dd><br/>
 					        
 					        <dt>Service d'accueil</dt><dd>{{ user.stage.entreprise.serviceAccueil }}</dd><br/>
 					        

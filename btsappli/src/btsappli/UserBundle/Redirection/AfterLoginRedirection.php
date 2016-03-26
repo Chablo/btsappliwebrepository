@@ -46,8 +46,14 @@ class AfterLoginRedirection implements AuthenticationSuccessHandlerInterface
             $redirection = new RedirectResponse($this->router->generate('btsappli_utilisateurs_accueilAdmin'));
         }
         // sinon il s'agit d'un simple utilisateur et il est redirigé vers l'accueil étudiant
-        else {
+        elseif (in_array('ROLE_ETU', $rolesTab, true))
+        {
             $redirection = new RedirectResponse($this->router->generate('btsappli_utilisateurs_accueilEtu'));
+        }
+        // S'il s'agit d'un étudiant non validé on le redirige vers le login
+        else
+        {
+            $redirection = new RedirectResponse($this->router->generate('btsappli_utilisateurs_etudiantNonValide'));
         }
         return $redirection;
     }

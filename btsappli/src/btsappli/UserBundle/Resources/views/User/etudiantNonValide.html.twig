@@ -1,0 +1,38 @@
+
+{% extends "::vueMere.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block contenuCentral %}
+
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div style="margin-top:70px;">
+            <div class="panel panel-primary"> <!--Fenetre-->
+                <div class="panel-heading"><h4>Connexion</h4></div>
+                <div class="panel-body">
+                    
+                    <p>Votre compte n'a pas encore été validé par l'administateur. <br><br></p>
+                    
+                    <!-- Ligne contenant le bouton Retour-->
+                    <div class="row">
+
+                        <div class="col-lg-4 col-lg-offset-4">
+                            <a href="{{ path('fos_user_security_login') }}" role="button" class="btn btn-primary" type="button" style="width:130px"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a>
+                        </div>
+                    </div>
+                     
+                                </form>
+                            </ul>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+
+{% endblock %}
+
+
+{% block footer %}
+            
+{% endblock %}

@@ -18,19 +18,43 @@ class UserRepository extends EntityRepository
 		$gestionnaireEntite = $this -> _em;
 		
 		// écriture de la requête personnalisée
-		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s LEFT JOIN u.promotion p WHERE p.enCours = true ORDER BY u.nom ASC, u.prenom ASC');
+		$requete = $gestionnaireEntite->createQuery('SELECT u, s FROM btsappliUserBundle:User u LEFT JOIN u.stage s LEFT JOIN u.promotion p WHERE p.enCours = true AND u.roles LIKE \'%"ROLE_ETU"%\' ORDER BY u.nom ASC, u.prenom ASC');
 		
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();
 	}
 	
-	public function getUsersEtPromo()
+	public function getEtudiantsEtPromotions()
 	{
 	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
 		$gestionnaireEntite = $this -> _em;
 		
 		// écriture de la requête personnalisée
-		$requete = $gestionnaireEntite->createQuery('SELECT u, p FROM btsappliUserBundle:User u LEFT JOIN u.promotion p');
+		$requete = $gestionnaireEntite->createQuery('SELECT u, p FROM btsappliUserBundle:User u LEFT JOIN u.promotion p WHERE u.roles LIKE \'%"ROLE_ETU"%\' ORDER BY u.nom ASC, u.prenom ASC');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
+	
+	public function getUsersNonValides()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT u FROM btsappliUserBundle:User u WHERE u.roles NOT LIKE \'%"ROLE_ETU"%\' AND u.roles NOT LIKE \'%"ROLE_SUPER_ADMIN"%\'');
+		
+		// On exécute la requête et on renvoie les résultats
+		return $requete->getResult();
+	}
+	
+	public function getEtudiants()
+	{
+	    // appel du gestionnaire d'entité avec une méthode spécifique au repository
+		$gestionnaireEntite = $this -> _em;
+		
+		// écriture de la requête personnalisée
+		$requete = $gestionnaireEntite->createQuery('SELECT u FROM btsappliUserBundle:User u WHERE u.roles LIKE \'%"ROLE_ETU"%\' ORDER BY u.nom ASC, u.prenom ASC');
 		
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();
@@ -78,7 +102,7 @@ class UserRepository extends EntityRepository
 		$gestionnaireEntite = $this -> _em;
 		
 		// écriture de la requête personnalisée
-		$requete = $gestionnaireEntite->createQuery('SELECT u FROM btsappliUserBundle:User u LEFT JOIN u.promotion p WHERE u.stage is null AND p.enCours = true ORDER BY u.nom ASC, u.prenom ASC');
+		$requete = $gestionnaireEntite->createQuery('SELECT u FROM btsappliUserBundle:User u LEFT JOIN u.promotion p WHERE u.stage is null AND p.enCours = true AND u.roles LIKE \'%"ROLE_ETU"%\' ORDER BY u.nom ASC, u.prenom ASC');
 		
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();
@@ -90,7 +114,7 @@ class UserRepository extends EntityRepository
 		$gestionnaireEntite = $this -> _em;
 		
 		// écriture de la requête personnalisée
-		$requete = $gestionnaireEntite->createQuery('SELECT u FROM btsappliUserBundle:User u LEFT JOIN u.promotion p WHERE p.enCours = true');
+		$requete = $gestionnaireEntite->createQuery('SELECT u FROM btsappliUserBundle:User u LEFT JOIN u.promotion p WHERE p.enCours = true AND u.roles LIKE \'%"ROLE_ETU"%\' ORDER BY u.nom ASC, u.prenom ASC');
 		
 		// On exécute la requête et on renvoie les résultats
 		return $requete->getResult();

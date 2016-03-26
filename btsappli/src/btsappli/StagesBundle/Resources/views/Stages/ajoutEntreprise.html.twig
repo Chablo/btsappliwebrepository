@@ -1,25 +1,27 @@
 {# src/btsappli/StagesBundle/Resources/views/Stages/ajoutEntreprise.html.twig #}
 
+{# Vue qui permet à l'étudiant d'ajouter une nouvelle entreprise #}
+
 {% extends "::vueMere.html.twig" %}
 
 {% block contenuCentral %}
 <div class="col-lg-10 col-lg-offset-1">
     <div style="margin-top:18px;">
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading"><h3>Ajout d'une entreprise</h3></div>
-                <div class="panel-body">
-                    <form method="post" {{ form_enctype(formulaireEntreprise) }}>
-                        {{ form_widget(formulaireEntreprise) }}
-                        <div class="row">
+            <div class="panel-body">
+                <form method="post" {{ form_enctype(formulaireEntreprise) }}>
+                    {{ form_widget(formulaireEntreprise) }}
+                    <div class="row">
                         <div class="col-lg-1  col-lg-offset-1">
-                            <a href="{{ path('btsappli_stages_ajoutStageEnt') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Retour</a>
+                            <a href="{{ path('btsappli_stages_ajoutStageEntreprise') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Annuler</a>
                         </div>
                         <div class="col-lg-1  col-lg-offset-8">
                             <input type="submit" class="btn btn-primary pull-right" style="width:140px" />
                         </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

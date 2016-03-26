@@ -1,0 +1,30 @@
+{# src/btsappli/UserBundle/Resources/views/User/suppressionEtudiantValidation.html.twig #}
+
+{% extends "::vueMere.html.twig" %}
+
+{% block contenuCentral %}
+{# Contient la liste des étudiants ... #}
+
+
+<div style="margin-top:80px;"> <!-- pour descendre le contenu de x pixels -->
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">Suppression d'un étudiant</h3>
+            </div>
+            <div class="panel-body">
+                <p>Voulez-vous vraiment supprimer définitivement l'étudiant {{user.prenom}} {{user.nom}} de l'application ?</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-1 col-lg-offset-2">
+    <a href="{{ path('btsappli_utilisateurs_suiviEtudiant') }}" role="button" class="btn btn-primary pull-left" type="button" style="width:140px">Annuler</a>  <!--&nbsp; = espace-->
+    </div>
+    <div class="col-lg-1 col-lg-offset-6">
+    <a href="{{ path('btsappli_utilisateurs_suppressionEtudiant', {'id':user.id}) }}" role="button" class="btn btn-danger pull-right" type="button" style="width:140px">Supprimer</a> 
+    </div>
+</div>
+{% endblock %}

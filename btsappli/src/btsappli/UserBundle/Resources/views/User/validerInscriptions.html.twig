@@ -6,7 +6,7 @@
 {# Contient la liste des étudiants ... #}
 
 
-<div style="margin-top:12px;"> <!-- pour descendre le contenu de x pixels -->
+<div style="margin-top:18px;"> <!-- pour descendre le contenu de x pixels -->
 <div class="col-lg-12 ">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -15,10 +15,12 @@
                 <div class="col-lg-6">
                     <p>Promotions en cours : 
                         {% for promotionCourante in tabPromotions %}
-                            Promotion {{ promotionCourante.anneePromo }} {% if not loop.last %} - {% endif %}
+                            {{ promotionCourante.anneePromo }} {% if not loop.last %} - {% endif %}
                         {% endfor %}
                     </p>
-                    <a type="button" class="btn btn-success btn-xs"  href="{{ path('btsappli_utilisateurs_ajoutPromo') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true" ></span> Ajouter</a>
+                </div>
+                <div class="col-lg-1 col-lg-offset-4">
+                    <a type="button" class="btn btn-success " style="width:140px;"  href="{{ path('btsappli_utilisateurs_ajoutPromo') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true" ></span> Ajouter</a>
                 </div>
             </div>
         </div>
@@ -30,12 +32,12 @@
                 <thead>
                 <tr><td></td><td></td><td></td></tr>
                 <tr class="info" align="center">
-                    <td style="width:200px">Nom</td>
-                    <td style="width:200px">Prenom</td>
-                    <td style="width:350px">Email</td>
-                    <td style="width:200px">Choisir promotion</td>
-                    <td style="width:200px">Promotion</td>
-                    <td style="width:250px">Validation&nbsp;|&nbsp;Suppression</td>
+                    <td style="width:200px"><b>Nom</b></td>
+                    <td style="width:200px"><b>Prenom</b></td>
+                    <td style="width:350px"><b>Email</b></td>
+                    <td style="width:200px"><b>Choisir promotion</b></td>
+                    <td style="width:200px"><b>Promotion</b></td>
+                    <td style="width:250px"><b>Validation&nbsp;|&nbsp;Suppression</b></td>
                 </tr>
                 </thead>
                 <!-- Affichage de tous les demandes -->
@@ -72,11 +74,11 @@
                         </td>
                         <td>
                             {% if userCourant.promotion is not null %}
-                                <a type="button" role="button" class="btn btn-success"  href="{{ path('btsappli_utilisateurs_acceptInscriptions', {'id':userCourant.id}) }}"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></a>
+                                <a type="button" role="button" class="btn btn-success"  href="{{ path('btsappli_utilisateurs_accepterInscription', {'id':userCourant.id}) }}"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></a>
                             {% else %} 
                                 <button type="button" role="button" class="btn btn-success disabled"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span></button>
                             {% endif %} 
-                                <button type="button" class="btn btn-danger"  href="{{ path('btsappli_utilisateurs_supprInscriptions', {'id':userCourant.id}) }}"><span class="glyphicon glyphicon-remove" aria-hidden="true" ></span></a>
+                                <a type="button" class="btn btn-danger"  href="{{ path('btsappli_utilisateurs_refuserInscriptionValidation', {'id':userCourant.id}) }}"><span class="glyphicon glyphicon-remove" aria-hidden="true" ></span></a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -85,7 +87,7 @@
     </div>
     <div class="row">
         <div class="col-lg-1">
-            <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary" type="button" style="width:140px">Retour</a>  <!--&nbsp; = espace-->
+            <a href="{{ path('btsappli_utilisateurs_accueilAdmin') }}" role="button" class="btn btn-primary" type="button" style="width:140px"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Retour</a>  <!--&nbsp; = espace-->
         </div>
     </div>
 </div>
